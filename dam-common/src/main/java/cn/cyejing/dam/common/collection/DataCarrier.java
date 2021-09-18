@@ -24,7 +24,7 @@ public class DataCarrier<T> {
     private final FastThreadLocal<Buffer<T>> bufferThreadLocal = new FastThreadLocal<Buffer<T>>() {
         @Override
         protected Buffer<T> initialValue() throws Exception {
-            Buffer<T> buffer = new Buffer<>(bufferSize, rejectedStrategy);
+            Buffer<T> buffer = new Buffer<>(bufferSize);
             buffers.add(buffer);
             log.info("the thread {} add DataCarrier Buffer @{}", Thread.currentThread().getName(), Integer.toHexString(hashCode()));
             return buffer;
@@ -35,20 +35,14 @@ public class DataCarrier<T> {
     private final int consumeCycle; //ms
     private final int bufferSize;
     private final Consumer<List<T>> consumer;
-    private final Supplier<Boolean> rejectedStrategy;
+
 
 
     public DataCarrier(int consumeCycle, int bufferSize, int batchSize, Consumer<List<T>> consumer) {
-        this(consumeCycle, bufferSize, batchSize, consumer, new LogStrategy());
-    }
-
-
-    public DataCarrier(int consumeCycle, int bufferSize, int batchSize, Consumer<List<T>> consumer, Supplier<Boolean> rejectedStrategy) {
         this.consumeCycle = consumeCycle;
         this.bufferSize = bufferSize;
         this.batchSize = batchSize;
         this.consumer = consumer;
-        this.rejectedStrategy = rejectedStrategy;
         this.consumerThread = threadFactory.newThread(this::consumeData);
         this.consumerThread.start();
     }
@@ -89,18 +83,16 @@ public class DataCarrier<T> {
         private final Object[] buffer;
         private int writeIndex = 0;
         private int readIndex = 0;
-        private final Supplier<Boolean> rejectedStrategy;
 
 
-        public Buffer(int bufferSize, Supplier<Boolean> rejectedStrategy) {
+        public Buffer(int bufferSize) {
             this.buffer = new Object[bufferSize];
-            this.rejectedStrategy = rejectedStrategy;
         }
 
 
         public boolean add(T data) {
             if (buffer[writeIndex] != null) {
-                return rejectedStrategy.get();
+                return false;
             } else {
                 buffer[writeIndex++] = data;
                 if (writeIndex == buffer.length) {
@@ -139,13 +131,4 @@ public class DataCarrier<T> {
         }
     }
 
-
-    public static class LogStrategy implements Supplier<Boolean> {
-
-        @Override
-        public Boolean get() {
-            log.debug("buffer is full");
-            return false;
-        }
-    }
 }

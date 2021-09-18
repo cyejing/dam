@@ -19,15 +19,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class DynamicConfigInitializer {
-
-    private static class SingletonHolder {
-        private static final DynamicConfigInitializer INSTANCE = new DynamicConfigInitializer();
-    }
+    private static final DynamicConfigInitializer INSTANCE = new DynamicConfigInitializer();
 
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     public static DynamicConfigInitializer getInstance() {
-        return SingletonHolder.INSTANCE;
+        return INSTANCE;
     }
 
     public boolean loadFile(String path) {

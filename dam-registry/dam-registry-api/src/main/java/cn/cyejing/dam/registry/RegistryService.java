@@ -6,8 +6,6 @@ import cn.cyejing.dam.registry.api.RouteAPI;
 
 public interface RegistryService {
 
-    void initialize(RegistryConfig config);
-
     void initialize(RegistryConfig config, boolean watch);
 
     InstanceAPI getInstanceAPI();

@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 @Slf4j
 public class DefaultDynamicConfig implements DynamicConfig {
 
+    private static final DynamicConfig INSTANCE = new DefaultDynamicConfig();
 
     @Getter
     private ConcurrentMap<String/*serviceName*/, SortedSet<Route>> routsMap = new ConcurrentHashMap<>();
@@ -30,15 +31,12 @@ public class DefaultDynamicConfig implements DynamicConfig {
     @Getter
     private Set<Route> defaultRoutes = new ConcurrentSkipListSet<>();
 
-    private static class SingletonHolder {
-        private static final DynamicConfig INSTANCE = new DefaultDynamicConfig();
-    }
 
     private DefaultDynamicConfig() {
     }
 
     public static DynamicConfig getInstance() {
-        return SingletonHolder.INSTANCE;
+        return INSTANCE;
     }
 
 
