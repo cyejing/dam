@@ -1,0 +1,12 @@
+routes:
+  - id: 196105db9a384d7a93f8102ae46684cb
+    name: test
+    serviceName: test
+    order: 100
+    defaultRoute: true
+    protocol: http
+    expressionStr: Path.AntMatch('/**')
+    filterConfigs:
+      - name: echo
+        param: "{\"oldValue\":\"/webtest\",\"newValue\":\"\",\"loggable\":false}"
+instances: []
