@@ -6,19 +6,19 @@ import java.util.SortedSet;
 
 public interface DynamicConfig {
 
-    SortedSet<Route> getRoutes(String serviceName);
+    SortedSet<Route> getRoutes(String group);
 
     void addRoute(Route route);
 
-    void deleteRoute(String serviceName, String id);
+    void deleteRoute(String group, String id);
 
     void addInstance(Instance instance);
 
-    void deleteInstance(String serviceName, String address);
+    void deleteInstance(String host, String address);
 
-    Set<Instance> getInstancesNormal(String serviceName);
+    Set<Instance> getInstances(String host);
 
-    Set<Instance> getInstancesAll(String serviceName);
+    Set<Instance> getInstances(String host,String tag) ;
 
     Set<Route> getDefaultRoutes();
 

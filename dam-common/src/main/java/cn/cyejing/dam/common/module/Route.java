@@ -9,31 +9,24 @@ import java.util.Objects;
 import java.util.Set;
 
 
-@Data
 @Slf4j
+@Data
 public class Route implements Comparable<Route>, RouteReadonly {
 
     protected String id;
-    protected String name;
-    protected String serviceName;
+    protected String group;
     protected Integer order;
     protected String protocol;
     protected String expressionStr;
     protected Expression expression;
     protected Set<FilterConfig> filterConfigs = new HashSet<>();
 
-    protected boolean defaultRoute;
+    protected boolean global;
 
     protected boolean loggable;
 
     public boolean addFilterConfig(FilterConfig filterConfig) {
         return filterConfigs.add(filterConfig);
-    }
-
-
-    @Override
-    public boolean isDefault() {
-        return defaultRoute;
     }
 
     public FilterConfig getFilterConfig(String name) {
@@ -43,16 +36,6 @@ public class Route implements Comparable<Route>, RouteReadonly {
             }
         }
         return null;
-    }
-
-
-    public boolean hasName(String name) {
-        for (FilterConfig filterConfig : filterConfigs) {
-            if (filterConfig.getName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

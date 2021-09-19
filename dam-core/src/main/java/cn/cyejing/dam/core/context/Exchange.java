@@ -26,8 +26,6 @@ public interface Exchange {
 
     String getProtocol();
 
-    String getServiceName();
-
     FilterConfig getFilterConfig(String name);
 
     Request getRequest();

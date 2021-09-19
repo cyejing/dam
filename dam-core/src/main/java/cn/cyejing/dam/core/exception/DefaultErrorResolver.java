@@ -5,11 +5,14 @@ import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Response;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DefaultErrorResolver implements ErrorResolver {
 
     @Override
     public Response resolve(Throwable t) {
+        log.error("occur error", t);
         if (t instanceof DamException) {
             ErrorCode errorCode = ((DamException) t).getErrorCode();
             switch (errorCode) {
@@ -20,10 +23,8 @@ public class DefaultErrorResolver implements ErrorResolver {
                 case INTERNAL_SERVER_ERROR:
                     return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, errorCode, "internal server error");
             }
-        } else {
-            return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_SERVER_ERROR, "internal server error");
         }
-        return null;
+        return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_SERVER_ERROR, "internal server error");
     }
 
     private DefaultResponse buildResponse(HttpResponseStatus status, ErrorCode code, String message) {

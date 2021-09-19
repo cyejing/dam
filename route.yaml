@@ -1,9 +1,13 @@
 routes:
   - id: 196105db9a384d7a93f8102ae46684cb
-    name: test
-    serviceName: test
+    group: test
     order: 100
-    defaultRoute: true
+    global: true
     protocol: http
     expressionStr: Path.AntMatch('/**')
-instances: [ ]
+    filterConfigs:
+      - name: proxy
+        param: "{\"uri\":\"lb://test\"}"
+instances:
+  - host: test
+    address: localhost:4843

@@ -9,12 +9,12 @@ public interface InstanceAPI {
 
     void registerInstance(Instance instance);
 
-    void unregisterInstance(String serviceName, String address);
+    void unregisterInstance(String host, String address);
 
     void subscribeInstance(NotifyListener<Instance> listener);
 
-    Instance queryInstance(String serviceName, String address);
+    Instance queryInstance(String host, String address);
 
-    List<Instance> queryInstanceList(String serviceName);
+    List<Instance> queryInstanceList(String host);
 
 }

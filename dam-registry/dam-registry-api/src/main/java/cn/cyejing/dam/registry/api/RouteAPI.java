@@ -11,14 +11,14 @@ public interface RouteAPI {
 
     void subscribeRoute(NotifyListener<Route> listener);
 
-    void deleteRoute(String serviceName, String routeId);
+    void deleteRoute(String group, String routeId);
 
-    void deleteRoute(String serviceName);
+    void deleteRoute(String group);
 
-    Route queryRoute(String serviceName, String routeId);
+    Route queryRoute(String group, String routeId);
 
     List<Route> queryRoutes();
 
-    List<Route> queryRoute(String serviceName);
+    List<Route> queryRoute(String group);
 
 }

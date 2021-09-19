@@ -38,12 +38,12 @@ public class DefaultRequestMutable implements RequestMutable {
     }
 
     @Override
-    public String getHost() {
+    public String getAddress() {
         return this.host = host;
     }
 
     @Override
-    public void setHost(String host) {
+    public void setAddress(String host) {
         this.host = host;
     }
 

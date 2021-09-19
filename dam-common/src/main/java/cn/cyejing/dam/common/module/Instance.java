@@ -9,7 +9,7 @@ import java.util.Objects;
 @Data
 public class Instance {
 
-    private String serviceName;
+    private String host;
 
     private String address;
 
@@ -25,13 +25,13 @@ public class Instance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Instance instance = (Instance) o;
-        return Objects.equals(serviceName, instance.serviceName) &&
+        return Objects.equals(host, instance.host) &&
                 Objects.equals(address, instance.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(serviceName, address);
+        return Objects.hash(host, address);
     }
 
 

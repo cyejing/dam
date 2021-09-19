@@ -28,7 +28,8 @@ public class TailFilter implements Filter {
     }
 
     @Override
-    public void filter(Exchange exchange, Object config, FilterChain chain) {
+    public void filter(FilterChain chain, Exchange exchange, Object config) {
         exchange.occurError(new DamException(ErrorCode.FILTER_TAIL));
     }
+
 }

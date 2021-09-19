@@ -3,6 +3,7 @@ package cn.cyejing.dam.core.config;
 import cn.cyejing.dam.common.module.DefaultDynamicConfig;
 import cn.cyejing.dam.common.module.Instance;
 import cn.cyejing.dam.common.module.Route;
+import cn.cyejing.dam.core.support.cache.CacheManager;
 import cn.cyejing.dam.registry.RegistryConfig;
 import cn.cyejing.dam.registry.RegistryService;
 import cn.cyejing.dam.registry.RegistryServiceFactory;
@@ -37,6 +38,7 @@ public class DynamicConfigInitializer {
             RouteConfig config = yaml.loadAs(new FileInputStream(absolutePath), RouteConfig.class);
             for (Route route : config.getRoutes()) {
                 DefaultDynamicConfig.getInstance().addRoute(route);
+                CacheManager.removeForRoute(route.getId());
             }
             for (Instance instance : config.getInstances()) {
                 DefaultDynamicConfig.getInstance().addInstance(instance);
@@ -58,11 +60,12 @@ public class DynamicConfigInitializer {
                 @Override
                 public void put(Route route) {
                     DefaultDynamicConfig.getInstance().addRoute(route);
+                    CacheManager.removeForRoute(route.getId());
                 }
 
                 @Override
                 public void delete(Route route) {
-                    DefaultDynamicConfig.getInstance().deleteRoute(route.getServiceName(), route.getId());
+                    DefaultDynamicConfig.getInstance().deleteRoute(route.getGroup(), route.getId());
                 }
             });
 
@@ -74,7 +77,7 @@ public class DynamicConfigInitializer {
 
                 @Override
                 public void delete(Instance instance) {
-                    DefaultDynamicConfig.getInstance().deleteInstance(instance.getServiceName(), instance.getAddress());
+                    DefaultDynamicConfig.getInstance().deleteInstance(instance.getHost(), instance.getAddress());
                 }
             });
         }

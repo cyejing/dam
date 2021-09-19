@@ -41,6 +41,12 @@ public class DefaultResponse implements Response {
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
     }
 
+    public DefaultResponse(org.asynchttpclient.Response response) {
+        this(HttpResponseStatus.valueOf(response.getStatusCode()),
+                Unpooled.wrappedBuffer(response.getResponseBodyAsByteBuffer()),
+                response.getHeaders());
+    }
+
     @Override
     public HttpResponseStatus getStatus() {
         return response.status();

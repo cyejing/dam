@@ -10,43 +10,39 @@ public class DefaultDynamicConfigTest {
     public void testRouteUpdate() {
         DefaultDynamicConfig.getInstance().clear();
         Route route = new Route();
-        route.setServiceName("foo");
+        route.setGroup("foo");
         route.setId("1234");
-        route.setName("foo1");
         route.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals(route, DefaultDynamicConfig.getInstance().getRoutes("foo").first());
 
         Route route1 = new Route();
-        route1.setServiceName("foo");
+        route1.setGroup("foo");
         route1.setId("1234");
-        route1.setName("foo2");
-        route1.setOrder(1);
+        route1.setOrder(2);
         DefaultDynamicConfig.getInstance().addRoute(route1);
-        assertEquals("foo2", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals(route1, DefaultDynamicConfig.getInstance().getRoutes("foo").first());
     }
 
     @Test
     public void testRouteNoUpdate() {
         DefaultDynamicConfig.getInstance().clear();
         Route route = new Route();
-        route.setServiceName("foo");
+        route.setGroup("foo");
         route.setId("1234");
-        route.setName("foo1");
         route.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals(route, DefaultDynamicConfig.getInstance().getRoutes("foo").first());
 
         Route route1 = new Route();
-        route1.setServiceName("foo");
+        route1.setGroup("foo");
         route1.setId("1235");
-        route1.setName("foo2");
         route1.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route1);
         assertEquals(2, DefaultDynamicConfig.getInstance().getRoutes("foo").size());
         Route[] routes = DefaultDynamicConfig.getInstance().getRoutes("foo").toArray(new Route[]{});
-        assertEquals("foo1", routes[0].getName());
-        assertEquals("foo2", routes[1].getName());
+        assertEquals(route, routes[0]);
+        assertEquals(route1, routes[1]);
     }
 
 
@@ -54,25 +50,23 @@ public class DefaultDynamicConfigTest {
     public void testAddDiffOrder() {
         DefaultDynamicConfig.getInstance().clear();
         Route route = new Route();
-        route.setServiceName("foo");
+        route.setGroup("foo");
         route.setId("1234");
-        route.setName("foo1");
         route.setOrder(1);
-        route.setDefaultRoute(true);
+        route.setGlobal(true);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals(route, DefaultDynamicConfig.getInstance().getRoutes("foo").first());
 
         Route route1 = new Route();
-        route1.setServiceName("foo");
+        route1.setGroup("foo");
         route1.setId("1234");
-        route1.setName("foo2");
         route1.setOrder(1);
-        route1.setDefaultRoute(true);
+        route1.setGlobal(true);
         DefaultDynamicConfig.getInstance().addRoute(route1);
         assertEquals(1, DefaultDynamicConfig.getInstance().getRoutes("foo").size());
         assertEquals(1, DefaultDynamicConfig.getInstance().getDefaultRoutes().size());
-        assertEquals("foo2", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
-        assertEquals("foo2", DefaultDynamicConfig.getInstance().getDefaultRoutes().stream().findFirst().get().getName());
+        assertEquals(route1, DefaultDynamicConfig.getInstance().getRoutes("foo").first());
+        assertEquals(route1, DefaultDynamicConfig.getInstance().getDefaultRoutes().stream().findFirst().get());
     }
 
     @Test
@@ -80,22 +74,22 @@ public class DefaultDynamicConfigTest {
         {
             DefaultDynamicConfig.getInstance().clear();
             Instance instance = new Instance();
-            instance.setServiceName("123");
+            instance.setHost("123");
             instance.setAddress("123");
             instance.setRegisterTime(122L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
-            Instance[] ins = DefaultDynamicConfig.getInstance().getInstancesNormal("123").toArray(new Instance[1]);
+            Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
             assertEquals("123", ins[0].getAddress());
         }
 
         {
             Instance instance = new Instance();
-            instance.setServiceName("123");
+            instance.setHost("123");
             instance.setAddress("123");
             instance.setRegisterTime(123L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
-            Instance[] ins = DefaultDynamicConfig.getInstance().getInstancesNormal("123").toArray(new Instance[1]);
+            Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
             assertEquals("123", ins[0].getAddress());
             assertEquals(123L, ins[0].getRegisterTime());
@@ -103,11 +97,11 @@ public class DefaultDynamicConfigTest {
 
         {
             Instance instance = new Instance();
-            instance.setServiceName("123");
+            instance.setHost("123");
             instance.setAddress("124");
             instance.setRegisterTime(124L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
-            Instance[] ins = DefaultDynamicConfig.getInstance().getInstancesNormal("123").toArray(new Instance[1]);
+            Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(2, ins.length);
             assertEquals("124", ins[0].getAddress());
             assertEquals(124L, ins[0].getRegisterTime());
@@ -115,28 +109,28 @@ public class DefaultDynamicConfigTest {
 
         {
             DefaultDynamicConfig.getInstance().deleteInstance("123", "124");
-            Instance[] ins = DefaultDynamicConfig.getInstance().getInstancesNormal("123").toArray(new Instance[1]);
+            Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
             assertEquals("123", ins[0].getAddress());
             assertEquals(123L, ins[0].getRegisterTime());
             DefaultDynamicConfig.getInstance().deleteInstance("123", "123");
 
-            assertEquals(0, DefaultDynamicConfig.getInstance().getInstancesNormal("123").size());
+            assertEquals(0, DefaultDynamicConfig.getInstance().getInstances("123").size());
 
         }
 
         {
             DefaultDynamicConfig.getInstance().clear();
             Instance instance = new Instance();
-            instance.setServiceName("123");
+            instance.setHost("123");
             instance.setAddress("123");
             instance.setRegisterTime(122L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
-            Instance[] ins = DefaultDynamicConfig.getInstance().getInstancesNormal("123").toArray(new Instance[1]);
+            Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
             assertEquals("123", ins[0].getAddress());
 
-            Instance[] ins1 = DefaultDynamicConfig.getInstance().getInstancesAll("123").toArray(new Instance[1]);
+            Instance[] ins1 = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins1.length);
         }
     }

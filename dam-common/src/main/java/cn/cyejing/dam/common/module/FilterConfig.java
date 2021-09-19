@@ -13,6 +13,10 @@ public class FilterConfig {
     private Boolean loggable = false;
     private Boolean opened = true;
 
+    public String getName() {
+        return name.toLowerCase();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

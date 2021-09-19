@@ -57,7 +57,7 @@ public class DefaultExchange implements Exchange, InternalExchange {
         } else if (Protocol.isDubbo(getProtocol())) {
             this.requestDubbo = new RequestDubbo(request);
         } else {
-            //??
+            log.error("unknown protocol");
         }
     }
 
@@ -121,11 +121,6 @@ public class DefaultExchange implements Exchange, InternalExchange {
     }
 
     @Override
-    public String getServiceName() {
-        return this.route.getServiceName();
-    }
-
-    @Override
     public FilterConfig getFilterConfig(String name) {
         return this.route.getFilterConfig(name);
     }
@@ -175,13 +170,13 @@ public class DefaultExchange implements Exchange, InternalExchange {
             }
             throw new DamException(ErrorCode.NOT_FOUND);
         }
-        SortedSet<Route> routes = DefaultDynamicConfig.getInstance().getRoutes(defaultRoute.getServiceName());
-        List<Route> noDefaultRoutes = routes.stream().filter(route -> !route.isDefaultRoute()).collect(Collectors.toList());
+        SortedSet<Route> routes = DefaultDynamicConfig.getInstance().getRoutes(defaultRoute.getGroup());
+        List<Route> noDefaultRoutes = routes.stream().filter(route -> !route.isGlobal()).collect(Collectors.toList());
         RouteReadonly route = matchRoutes(request, noDefaultRoutes);
         if (route == null) {
-            route = matchRoutes(request, routes.stream().filter(Route::isDefaultRoute).collect(Collectors.toList()));
+            route = matchRoutes(request, routes.stream().filter(Route::isGlobal).collect(Collectors.toList()));
             if (route == null) {
-                log.info("Route information not found. Service name:{} Original request：{}", defaultRoute.getServiceName(), request.getUrl());
+                log.info("Route information not found. Service name:{} Original request：{}", defaultRoute.getGroup(), request.getUrl());
                 throw new DamException(ErrorCode.NOT_FOUND);
             }
         }
@@ -199,8 +194,8 @@ public class DefaultExchange implements Exchange, InternalExchange {
                     return route.toReadonly();
                 }
             } catch (Exception e) {
-                log.error("Routing condition match error. serviceName:{},routeId:{},expressionStr:{}",
-                        route.getServiceName(), route.getId(), route.getExpressionStr(), e);
+                log.error("Routing condition match error. group:{},routeId:{},expressionStr:{}",
+                        route.getGroup(), route.getId(), route.getExpressionStr(), e);
             }
         }
         return null;

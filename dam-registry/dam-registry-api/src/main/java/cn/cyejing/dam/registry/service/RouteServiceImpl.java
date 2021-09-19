@@ -34,17 +34,17 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
     }
 
     @Override
-    public void deleteRoute(String serviceName, String routeId) {
+    public void deleteRoute(String group, String routeId) {
 
     }
 
     @Override
-    public void deleteRoute(String serviceName) {
+    public void deleteRoute(String group) {
 
     }
 
     @Override
-    public Route queryRoute(String serviceName, String routeId) {
+    public Route queryRoute(String group, String routeId) {
         return null;
     }
 
@@ -54,7 +54,7 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
     }
 
     @Override
-    public List<Route> queryRoute(String serviceName) {
+    public List<Route> queryRoute(String group) {
         return null;
     }
 
@@ -94,11 +94,11 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
         return "/routes";
     }
 
-    private String getKey(String serviceName, String id) {
-        return getKey(serviceName) + "/" + id;
+    private String getKey(String group, String id) {
+        return getKey(group) + "/" + id;
     }
 
-    private String getKey(String serviceName) {
-        return getKey() + "/" + serviceName;
+    private String getKey(String group) {
+        return getKey() + "/" + group;
     }
 }

@@ -7,10 +7,9 @@ import java.util.Set;
 
 public interface RouteReadonly {
     String getId();
+    String getGroup();
 
-    String getName();
-
-    String getServiceName();
+    boolean isGlobal();
 
     Integer getOrder();
 
@@ -22,11 +21,8 @@ public interface RouteReadonly {
 
     boolean isLoggable();
 
-    boolean isDefault();
-
     String getProtocol();
 
     FilterConfig getFilterConfig(String name);
 
-    boolean hasName(String name);
 }

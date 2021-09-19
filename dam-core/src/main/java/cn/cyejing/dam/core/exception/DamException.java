@@ -11,6 +11,7 @@ public class DamException extends RuntimeException {
     private ErrorCode errorCode;
 
     public DamException(ErrorCode errorCode) {
+        super(errorCode.name());
         this.errorCode = errorCode;
     }
 

@@ -12,9 +12,9 @@ public interface RequestMutable {
     void setScheme(String scheme);
 
 
-    String getHost();
+    String getAddress();
 
-    void setHost(String host);
+    void setAddress(String host);
 
     String getPath();
 

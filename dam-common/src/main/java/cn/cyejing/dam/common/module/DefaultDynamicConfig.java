@@ -7,12 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -21,11 +21,11 @@ public class DefaultDynamicConfig implements DynamicConfig {
     private static final DynamicConfig INSTANCE = new DefaultDynamicConfig();
 
     @Getter
-    private ConcurrentMap<String/*serviceName*/, SortedSet<Route>> routsMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<String/*group*/, SortedSet<Route>> routsMap = new ConcurrentHashMap<>();
 
 
     @Getter
-    private ConcurrentMap<String/*serviceName*/, Set<Instance>> instanceMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<String/*host*/, Set<Instance>> instanceMap = new ConcurrentHashMap<>();
 
 
     @Getter
@@ -41,8 +41,8 @@ public class DefaultDynamicConfig implements DynamicConfig {
 
 
     @Override
-    public SortedSet<Route> getRoutes(String serviceName) {
-        SortedSet<Route> routes = routsMap.get(serviceName);
+    public SortedSet<Route> getRoutes(String group) {
+        SortedSet<Route> routes = routsMap.get(group);
         if (routes == null) {
             return null;
         }
@@ -57,31 +57,31 @@ public class DefaultDynamicConfig implements DynamicConfig {
         }
 
         defaultRoutes.removeIf(r -> r.getId().equals(route.getId()));
-        if (route.isDefaultRoute()) {
+        if (route.isGlobal()) {
             defaultRoutes.add(route);
         }
-        String serviceName = route.getServiceName();
-        if (StringUtils.isEmpty(serviceName)) {
-            throw new IllegalArgumentException("serviceName can not be empty. id: " + route.getId());
+        String group = route.getGroup();
+        if (StringUtils.isEmpty(group)) {
+            throw new IllegalArgumentException("group can not be empty. id: " + route.getId());
         }
-        SortedSet<Route> routes = routsMap.get(serviceName);
+        SortedSet<Route> routes = routsMap.get(group);
         if (routes == null) {
-            routsMap.putIfAbsent(serviceName, new ConcurrentSkipListSet<>());
-            routes = routsMap.get(serviceName);
+            routsMap.putIfAbsent(group, new ConcurrentSkipListSet<>());
+            routes = routsMap.get(group);
         }
         if (routes.removeIf(r -> r.getId().equals(route.getId()))) {
-            log.info("modify Route serviceName:{}, id:{}, route:{}", route.getServiceName(), route.getId(), JSONUtil.toJSONString(route));
+            log.info("modify Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.toJSONString(route));
         } else {
-            log.info("add Route serviceName:{}, id:{}, route:{}", route.getServiceName(), route.getId(), JSONUtil.toJSONString(route));
+            log.info("add Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.toJSONString(route));
         }
         routes.add(route);
     }
 
 
     @Override
-    public void deleteRoute(String serviceName, String id) {
-        log.info("delete Route serviceName:{}, id:{}", serviceName, id);
-        SortedSet<Route> routes = routsMap.get(serviceName);
+    public void deleteRoute(String group, String id) {
+        log.info("delete Route group:{}, id:{}", group, id);
+        SortedSet<Route> routes = routsMap.get(group);
         if (routes != null) {
             routes.removeIf(route -> route.getId().equals(id));
         }
@@ -91,44 +91,48 @@ public class DefaultDynamicConfig implements DynamicConfig {
 
     @Override
     public void addInstance(Instance instance) {
-        String serviceName = instance.getServiceName();
-        if (StringUtils.isEmpty(serviceName)) {
-            throw new IllegalArgumentException("serviceName can not be empty");
+        String host = instance.getHost();
+        if (StringUtils.isEmpty(host)) {
+            throw new IllegalArgumentException("host can not be empty");
         }
-        Set<Instance> instances = instanceMap.get(serviceName);
+        Set<Instance> instances = instanceMap.get(host);
         if (instances == null) {
-            instanceMap.putIfAbsent(serviceName, ConcurrentHashMap.newKeySet());
-            instances = instanceMap.get(serviceName);
+            instanceMap.putIfAbsent(host, ConcurrentHashMap.newKeySet());
+            instances = instanceMap.get(host);
         }
         if (instances.removeIf(ins -> ins.getAddress().equals(instance.getAddress()))) {
-            log.info("modify Instance serviceName:{}, address:{}, instance:{}", instance.getServiceName(), instance.getAddress(), JSONUtil.toJSONString(instance));
+            log.info("modify Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.toJSONString(instance));
         } else {
-            log.info("add Instance serviceName:{}, address:{}, instance:{}", instance.getServiceName(), instance.getAddress(), JSONUtil.toJSONString(instance));
+            log.info("add Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.toJSONString(instance));
         }
         instances.add(instance);
     }
 
     @Override
-    public void deleteInstance(String serviceName, String address) {
-        log.info("delete Instance serviceName:{}, address:{}", serviceName, address);
-        Set<Instance> instances = instanceMap.get(serviceName);
+    public void deleteInstance(String host, String address) {
+        log.info("delete Instance host:{}, address:{}", host, address);
+        Set<Instance> instances = instanceMap.get(host);
         instances.removeIf(instance -> instance.getAddress().equals(address));
     }
 
 
     @Override
-    public Set<Instance> getInstancesNormal(String serviceName) {
-        if (instanceMap.get(serviceName) == null) {
+    public Set<Instance> getInstances(String host) {
+        if (instanceMap.get(host) == null) {
             return Collections.emptySet();
         }
-
-        return Collections.unmodifiableSet(instanceMap.get(serviceName));
+        return Collections.unmodifiableSet(instanceMap.get(host));
     }
 
 
     @Override
-    public Set<Instance> getInstancesAll(String serviceName) {
-        return instanceMap.get(serviceName) == null ? new HashSet<>() : Collections.unmodifiableSet(instanceMap.get(serviceName));
+    public Set<Instance> getInstances(String host,String tag) {
+        if (instanceMap.get(host) == null) {
+            return Collections.emptySet();
+        }
+        return instanceMap.get(host).stream()
+                .filter(instance -> instance.getTags().contains(tag))
+                .collect(Collectors.toSet());
     }
 
 

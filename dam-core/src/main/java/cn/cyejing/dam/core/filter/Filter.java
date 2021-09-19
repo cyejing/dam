@@ -2,9 +2,13 @@ package cn.cyejing.dam.core.filter;
 
 import cn.cyejing.dam.core.context.Exchange;
 
-public interface Filter<T> {
+public interface Filter<T>{
 
     String getName();
+
+    default String getNameToLowerCase() {
+        return getName().toLowerCase();
+    }
 
     int getOrder();
 
@@ -12,6 +16,6 @@ public interface Filter<T> {
 
     Class<T> getConfigClass();
 
-    void filter(Exchange exchange, T config, FilterChain chain);
+    void filter(FilterChain chain, Exchange exchange, T config) throws Exception;
 
 }

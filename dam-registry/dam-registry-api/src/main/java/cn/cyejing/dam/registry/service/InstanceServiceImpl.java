@@ -32,7 +32,7 @@ public class InstanceServiceImpl extends AbstractService implements InstanceAPI 
     }
 
     @Override
-    public void unregisterInstance(String serviceName, String address) {
+    public void unregisterInstance(String host, String address) {
 
     }
 
@@ -42,12 +42,12 @@ public class InstanceServiceImpl extends AbstractService implements InstanceAPI 
     }
 
     @Override
-    public Instance queryInstance(String serviceName, String address) {
+    public Instance queryInstance(String host, String address) {
         return null;
     }
 
     @Override
-    public List<Instance> queryInstanceList(String serviceName) {
+    public List<Instance> queryInstanceList(String host) {
         return null;
     }
 
@@ -85,12 +85,12 @@ public class InstanceServiceImpl extends AbstractService implements InstanceAPI 
         return "/instance";
     }
 
-    private String getKey(String serviceName, String address) {
-        return getKey(serviceName) + "/" + address;
+    private String getKey(String host, String address) {
+        return getKey(host) + "/" + address;
     }
 
-    private String getKey(String serviceName) {
-        return getKey() + "/" + serviceName;
+    private String getKey(String host) {
+        return getKey() + "/" + host;
     }
 
 }

@@ -34,13 +34,14 @@ public class FilteringHandler {
                 globalFilters.add(filter);
             }
             filters.add(filter);
+            log.info("scan filter:{}", filter);
         }
-        this.filterMap = filters.stream().collect(Collectors.toMap(Filter::getName, Function.identity()));
+        this.filterMap = filters.stream().collect(Collectors.toMap(Filter::getNameToLowerCase, Function.identity()));
     }
 
     public void handler(InternalExchange exchange) {
         Set<FilterConfig> filterConfigs = exchange.getRoute().getFilterConfigs();
-        List<Filter<?>> runFilters = new ArrayList<>(globalFilters);
+        List<Filter> runFilters = new ArrayList<>(globalFilters);
 
         for (FilterConfig filterConfig : filterConfigs) {
             Filter<?> filter = filterMap.get(filterConfig.getName());
@@ -50,7 +51,7 @@ public class FilteringHandler {
         }
 
         if (runFilters.size() > 1) {
-            runFilters.sort(Comparator.comparingInt(Filter::getOrder));
+            runFilters.sort((o1, o2) -> Integer.compare(o2.getOrder(), o1.getOrder()));
         }
 
         DefaultFilterChain chain = new DefaultFilterChain(this, exchange, runFilters.toArray(new Filter[0]));
