@@ -1,7 +1,6 @@
 
 package cn.cyejing.dam.core.selector.match;
 
-import cn.cyejing.dam.core.exception.DamException;
 import cn.cyejing.dam.common.utils.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

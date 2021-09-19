@@ -1,8 +1,8 @@
 
 package cn.cyejing.dam.core.selector;
 
-import cn.cyejing.dam.common.module.Condition;
 import cn.cyejing.dam.common.enums.EnumOperator;
+import cn.cyejing.dam.common.module.Condition;
 import cn.cyejing.dam.core.context.Request;
 import lombok.Getter;
 

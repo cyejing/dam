@@ -27,7 +27,7 @@ public class SymbolTokenReader implements TokenReader {
             tokenStream.addToken(TokenType.LSQUARE, "[");
         } else if (c == ']') {
             tokenStream.addToken(TokenType.RSQUARE, "]");
-        }else if (c==';'){
+        } else if (c == ';') {
             tokenStream.addToken(TokenType.SEMICOLON, ";");
         }
     }

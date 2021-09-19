@@ -1,12 +1,6 @@
 package cn.cyejing.dam.common.expression;
 
-import cn.cyejing.dam.common.enums.EnumOperator;
-import cn.cyejing.dam.common.module.Condition;
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

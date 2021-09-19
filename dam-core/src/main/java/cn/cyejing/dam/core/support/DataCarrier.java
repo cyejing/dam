@@ -1,4 +1,4 @@
-package cn.cyejing.dam.common.collection;
+package cn.cyejing.dam.core.support;
 
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.FastThreadLocal;
@@ -10,13 +10,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 
 @Slf4j
 public class DataCarrier<T> {
 
-    private static final ThreadFactory threadFactory = new DefaultThreadFactory("DataCarrier-Consumer", true);
+    private static final ThreadFactory threadFactory = new DefaultThreadFactory("DataCarrier-Consumer-0", true);
 
     private final Thread consumerThread;
 
@@ -36,8 +35,6 @@ public class DataCarrier<T> {
     private final int bufferSize;
     private final Consumer<List<T>> consumer;
 
-
-
     public DataCarrier(int consumeCycle, int bufferSize, int batchSize, Consumer<List<T>> consumer) {
         this.consumeCycle = consumeCycle;
         this.bufferSize = bufferSize;
@@ -46,7 +43,6 @@ public class DataCarrier<T> {
         this.consumerThread = threadFactory.newThread(this::consumeData);
         this.consumerThread.start();
     }
-
 
 
     public boolean add(T data) {

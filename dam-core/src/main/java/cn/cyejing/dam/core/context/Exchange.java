@@ -3,9 +3,6 @@ package cn.cyejing.dam.core.context;
 
 import cn.cyejing.dam.common.module.FilterConfig;
 import cn.cyejing.dam.common.module.RouteReadonly;
-import io.netty.handler.codec.http.HttpHeaders;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public interface Exchange {

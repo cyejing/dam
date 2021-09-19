@@ -80,11 +80,7 @@ public class EtcdRegistry implements RegistrySPI {
     public void delete(String key,boolean withPrefix) {
         try {
             ByteSequence etcdKey = ByteSequence.from(wrapNamespace(key), Charset.defaultCharset());
-
-            DeleteOption.Builder deleteOption = DeleteOption.newBuilder();
-            if (withPrefix) {
-                deleteOption.withPrefix(etcdKey);
-            }
+            DeleteOption.Builder deleteOption = DeleteOption.newBuilder().isPrefix(withPrefix);
             client.getKVClient().delete(etcdKey, deleteOption.build());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -96,10 +92,7 @@ public class EtcdRegistry implements RegistrySPI {
     public List<KeyValue> get(String key,boolean withPrefix) {
         try {
             ByteSequence etcdKey = ByteSequence.from(wrapNamespace(key), Charset.defaultCharset());
-            GetOption.Builder getOption = GetOption.newBuilder();
-            if (withPrefix) {
-                getOption.withPrefix(etcdKey);
-            }
+            GetOption.Builder getOption = GetOption.newBuilder().isPrefix(withPrefix);
             GetResponse getResponse = client.getKVClient().get(etcdKey, getOption.build()).get();
             if (getResponse.getKvs().size() > 0) {
                 return getResponse.getKvs().stream()
@@ -115,12 +108,9 @@ public class EtcdRegistry implements RegistrySPI {
     }
 
     @Override
-    public void addWatch(String watchKey, Watch watch,boolean prefix) {
+    public void addWatch(String watchKey, Watch watch,boolean withPrefix) {
         ByteSequence etcdKey = ByteSequence.from(watchKey, Charset.defaultCharset());
-        WatchOption.Builder watchOption = WatchOption.newBuilder();
-        if (prefix) {
-            watchOption.withPrefix(etcdKey);
-        }
+        WatchOption.Builder watchOption = WatchOption.newBuilder().isPrefix(withPrefix);
         client.getWatchClient().watch(etcdKey, watchOption.build()
                 , response -> response.getEvents().forEach(watchEvent -> {
                     String key = watchEvent.getKeyValue().getKey().toString(Charset.defaultCharset());

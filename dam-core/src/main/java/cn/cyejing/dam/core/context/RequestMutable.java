@@ -1,8 +1,8 @@
 
 package cn.cyejing.dam.core.context;
 
-import org.asynchttpclient.Request;
 import io.netty.handler.codec.http.cookie.Cookie;
+import org.asynchttpclient.Request;
 
 
 public interface RequestMutable {

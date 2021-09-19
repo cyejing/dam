@@ -1,27 +1,27 @@
 package cn.cyejing.dam.common.constants;
 
 
-public interface Protocol {
+public abstract class Protocol {
 
-	String HTTP = "http";
+	private static String HTTP = "http";
 
-	String DUBBO = "dubbo";
+	private static String DUBBO = "dubbo";
 
-	String TCP = "tcp";
+	private static String TCP = "tcp";
 
-	static boolean isHttp(String protocol) {
+	public static boolean isHttp(String protocol) {
 	    return HTTP.equals(protocol);
 	}
 
-	static boolean isDubbo(String protocol) {
+	public static boolean isDubbo(String protocol) {
         return DUBBO.equals(protocol);
     }
 
-	static boolean isTcp(String protocol) {
+	public static boolean isTcp(String protocol) {
 		return TCP.equals(protocol);
 	}
 
-    static String getProtocol(String protocol)
+	public static String getProtocol(String protocol)
 	{
 		if (isDubbo(protocol)) {
 			return DUBBO;

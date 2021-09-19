@@ -1,9 +1,6 @@
 
 package cn.cyejing.dam.common.expression;
 
-import cn.cyejing.dam.common.module.Condition;
-import cn.cyejing.dam.common.enums.EnumType;
-import cn.cyejing.dam.common.enums.EnumOperator;
 import cn.cyejing.dam.common.expression.ast.ASTParser;
 import cn.cyejing.dam.common.expression.ast.Node;
 import cn.cyejing.dam.common.expression.token.Token;

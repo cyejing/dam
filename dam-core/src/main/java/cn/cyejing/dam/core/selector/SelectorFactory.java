@@ -1,16 +1,12 @@
 
 package cn.cyejing.dam.core.selector;
 
-import cn.cyejing.dam.common.module.Condition;
 import cn.cyejing.dam.common.enums.EnumType;
 import cn.cyejing.dam.common.expression.EvaluationContext;
 import cn.cyejing.dam.core.context.Request;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 public class SelectorFactory {

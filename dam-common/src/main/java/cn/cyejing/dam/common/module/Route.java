@@ -3,7 +3,6 @@ package cn.cyejing.dam.common.module;
 
 import cn.cyejing.dam.common.expression.Expression;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;

@@ -1,8 +1,6 @@
 
 package cn.cyejing.dam.core.context;
 
-import cn.cyejing.dam.core.exception.DamException;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.handler.codec.http.cookie.ServerCookieDecoder;

@@ -1,7 +1,5 @@
-package cn.cyejing.dam.common.collection;
+package cn.cyejing.dam.core.support;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -9,6 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.Assert.*;
 
 public class DataCarrierTest {
 
@@ -35,7 +35,7 @@ public class DataCarrierTest {
         executorService.awaitTermination(5, TimeUnit.SECONDS);
         Thread.sleep(1000);
         System.out.println(adder.get() + ":" + consumerCount.get());
-        Assert.assertEquals(adder.get(), consumerCount.get());
+        assertEquals(adder.get(), consumerCount.get());
     }
 
 
@@ -62,7 +62,7 @@ public class DataCarrierTest {
         executorService.awaitTermination(5, TimeUnit.SECONDS);
         Thread.sleep(1000);
         System.out.println(adder.get() + ":" + consumerCount.get());
-        Assert.assertEquals(adder.get(), consumerCount.get());
+        assertEquals(adder.get(), consumerCount.get());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class DataCarrierTest {
         executorService.awaitTermination(5, TimeUnit.SECONDS);
         Thread.sleep(1000);
         System.out.println(adder.get() + ":" + consumerCount.get());
-        Assert.assertEquals(adder.get(), consumerCount.get());
+        assertEquals(adder.get(), consumerCount.get());
     }
 
     public static class Data {
