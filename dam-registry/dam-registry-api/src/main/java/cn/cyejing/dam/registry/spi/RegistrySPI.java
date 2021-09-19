@@ -20,6 +20,6 @@ public interface RegistrySPI {
 
     List<KeyValue> get(String key, boolean withPrefix);
 
-    void addWatch(String key, Watch watch,boolean prefix);
+    void addWatch(String key, Watch watch, boolean prefix);
 
 }

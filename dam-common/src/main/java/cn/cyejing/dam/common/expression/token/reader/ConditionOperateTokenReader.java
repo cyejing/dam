@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token.reader;
 
 import cn.cyejing.dam.common.enums.EnumMatch;
@@ -12,21 +11,11 @@ import java.util.*;
 public class ConditionOperateTokenReader implements TokenReader {
 
     private static final String[] ALL;
-    private static final String[] OP_EQUALS = new String[]{
-            "equals", "Equals", "等于", "anyMatch", "AnyMatch", "任意匹配"
-    };
-    private static final String[] OP_ANT_MATCH = new String[]{
-            "AntMatch", "antMatch", "路径匹配"
-    };
-    private static final String[] OP_LIKE_MATCH = new String[]{
-            "likeMatch", "LikeMatch", "模糊匹配", "包含", "contains", "Contains"
-    };
-    private static final String[] OP_IP_MATCH = new String[]{
-            "ipMatch", "IpMatch", "Ip匹配", "地址匹配",
-    };
-    private static final String[] OP_REGEX_MATCH = new String[]{
-            "regexMatch", "RegexMatch", "正则匹配",
-    };
+    private static final String[] OP_EQUALS = new String[]{"equals", "Equals", "等于", "anyMatch", "AnyMatch", "任意匹配"};
+    private static final String[] OP_ANT_MATCH = new String[]{"AntMatch", "antMatch", "路径匹配"};
+    private static final String[] OP_LIKE_MATCH = new String[]{"likeMatch", "LikeMatch", "模糊匹配", "包含", "contains", "Contains"};
+    private static final String[] OP_IP_MATCH = new String[]{"ipMatch", "IpMatch", "Ip匹配", "地址匹配"};
+    private static final String[] OP_REGEX_MATCH = new String[]{"regexMatch", "RegexMatch", "正则匹配"};
 
     private static final Map<String, String[]> MAP = new HashMap<>();
 

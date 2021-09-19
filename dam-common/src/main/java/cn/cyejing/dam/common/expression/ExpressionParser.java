@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression;
 
 import cn.cyejing.dam.common.expression.ast.ASTParser;
@@ -17,7 +16,7 @@ public class ExpressionParser {
             throw new ExpressionException("Expressions cannot be null");
         }
         List<Token> tokens = new TokenParser(expressionStr).process();
-        Node ast = new ASTParser(expressionStr,tokens).process();
+        Node ast = new ASTParser(expressionStr, tokens).process();
         return new DefaultExpressionImpl(expressionStr, ast);
     }
 

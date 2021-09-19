@@ -7,9 +7,9 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 
 public interface Response {
 
-    void setStatus(HttpResponseStatus status);
-
     HttpResponseStatus getStatus();
+
+    void setStatus(HttpResponseStatus status);
 
     void addHeader(CharSequence key, CharSequence val);
 

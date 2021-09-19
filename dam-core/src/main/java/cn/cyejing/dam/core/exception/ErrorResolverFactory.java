@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 @Slf4j
-public  class ErrorResolverFactory {
+public class ErrorResolverFactory {
 
-    private static ErrorResolverFactory INSTANCE = new ErrorResolverFactory();
+    private static final ErrorResolverFactory INSTANCE = new ErrorResolverFactory();
 
     private List<ErrorResolver> errorResolvers = new ArrayList<>();
 

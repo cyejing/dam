@@ -15,11 +15,14 @@ import java.util.function.Consumer;
 @Slf4j
 public class DataCarrier<T> {
 
-    private static final ThreadFactory threadFactory = new DefaultThreadFactory("DataCarrier-Consumer-0", true);
+    private static final ThreadFactory THREAD_FACTORY = new DefaultThreadFactory("DataCarrier-Consumer-0", true);
 
     private final Thread consumerThread;
 
     private final List<Buffer<T>> buffers = new CopyOnWriteArrayList<>();
+    private final int batchSize;
+    private final int consumeCycle; //ms
+    private final int bufferSize;
     private final FastThreadLocal<Buffer<T>> bufferThreadLocal = new FastThreadLocal<Buffer<T>>() {
         @Override
         protected Buffer<T> initialValue() throws Exception {
@@ -29,10 +32,6 @@ public class DataCarrier<T> {
             return buffer;
         }
     };
-
-    private final int batchSize;
-    private final int consumeCycle; //ms
-    private final int bufferSize;
     private final Consumer<List<T>> consumer;
 
     public DataCarrier(int consumeCycle, int bufferSize, int batchSize, Consumer<List<T>> consumer) {
@@ -40,7 +39,7 @@ public class DataCarrier<T> {
         this.bufferSize = bufferSize;
         this.batchSize = batchSize;
         this.consumer = consumer;
-        this.consumerThread = threadFactory.newThread(this::consumeData);
+        this.consumerThread = THREAD_FACTORY.newThread(this::consumeData);
         this.consumerThread.start();
     }
 

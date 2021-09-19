@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression;
 
 
@@ -8,7 +7,7 @@ public interface Expression {
 
     String toStringAST();
 
-    default boolean evaluateBoolean(EvaluationContext evaluationContext){
+    default boolean evaluateBoolean(EvaluationContext evaluationContext) {
         return (Boolean) evaluate(evaluationContext);
     }
 

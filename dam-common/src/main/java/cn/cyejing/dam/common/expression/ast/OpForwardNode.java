@@ -1,10 +1,9 @@
-
 package cn.cyejing.dam.common.expression.ast;
 
 import cn.cyejing.dam.common.expression.EvaluationContext;
 
 
-public class OpForwardNode extends Node{
+public class OpForwardNode extends Node {
 
     private String address;
 

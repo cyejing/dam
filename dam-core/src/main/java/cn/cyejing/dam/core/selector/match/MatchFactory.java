@@ -9,9 +9,8 @@ import java.util.Map;
 
 public class MatchFactory {
 
-    private final Map<EnumMatch, Match> matchOperatorMap = Maps.newHashMap();
-
     private static final cn.cyejing.dam.core.selector.match.MatchFactory INSTANCE = new cn.cyejing.dam.core.selector.match.MatchFactory();
+    private final Map<EnumMatch, Match> matchOperatorMap = Maps.newHashMap();
 
     private MatchFactory() {
         matchOperatorMap.put(EnumMatch.EQUALS, new AnyMatch());
@@ -21,7 +20,7 @@ public class MatchFactory {
         matchOperatorMap.put(EnumMatch.REGEX, new RegularMatch());
     }
 
-    
+
     public static Match getMatch(EnumMatch match) {
         return INSTANCE.matchOperatorMap.get(match);
     }

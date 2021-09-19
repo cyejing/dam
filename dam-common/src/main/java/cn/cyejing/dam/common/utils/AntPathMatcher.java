@@ -11,31 +11,20 @@ import java.util.regex.Pattern;
 
 public class AntPathMatcher {
 
-    private static final String[] EMPTY_STRING_ARRAY = {};
-
-
     public static final String DEFAULT_PATH_SEPARATOR = "/";
-
+    private static final String[] EMPTY_STRING_ARRAY = {};
     private static final int CACHE_TURNOFF_THRESHOLD = 65536;
 
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{[^/]+?}");
 
     private static final char[] WILDCARD_CHARS = {'*', '?', '{'};
-
-
-    private String pathSeparator;
-
-    private PathSeparatorPatternCache pathSeparatorPatternCache;
-
-    private boolean caseSensitive = true;
-
-    private boolean trimTokens = false;
-
-    private volatile Boolean cachePatterns;
-
-    private final Map<String, String[]> tokenizedPatternCache = new ConcurrentHashMap<>(256);
-
     final Map<String, AntPathStringMatcher> stringMatcherCache = new ConcurrentHashMap<>(256);
+    private final Map<String, String[]> tokenizedPatternCache = new ConcurrentHashMap<>(256);
+    private String pathSeparator;
+    private PathSeparatorPatternCache pathSeparatorPatternCache;
+    private boolean caseSensitive = true;
+    private boolean trimTokens = false;
+    private volatile Boolean cachePatterns;
 
 
     public AntPathMatcher() {
@@ -52,7 +41,7 @@ public class AntPathMatcher {
 
 
     public void setPathSeparator(String pathSeparator) {
-        this.pathSeparator = (pathSeparator != null ? pathSeparator : DEFAULT_PATH_SEPARATOR);
+        this.pathSeparator = pathSeparator != null ? pathSeparator : DEFAULT_PATH_SEPARATOR;
         this.pathSeparatorPatternCache = new PathSeparatorPatternCache(this.pathSeparator);
     }
 
@@ -144,7 +133,7 @@ public class AntPathMatcher {
         if (pathIdxStart > pathIdxEnd) {
             // Path is exhausted, only match if rest of pattern is * or **'s
             if (pattIdxStart > pattIdxEnd) {
-                return (pattern.endsWith(this.pathSeparator) == path.endsWith(this.pathSeparator));
+                return pattern.endsWith(this.pathSeparator) == path.endsWith(this.pathSeparator);
             }
             if (!fullMatch) {
                 return true;
@@ -203,8 +192,8 @@ public class AntPathMatcher {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - pattIdxStart - 1);
-            int strLength = (pathIdxEnd - pathIdxStart + 1);
+            int patLength = patIdxTmp - pattIdxStart - 1;
+            int strLength = pathIdxEnd - pathIdxStart + 1;
             int foundIdx = -1;
 
             strLoop:
@@ -245,7 +234,7 @@ public class AntPathMatcher {
                 pos += skipped;
                 skipped = skipSegment(path, pos, pattDir);
                 if (skipped < pattDir.length()) {
-                    return (skipped > 0 || (pattDir.length() > 0 && isWildcardChar(pattDir.charAt(0))));
+                    return skipped > 0 || (pattDir.length() > 0 && isWildcardChar(pattDir.charAt(0)));
                 }
                 pos += skipped;
             }
@@ -386,7 +375,7 @@ public class AntPathMatcher {
             return pattern1;
         }
 
-        boolean pattern1ContainsUriVar = (pattern1.indexOf('{') != -1);
+        boolean pattern1ContainsUriVar = pattern1.indexOf('{') != -1;
         if (!pattern1.equals(pattern2) && !pattern1ContainsUriVar && match(pattern1, pattern2)) {
             // /* + /hotel -> /hotel ; "/*.*" + "/*.html" -> /*.html
             // However /user + /user -> /usr/user ; /{foo} + /bar -> /{foo}/bar
@@ -413,14 +402,14 @@ public class AntPathMatcher {
 
         String ext1 = pattern1.substring(starDotPos1 + 1);
         int dotPos2 = pattern2.indexOf('.');
-        String file2 = (dotPos2 == -1 ? pattern2 : pattern2.substring(0, dotPos2));
-        String ext2 = (dotPos2 == -1 ? "" : pattern2.substring(dotPos2));
-        boolean ext1All = (ext1.equals(".*") || ext1.isEmpty());
-        boolean ext2All = (ext2.equals(".*") || ext2.isEmpty());
+        String file2 = dotPos2 == -1 ? pattern2 : pattern2.substring(0, dotPos2);
+        String ext2 = dotPos2 == -1 ? "" : pattern2.substring(dotPos2);
+        boolean ext1All = ext1.equals(".*") || ext1.isEmpty();
+        boolean ext2All = ext2.equals(".*") || ext2.isEmpty();
         if (!ext1All && !ext2All) {
             throw new IllegalArgumentException("Cannot combine patterns: " + pattern1 + " vs " + pattern2);
         }
-        String ext = (ext1All ? ext2 : ext1);
+        String ext = ext1All ? ext2 : ext1;
         return file2 + ext;
     }
 
@@ -441,6 +430,25 @@ public class AntPathMatcher {
         return new AntPatternComparator(path);
     }
 
+    public String[] tokenizeToStringArray(String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens) {
+
+        if (str == null) {
+            return EMPTY_STRING_ARRAY;
+        }
+
+        StringTokenizer st = new StringTokenizer(str, delimiters);
+        List<String> tokens = new ArrayList<>();
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            if (trimTokens) {
+                token = token.trim();
+            }
+            if (!ignoreEmptyTokens || token.length() > 0) {
+                tokens.add(token);
+            }
+        }
+        return !CollectionUtils.isEmpty(tokens) ? tokens.toArray(EMPTY_STRING_ARRAY) : EMPTY_STRING_ARRAY;
+    }
 
     protected static class AntPathStringMatcher {
 
@@ -484,8 +492,8 @@ public class AntPathMatcher {
                 end = matcher.end();
             }
             patternBuilder.append(quote(pattern, end, pattern.length()));
-            this.pattern = (caseSensitive ? Pattern.compile(patternBuilder.toString()) :
-                    Pattern.compile(patternBuilder.toString(), Pattern.CASE_INSENSITIVE));
+            this.pattern = caseSensitive ? Pattern.compile(patternBuilder.toString()) :
+                    Pattern.compile(patternBuilder.toString(), Pattern.CASE_INSENSITIVE);
         }
 
         private String quote(String s, int start, int end) {
@@ -519,7 +527,6 @@ public class AntPathMatcher {
             }
         }
     }
-
 
     protected static class AntPatternComparator implements Comparator<String> {
 
@@ -610,7 +617,7 @@ public class AntPathMatcher {
                     this.prefixPattern = !this.catchAllPattern && this.pattern.endsWith("/**");
                 }
                 if (this.uriVars == 0) {
-                    this.length = (this.pattern != null ? this.pattern.length() : 0);
+                    this.length = this.pattern != null ? this.pattern.length() : 0;
                 }
             }
 
@@ -651,7 +658,7 @@ public class AntPathMatcher {
             }
 
             public boolean isLeastSpecific() {
-                return (this.pattern == null || this.catchAllPattern);
+                return this.pattern == null || this.catchAllPattern;
             }
 
             public boolean isPrefixPattern() {
@@ -665,14 +672,13 @@ public class AntPathMatcher {
 
             public int getLength() {
                 if (this.length == null) {
-                    this.length = (this.pattern != null ?
-                            VARIABLE_PATTERN.matcher(this.pattern).replaceAll("#").length() : 0);
+                    this.length = this.pattern != null ?
+                            VARIABLE_PATTERN.matcher(this.pattern).replaceAll("#").length() : 0;
                 }
                 return this.length;
             }
         }
     }
-
 
     private static class PathSeparatorPatternCache {
 
@@ -692,25 +698,5 @@ public class AntPathMatcher {
         public String getEndsOnDoubleWildCard() {
             return this.endsOnDoubleWildCard;
         }
-    }
-
-    public String[] tokenizeToStringArray(String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens) {
-
-        if (str == null) {
-            return EMPTY_STRING_ARRAY;
-        }
-
-        StringTokenizer st = new StringTokenizer(str, delimiters);
-        List<String> tokens = new ArrayList<>();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if (trimTokens) {
-                token = token.trim();
-            }
-            if (!ignoreEmptyTokens || token.length() > 0) {
-                tokens.add(token);
-            }
-        }
-        return (!CollectionUtils.isEmpty(tokens) ? tokens.toArray(EMPTY_STRING_ARRAY) : EMPTY_STRING_ARRAY);
     }
 }

@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token;
 
 import java.util.ArrayList;
@@ -8,12 +7,9 @@ import java.util.List;
 public class TokenStream {
 
     private final String expressionString;
-
-    private int pos;
-
     private final int max;
-
     private final List<Token> tokens = new ArrayList<>();
+    private int pos;
 
     public TokenStream(String inputData) {
         this.expressionString = inputData + "\0";
@@ -66,7 +62,7 @@ public class TokenStream {
     }
 
 
-    public void addToken(TokenType type,String data) {
+    public void addToken(TokenType type, String data) {
         addToken(type, null, data);
     }
 

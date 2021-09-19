@@ -1,10 +1,9 @@
-
 package cn.cyejing.dam.common.expression.ast;
 
 import cn.cyejing.dam.common.expression.EvaluationContext;
 
 
-public class CombineNode extends Node{
+public class CombineNode extends Node {
     public CombineNode(Node... operands) {
         super(operands);
     }
@@ -19,7 +18,6 @@ public class CombineNode extends Node{
         }
         return null;
     }
-
 
 
     @Override

@@ -1,10 +1,9 @@
-
 package cn.cyejing.dam.core.selector.match;
 
 import cn.cyejing.dam.common.utils.AntPathMatcher;
 
 
-public class AntMatch implements Match{
+public class AntMatch implements Match {
 
     private final AntPathMatcher matcher = new AntPathMatcher();
 

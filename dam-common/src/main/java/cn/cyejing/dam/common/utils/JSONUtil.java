@@ -13,23 +13,23 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.util.List;
 
 public class JSONUtil {
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final JsonFactory jasonFactory = mapper.getFactory();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final JsonFactory JASON_FACTORY = MAPPER.getFactory();
 
     static {
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false)
                 .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-        mapper.addMixIn(Object.class, ExcludeFilter.class);
-        mapper.setFilterProvider(new SimpleFilterProvider().addFilter("excludeFilter", SimpleBeanPropertyFilter.serializeAllExcept("class")));
+        MAPPER.addMixIn(Object.class, ExcludeFilter.class);
+        MAPPER.setFilterProvider(new SimpleFilterProvider().addFilter("excludeFilter", SimpleBeanPropertyFilter.serializeAllExcept("class")));
     }
 
     public static String toJSONString(Object obj) {
         try {
-            return mapper.writeValueAsString(obj);
+            return MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException("object format to json error:" + obj, e);
         }
@@ -37,7 +37,7 @@ public class JSONUtil {
 
     public static <T> T parse(String str, Class<T> clz) {
         try {
-            return mapper.readValue(str == null ? "{}" : str, clz);
+            return MAPPER.readValue(str == null ? "{}" : str, clz);
         } catch (Exception e) {
             throw new RuntimeException("json parse to object [" + clz + "] error:" + str, e);
         }
@@ -45,7 +45,7 @@ public class JSONUtil {
 
     public static <T> T parse(String str, JavaType javaType) {
         try {
-            return mapper.readValue(str, javaType);
+            return MAPPER.readValue(str, javaType);
         } catch (Exception e) {
             throw new RuntimeException("json parse to object [" + str + "] error:" + str, e);
         }
@@ -56,11 +56,11 @@ public class JSONUtil {
     }
 
     public static JavaType getCollectionType(Class<?> collectionClass, Class<?>... elementClasses) {
-        return mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
+        return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementClasses);
     }
 
     public static ObjectNode createObjectNode() {
-        return mapper.createObjectNode();
+        return MAPPER.createObjectNode();
     }
 
     @JsonFilter("excludeFilter")

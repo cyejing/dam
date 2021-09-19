@@ -9,9 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public class DefaultFilterChain implements FilterChain {
 
-    private FilteringHandler handler;
     private final InternalExchange exchange;
     private final Filter<Object>[] filters;
+    private FilteringHandler handler;
     private int index = 0;
 
     public DefaultFilterChain(FilteringHandler handler, InternalExchange exchange, Filter<Object>[] filters) {

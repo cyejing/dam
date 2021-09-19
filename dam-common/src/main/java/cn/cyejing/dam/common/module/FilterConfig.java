@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.module;
 
 import lombok.Data;

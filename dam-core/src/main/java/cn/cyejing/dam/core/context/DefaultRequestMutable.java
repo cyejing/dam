@@ -6,7 +6,7 @@ import org.asynchttpclient.RequestBuilder;
 
 import java.util.Objects;
 
-public class DefaultRequestMutable implements RequestMutable{
+public class DefaultRequestMutable implements RequestMutable {
 
     private RequestBuilder requestBuilder;
     private String scheme;

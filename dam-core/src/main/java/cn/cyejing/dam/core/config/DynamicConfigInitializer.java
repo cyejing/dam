@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.config;
 
 import cn.cyejing.dam.common.module.DefaultDynamicConfig;

@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.selector;
 
 import cn.cyejing.dam.common.enums.EnumType;
@@ -11,9 +10,8 @@ import java.util.Map;
 
 public class SelectorFactory {
 
-    private final Map<EnumType, HttpSelector> httpSelectorMap = Maps.newHashMap();
-
     private static final SelectorFactory INSTANCE = new SelectorFactory();
+    private final Map<EnumType, HttpSelector> httpSelectorMap = Maps.newHashMap();
 
     private SelectorFactory() {
         httpSelectorMap.put(EnumType.HEADER, new HeaderSelector());

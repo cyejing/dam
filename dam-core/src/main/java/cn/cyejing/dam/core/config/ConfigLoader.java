@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.config;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +22,11 @@ public class ConfigLoader {
 
     private Config config;
 
-    public static ConfigLoader getInstance() {
-        return INSTANCE;
+    private ConfigLoader() {
     }
 
-    private ConfigLoader() {
+    public static ConfigLoader getInstance() {
+        return INSTANCE;
     }
 
     public static Config getConfig() {
@@ -103,7 +102,7 @@ public class ConfigLoader {
 
         if (StringUtils.isNotEmpty(config.getRegistry())) {
             DynamicConfigInitializer.getInstance().watchRegistry(config.getNamespace(), config.getRegistry());
-        }else{
+        } else {
             DynamicConfigInitializer.getInstance().loadFile(config.getRoutePath());
         }
         return this.config;

@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.utils;
 
 import java.util.Collection;
@@ -34,8 +33,8 @@ public class Assert {
         }
     }
 
-    private static String nullSafeGet( Supplier<String> messageSupplier) {
-        return messageSupplier != null ? (String)messageSupplier.get() : null;
+    private static String nullSafeGet(Supplier<String> messageSupplier) {
+        return messageSupplier != null ? (String) messageSupplier.get() : null;
     }
 
     public static void isTrue(boolean expression, String message) {

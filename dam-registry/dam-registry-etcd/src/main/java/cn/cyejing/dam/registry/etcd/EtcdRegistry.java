@@ -77,7 +77,7 @@ public class EtcdRegistry implements RegistrySPI {
     }
 
     @Override
-    public void delete(String key,boolean withPrefix) {
+    public void delete(String key, boolean withPrefix) {
         try {
             ByteSequence etcdKey = ByteSequence.from(wrapNamespace(key), Charset.defaultCharset());
             DeleteOption.Builder deleteOption = DeleteOption.newBuilder().isPrefix(withPrefix);
@@ -89,7 +89,7 @@ public class EtcdRegistry implements RegistrySPI {
 
 
     @Override
-    public List<KeyValue> get(String key,boolean withPrefix) {
+    public List<KeyValue> get(String key, boolean withPrefix) {
         try {
             ByteSequence etcdKey = ByteSequence.from(wrapNamespace(key), Charset.defaultCharset());
             GetOption.Builder getOption = GetOption.newBuilder().isPrefix(withPrefix);
@@ -108,7 +108,7 @@ public class EtcdRegistry implements RegistrySPI {
     }
 
     @Override
-    public void addWatch(String watchKey, Watch watch,boolean withPrefix) {
+    public void addWatch(String watchKey, Watch watch, boolean withPrefix) {
         ByteSequence etcdKey = ByteSequence.from(watchKey, Charset.defaultCharset());
         WatchOption.Builder watchOption = WatchOption.newBuilder().isPrefix(withPrefix);
         client.getWatchClient().watch(etcdKey, watchOption.build()

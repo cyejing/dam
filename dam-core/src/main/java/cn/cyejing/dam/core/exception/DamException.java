@@ -3,7 +3,7 @@ package cn.cyejing.dam.core.exception;
 
 import lombok.Getter;
 
-public class DamException extends RuntimeException{
+public class DamException extends RuntimeException {
 
     private static final long serialVersionUID = -5658789202509039759L;
 

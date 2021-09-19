@@ -41,15 +41,14 @@ public class DefaultResponse implements Response {
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
     }
 
+    @Override
+    public HttpResponseStatus getStatus() {
+        return response.status();
+    }
 
     @Override
     public void setStatus(HttpResponseStatus status) {
         response.setStatus(status);
-    }
-
-    @Override
-    public HttpResponseStatus getStatus() {
-        return response.status();
     }
 
     @Override

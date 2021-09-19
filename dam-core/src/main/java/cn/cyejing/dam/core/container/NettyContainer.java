@@ -18,13 +18,11 @@ import java.io.IOException;
 @Slf4j
 public class NettyContainer {
 
+    private final Config config;
     private NettyHttpServer nettyHttpServer;
     private AsyncHttpClient asyncHttpClient;
-
     private EventLoopGroup eventLoopGroupBoss;
     private EventLoopGroup eventLoopGroupWork;
-
-    private final Config config;
 
     public NettyContainer(Config config) {
         this.config = config;

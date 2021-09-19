@@ -9,10 +9,9 @@ import java.util.List;
 @Data
 public class RouteConfig {
 
+    private List<Route> routes;
+    private List<Instance> instances;
+
     public RouteConfig() {
     }
-
-    private List<Route> routes;
-
-    private List<Instance> instances;
 }

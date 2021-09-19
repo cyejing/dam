@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression;
 
 import cn.cyejing.dam.common.module.Condition;
@@ -6,8 +5,7 @@ import cn.cyejing.dam.common.module.Condition;
 import java.util.function.Predicate;
 
 
-public class
-EvaluationContext {
+public class EvaluationContext {
 
     private Predicate<Condition> conditionPredicate;
 

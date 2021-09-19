@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.selector;
 
 import cn.cyejing.dam.common.module.Condition;
@@ -12,7 +11,7 @@ public class HeaderSelector extends AbstractHttpSelector {
 
     @Override
     public boolean doTest(Request request, Condition condition, Match matchMatch) {
-        return matchMatch.match(condition.getValue(),request.getHeaders().get(condition.getName()));
+        return matchMatch.match(condition.getValue(), request.getHeaders().get(condition.getName()));
     }
 
     @Override

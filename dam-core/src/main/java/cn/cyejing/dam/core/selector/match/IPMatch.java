@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.selector.match;
 
 import cn.cyejing.dam.common.utils.Assert;
@@ -10,7 +9,7 @@ import java.net.UnknownHostException;
 
 
 @Slf4j
-public class IPMatch implements Match{
+public class IPMatch implements Match {
 
     @Override
     public boolean match(String rule, String val) {
@@ -27,8 +26,7 @@ public class IPMatch implements Match{
             String[] addressAndMask = StringUtils.split(rule, "/");
             rule = addressAndMask[0];
             nMaskBits = Integer.parseInt(addressAndMask[1]);
-        }
-        else {
+        } else {
             nMaskBits = -1;
         }
         requiredAddress = parseAddress(rule);
@@ -74,8 +72,7 @@ public class IPMatch implements Match{
     private InetAddress parseAddress(String address) {
         try {
             return InetAddress.getByName(address);
-        }
-        catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             log.warn("Failed to parse address:{}", address);
             throw new RuntimeException(e);
         }

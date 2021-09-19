@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token.reader;
 
 import cn.cyejing.dam.common.enums.EnumType;
@@ -12,33 +11,15 @@ import java.util.*;
 public class ConditionTypeTokenReader implements TokenReader {
 
     private static final String[] ALL;
-    private static final String[] TYPE_PATH = new String[]{
-            "PATH", "Path", "path", "路径"
-    };
-    private static final String[] TYPE_HEADER = new String[]{
-            "HEADER", "Header", "header", "请求头", "头"
-    };
-    private static final String[] TYPE_HOST = new String[]{
-            "HOST", "Host", "host", "域名"
-    };
-    private static final String[] TYPE_METHOD = new String[]{
-            "METHOD", "Method", "method", "方法"
-    };
-    private static final String[] TYPE_IP = new String[]{
-            "ClientIP", "ClientIp", "客户端地址", "客户端Ip", "客户端IP"
-    };
-    private static final String[] TYPE_COOKIE = new String[]{
-            "COOKIE", "Cookie", "cookie", "会话"
-    };
-    private static final String[] TYPE_QUERY = new String[]{
-            "QUERY", "Query", "query", "参数"
-    };
-    private static final String[] TYPE_BODY = new String[]{
-            "BODY", "Body", "body", "FORM", "Form", "form", "表单"
-    };
-    private static final String[] TYPE_CONTEXT = new String[]{
-            "CONTEXT", "Context", "context", "上下文"
-    };
+    private static final String[] TYPE_PATH = new String[]{"PATH", "Path", "path", "路径"};
+    private static final String[] TYPE_HEADER = new String[]{"HEADER", "Header", "header", "请求头", "头"};
+    private static final String[] TYPE_HOST = new String[]{"HOST", "Host", "host", "域名"};
+    private static final String[] TYPE_METHOD = new String[]{"METHOD", "Method", "method", "方法"};
+    private static final String[] TYPE_IP = new String[]{"ClientIP", "ClientIp", "客户端地址", "客户端Ip", "客户端IP"};
+    private static final String[] TYPE_COOKIE = new String[]{"COOKIE", "Cookie", "cookie", "会话"};
+    private static final String[] TYPE_QUERY = new String[]{"QUERY", "Query", "query", "参数"};
+    private static final String[] TYPE_BODY = new String[]{"BODY", "Body", "body", "FORM", "Form", "form", "表单"};
+    private static final String[] TYPE_CONTEXT = new String[]{"CONTEXT", "Context", "context", "上下文"};
 
 
     private static final Map<String, String[]> MAP = new HashMap<>();
@@ -96,7 +77,7 @@ public class ConditionTypeTokenReader implements TokenReader {
     }
 
 
-    private boolean maybeToken(TokenStream tokenStream,String[] strings, String key) {
+    private boolean maybeToken(TokenStream tokenStream, String[] strings, String key) {
         String type;
         if ((type = tokenStream.peekString(strings)) != null) {
             tokenStream.addToken(MAP_TOKEN_TYPE.get(key), key, type);

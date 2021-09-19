@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.selector;
 
 import cn.cyejing.dam.common.module.Condition;

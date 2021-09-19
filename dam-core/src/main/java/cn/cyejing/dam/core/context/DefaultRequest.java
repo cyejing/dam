@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.context;
 
 import io.netty.handler.codec.http.*;
@@ -55,7 +54,7 @@ public class DefaultRequest implements Request {
 
     private Map<String, List<String>> postParameters;
 
-    public DefaultRequest(FullHttpRequest request,InetSocketAddress remoteAddress) {
+    public DefaultRequest(FullHttpRequest request, InetSocketAddress remoteAddress) {
         this.fullHttpRequest = request;
         this.beginTime = System.currentTimeMillis();
         this.method = request.method();
@@ -149,7 +148,6 @@ public class DefaultRequest implements Request {
     public boolean isJsonPost() {
         return HttpMethod.POST.equals(method) && contentType.startsWith(HttpHeaderValues.APPLICATION_JSON.toString());
     }
-
 
 
     private String getClientIp(InetSocketAddress remoteAddress, FullHttpRequest request) {

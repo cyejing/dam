@@ -4,13 +4,13 @@ import org.asynchttpclient.AsyncHttpClient;
 
 public abstract class NettyClient {
 
-    private static AsyncHttpClient INSTANCE;
-
-    static void setClient(AsyncHttpClient client) {
-        INSTANCE = client;
-    }
+    private static AsyncHttpClient instance;
 
     public static AsyncHttpClient getClient() {
-        return INSTANCE;
+        return instance;
+    }
+
+    static void setClient(AsyncHttpClient client) {
+        instance = client;
     }
 }

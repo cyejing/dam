@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.selector;
 
 import cn.cyejing.dam.common.enums.EnumOperator;
@@ -11,16 +10,14 @@ import java.util.function.Predicate;
 
 public class PredicateSelector {
 
+    @Getter
+    private final EnumOperator operator;
     private HttpSelector httpSelector;
     private Request request;
     private Condition condition;
-
     private Predicate<?> predicate;
-    @Getter
-    private final EnumOperator operator;
 
 
-    
     public PredicateSelector(Request request, Condition condition) {
         this.httpSelector = SelectorFactory.getHttpSelector(condition.getType());
         this.request = request;
@@ -28,14 +25,14 @@ public class PredicateSelector {
         this.operator = condition.getOperator();
     }
 
-    
+
     public PredicateSelector(Predicate<?> predicate, EnumOperator operator) {
         this.predicate = predicate;
         this.operator = operator;
 
     }
 
-    
+
     public boolean test() {
         if (predicate != null) {
             return predicate.test(null);
@@ -45,8 +42,6 @@ public class PredicateSelector {
     }
 
 
-
-    
     public PredicateSelector operator(PredicateSelector predicateSelector, EnumOperator operator) {
         switch (operator) {
             case AND:

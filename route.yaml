@@ -9,4 +9,4 @@ routes:
     filterConfigs:
       - name: echo
         param: "{\"oldValue\":\"/webtest\",\"newValue\":\"\",\"loggable\":false}"
-instances: []
+instances: [ ]

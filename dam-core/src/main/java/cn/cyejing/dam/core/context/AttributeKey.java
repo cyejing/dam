@@ -8,10 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-
 public abstract class AttributeKey<T> {
-
-    private static final Map<String, AttributeKey<?>> nameMap = new HashMap<>();
 
     public static final AttributeKey<String> CONSISTENT_HASH_KEY = create(String.class);
     public static final AttributeKey<EnumLoadBalance> LOAD_BALANCE_ENUM_KEY = create(EnumLoadBalance.class);
@@ -23,28 +20,25 @@ public abstract class AttributeKey<T> {
     public static final AttributeKey<Set<String>> MATCH_ADDRESS = create(Set.class);
     public static final AttributeKey<Instance> LOAD_INSTANCE = create(Instance.class);
     public static final AttributeKey<String> MATCH_TAGS = create(String.class);
+    private static final Map<String, AttributeKey<?>> NAME_MAP = new HashMap<>();
 
     static {
-        nameMap.put("authId", AUTH_ID_KEY);
-        nameMap.put("clientId", CLIENT_ID_KEY);
-        nameMap.put("serviceName", SERVICE_NAME_KEY);
+        NAME_MAP.put("authId", AUTH_ID_KEY);
+        NAME_MAP.put("clientId", CLIENT_ID_KEY);
+        NAME_MAP.put("serviceName", SERVICE_NAME_KEY);
     }
 
 
-    
     public static AttributeKey<?> valueOf(String name) {
-        return nameMap.get(name);
+        return NAME_MAP.get(name);
     }
 
-    
-    public abstract T cast(Object value);
-
-    
-	public static <T> AttributeKey<T> create(final Class<? super T> valueClass) {
+    public static <T> AttributeKey<T> create(final Class<? super T> valueClass) {
         return new SimpleAttributeKey(valueClass);
     }
 
-    
+    public abstract T cast(Object value);
+
     public static class SimpleAttributeKey<T> extends AttributeKey<T> {
         private final Class<T> valueClass;
 

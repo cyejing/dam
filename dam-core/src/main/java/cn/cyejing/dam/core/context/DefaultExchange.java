@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.core.context;
 
 import cn.cyejing.dam.common.constants.Protocol;
@@ -25,24 +24,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class DefaultExchange implements Exchange,InternalExchange {
-
-    private ChannelHandlerContext ctx;
-
-    private FullHttpRequest fullHttpRequest;
-
-    private boolean keepAlive;
-
-    private boolean completed;
-
-    private boolean occurError;
-
-    private Throwable error;
+public class DefaultExchange implements Exchange, InternalExchange {
 
     private final Map<AttributeKey<?>, Object> attributes = new HashMap<>();
-
     private final AtomicBoolean released = new AtomicBoolean(false);
-
+    private ChannelHandlerContext ctx;
+    private FullHttpRequest fullHttpRequest;
+    private boolean keepAlive;
+    private boolean completed;
+    private boolean occurError;
+    private Throwable error;
     private Request request;
 
     private RequestMutable requestMutable;

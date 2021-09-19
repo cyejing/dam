@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token;
 
 import cn.cyejing.dam.common.expression.ExpressionException;

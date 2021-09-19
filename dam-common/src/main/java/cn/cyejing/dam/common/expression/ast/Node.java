@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.ast;
 
 import cn.cyejing.dam.common.expression.EvaluationContext;
@@ -7,7 +6,7 @@ import cn.cyejing.dam.common.utils.Assert;
 
 public abstract class Node {
 
-    private static Node[] NO_CHILDREN = new Node[0];
+    private static final Node[] NO_CHILDREN = new Node[0];
 
     protected Node[] children = Node.NO_CHILDREN;
 

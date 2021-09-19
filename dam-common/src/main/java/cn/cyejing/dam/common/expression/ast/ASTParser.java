@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.ast;
 
 import cn.cyejing.dam.common.expression.ExpressionException;
@@ -39,7 +38,7 @@ public class ASTParser {
         return node;
     }
 
-    private Node parseStr(){
+    private Node parseStr() {
         Node node = parseOrOp();
         if (peekToken(TokenType.FORWARD)) {
             List<Node> nodes = new ArrayList<>();
@@ -159,7 +158,7 @@ public class ASTParser {
         }
     }
 
-    private void checkNode(Token t,Node node) {
+    private void checkNode(Token t, Node node) {
         if (node == null) {
             throw newParseException(t, "");
         }

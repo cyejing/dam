@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token;
 
 
@@ -34,27 +33,24 @@ public enum TokenType {
 
     FORWARD("=>"),
 
-    SEMICOLON(";")
+    SEMICOLON(";");
 
-    ;
-
-    private String tokenStr;
     private final boolean hasPayload;
+    private String tokenStr;
 
 
     TokenType(String tokenStr) {
         this.tokenStr = tokenStr;
-        this.hasPayload = (tokenStr.length() != 0);
-    }
-
-    public String getTokenStr() {
-        return tokenStr;
+        this.hasPayload = tokenStr.length() != 0;
     }
 
     TokenType() {
         this("");
     }
 
+    public String getTokenStr() {
+        return tokenStr;
+    }
 
     @Override
     public String toString() {

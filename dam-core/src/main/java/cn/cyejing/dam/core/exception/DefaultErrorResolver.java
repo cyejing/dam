@@ -13,11 +13,14 @@ public class DefaultErrorResolver implements ErrorResolver {
         if (t instanceof DamException) {
             ErrorCode errorCode = ((DamException) t).getErrorCode();
             switch (errorCode) {
-                case NOT_FOUND: return buildResponse(HttpResponseStatus.NOT_FOUND, errorCode, "not found route");
-                case FILTER_TAIL: return buildResponse(HttpResponseStatus.NOT_EXTENDED, errorCode, "No more filters");
-                case INTERNAL_SERVER_ERROR: return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, errorCode, "internal server error");
+                case NOT_FOUND:
+                    return buildResponse(HttpResponseStatus.NOT_FOUND, errorCode, "not found route");
+                case FILTER_TAIL:
+                    return buildResponse(HttpResponseStatus.NOT_EXTENDED, errorCode, "No more filters");
+                case INTERNAL_SERVER_ERROR:
+                    return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, errorCode, "internal server error");
             }
-        }else{
+        } else {
             return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_SERVER_ERROR, "internal server error");
         }
         return null;

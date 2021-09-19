@@ -1,4 +1,3 @@
-
 package cn.cyejing.dam.common.expression.token.reader;
 
 import cn.cyejing.dam.common.expression.token.TokenReader;
@@ -10,7 +9,7 @@ public class BooleanTypeTokenReader implements TokenReader {
 
     @Override
     public boolean check(TokenStream tokenStream) {
-        return tokenStream.peekString("true", "false","真","假") != null;
+        return tokenStream.peekString("true", "false", "真", "假") != null;
     }
 
     @Override

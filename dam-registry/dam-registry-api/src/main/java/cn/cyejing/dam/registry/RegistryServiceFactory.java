@@ -9,10 +9,9 @@ import java.util.stream.StreamSupport;
 
 public class RegistryServiceFactory {
 
+    private static final RegistryServiceFactory INSTANCE = new RegistryServiceFactory();
     private RegistryService registryService;
     private RegistrySPI registrySPI;
-
-    private static final RegistryServiceFactory INSTANCE = new RegistryServiceFactory();
 
 
     private RegistryServiceFactory() {

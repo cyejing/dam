@@ -39,8 +39,8 @@ public class TokenParserTest {
     @Test
     public void testForward() {
         List<Token> process = new TokenParser("ClientIp.AnyMatch('127.0.0.1') => '192.168.1.1'").process();
-        assertEquals(process.get(0).getData(),"ClientIp");
-        assertEquals(process.get(0).getType(),TokenType.CONDITION_TYPE);
+        assertEquals(process.get(0).getData(), "ClientIp");
+        assertEquals(process.get(0).getType(), TokenType.CONDITION_TYPE);
     }
 
 }

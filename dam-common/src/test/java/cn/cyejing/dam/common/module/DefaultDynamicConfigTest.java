@@ -15,7 +15,7 @@ public class DefaultDynamicConfigTest {
         route.setName("foo1");
         route.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1",DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
 
         Route route1 = new Route();
         route1.setServiceName("foo");
@@ -23,7 +23,7 @@ public class DefaultDynamicConfigTest {
         route1.setName("foo2");
         route1.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route1);
-        assertEquals("foo2",DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals("foo2", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class DefaultDynamicConfigTest {
         route.setName("foo1");
         route.setOrder(1);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1",DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
 
         Route route1 = new Route();
         route1.setServiceName("foo");
@@ -50,7 +50,6 @@ public class DefaultDynamicConfigTest {
     }
 
 
-
     @Test
     public void testAddDiffOrder() {
         DefaultDynamicConfig.getInstance().clear();
@@ -61,7 +60,7 @@ public class DefaultDynamicConfigTest {
         route.setOrder(1);
         route.setDefaultRoute(true);
         DefaultDynamicConfig.getInstance().addRoute(route);
-        assertEquals("foo1",DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals("foo1", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
 
         Route route1 = new Route();
         route1.setServiceName("foo");
@@ -72,8 +71,8 @@ public class DefaultDynamicConfigTest {
         DefaultDynamicConfig.getInstance().addRoute(route1);
         assertEquals(1, DefaultDynamicConfig.getInstance().getRoutes("foo").size());
         assertEquals(1, DefaultDynamicConfig.getInstance().getDefaultRoutes().size());
-        assertEquals("foo2",DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
-        assertEquals("foo2",DefaultDynamicConfig.getInstance().getDefaultRoutes().stream().findFirst().get().getName());
+        assertEquals("foo2", DefaultDynamicConfig.getInstance().getRoutes("foo").first().getName());
+        assertEquals("foo2", DefaultDynamicConfig.getInstance().getDefaultRoutes().stream().findFirst().get().getName());
     }
 
     @Test
