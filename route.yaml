@@ -6,7 +6,4 @@ routes:
     defaultRoute: true
     protocol: http
     expressionStr: Path.AntMatch('/**')
-    filterConfigs:
-      - name: echo
-        param: "{\"oldValue\":\"/webtest\",\"newValue\":\"\",\"loggable\":false}"
 instances: [ ]

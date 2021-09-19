@@ -42,6 +42,7 @@ public class NettyHttpServer {
     }
 
     public void start(int port) {
+        NettyHttpServerHandler nettyHttpServerHandler = new NettyHttpServerHandler();
         ServerBootstrap childHandler =
                 this.serverBootstrap.group(eventLoopGroupBoss, eventLoopGroupWork)
                         .channel(useEPool ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
@@ -60,7 +61,7 @@ public class NettyHttpServer {
                                         new HttpServerCodec(),
                                         new HttpObjectAggregator(config.getMaxContentLength()),
                                         new HttpServerExpectContinueHandler(),
-                                        new NettyHttpServerHandler()
+                                        nettyHttpServerHandler
                                 );
                             }
                         });

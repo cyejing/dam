@@ -46,7 +46,6 @@ public class ConditionTypeTokenReader implements TokenReader {
         MAP.put(EnumType.COOKIE.name(), TYPE_COOKIE);
         MAP.put(EnumType.QUERY.name(), TYPE_QUERY);
         MAP.put(EnumType.BODY.name(), TYPE_BODY);
-        MAP.put(EnumType.CONTEXT.name(), TYPE_CONTEXT);
 
 
         MAP_TOKEN_TYPE.put(EnumType.PATH.name(), TokenType.CONDITION_TYPE);
@@ -57,7 +56,6 @@ public class ConditionTypeTokenReader implements TokenReader {
         MAP_TOKEN_TYPE.put(EnumType.COOKIE.name(), TokenType.CONDITION_TYPE_NAME);
         MAP_TOKEN_TYPE.put(EnumType.QUERY.name(), TokenType.CONDITION_TYPE_NAME);
         MAP_TOKEN_TYPE.put(EnumType.BODY.name(), TokenType.CONDITION_TYPE_NAME);
-        MAP_TOKEN_TYPE.put(EnumType.CONTEXT.name(), TokenType.CONDITION_TYPE_NAME);
 
     }
 

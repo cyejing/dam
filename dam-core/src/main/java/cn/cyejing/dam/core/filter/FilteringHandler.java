@@ -17,11 +17,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FilteringHandler {
 
+    private static final FilteringHandler INSTANCE = new FilteringHandler();
+
     private final List<Filter<?>> globalFilters = new ArrayList<>();
     private final List<Filter<?>> filters = new ArrayList<>();
     private final Map<String, Filter<?>> filterMap;
 
-    public FilteringHandler() {
+    public static FilteringHandler getInstance() {
+        return INSTANCE;
+    }
+
+    private FilteringHandler() {
         ServiceLoader<Filter> serviceloader = ServiceLoader.load(Filter.class);
         for (Filter<?> filter : serviceloader) {
             if (filter.isGlobal()) {
