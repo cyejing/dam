@@ -58,7 +58,7 @@ public class InstanceServiceImpl extends AbstractService implements InstanceAPI 
                 log.info("watch instance updatekey: {}, value: {}", keyValue.getKey(), keyValue.getValue());
                 for (NotifyListener<Instance> listener : instanceListener) {
                     try {
-                        Instance instance = JSONUtil.parse(keyValue.getValue(), Instance.class);
+                        Instance instance = JSONUtil.readValue(keyValue.getValue(), Instance.class);
                         listener.put(instance);
                     } catch (Exception e) {
                         log.error("resolve instance error", e);
@@ -71,7 +71,7 @@ public class InstanceServiceImpl extends AbstractService implements InstanceAPI 
                 log.info("watch instance delete key: {}, value: {}", keyValue.getKey(), keyValue.getValue());
                 for (NotifyListener<Instance> listener : instanceListener) {
                     try {
-                        Instance instance = JSONUtil.parse(keyValue.getValue(), Instance.class);
+                        Instance instance = JSONUtil.readValue(keyValue.getValue(), Instance.class);
                         listener.delete(instance);
                     } catch (Exception e) {
                         log.error("resolve instance error", e);

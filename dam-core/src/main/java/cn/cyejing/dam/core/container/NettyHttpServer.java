@@ -48,10 +48,10 @@ public class NettyHttpServer {
                         .channel(useEPool ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                         .option(ChannelOption.SO_BACKLOG, 1024)
                         .option(ChannelOption.SO_REUSEADDR, true)
-                        .option(ChannelOption.SO_KEEPALIVE, false)
                         .childOption(ChannelOption.TCP_NODELAY, true)
                         .childOption(ChannelOption.SO_SNDBUF, 65535)
                         .childOption(ChannelOption.SO_RCVBUF, 65535)
+                        .childOption(ChannelOption.SO_KEEPALIVE, false)
                         .localAddress(new InetSocketAddress(port))
                         .childHandler(new ChannelInitializer<SocketChannel>() {
                             @Override

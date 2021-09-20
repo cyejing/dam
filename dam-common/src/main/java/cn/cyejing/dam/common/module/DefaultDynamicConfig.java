@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -41,6 +39,11 @@ public class DefaultDynamicConfig implements DynamicConfig {
 
 
     @Override
+    public Route getRoute(String group, String id) {
+        return getRoutes(group).stream().filter(route -> route.getId().equals(id)).findFirst().orElseGet(null);
+    }
+
+    @Override
     public SortedSet<Route> getRoutes(String group) {
         SortedSet<Route> routes = routsMap.get(group);
         if (routes == null) {
@@ -70,9 +73,9 @@ public class DefaultDynamicConfig implements DynamicConfig {
             routes = routsMap.get(group);
         }
         if (routes.removeIf(r -> r.getId().equals(route.getId()))) {
-            log.info("modify Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.toJSONString(route));
+            log.info("modify Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.writeValueAsString(route));
         } else {
-            log.info("add Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.toJSONString(route));
+            log.info("add Route group:{}, id:{}, route:{}", route.getGroup(), route.getId(), JSONUtil.writeValueAsString(route));
         }
         routes.add(route);
     }
@@ -101,9 +104,9 @@ public class DefaultDynamicConfig implements DynamicConfig {
             instances = instanceMap.get(host);
         }
         if (instances.removeIf(ins -> ins.getAddress().equals(instance.getAddress()))) {
-            log.info("modify Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.toJSONString(instance));
+            log.info("modify Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.writeValueAsString(instance));
         } else {
-            log.info("add Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.toJSONString(instance));
+            log.info("add Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.writeValueAsString(instance));
         }
         instances.add(instance);
     }

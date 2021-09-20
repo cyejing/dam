@@ -13,6 +13,8 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -27,15 +29,35 @@ public class DynamicConfigInitializer {
     }
 
     public boolean loadFile(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new RuntimeException("rote file is not exist " + path);
-
+        InputStream inputStream = null;
+        try {
+            if (new File(path).exists()) {
+                inputStream = new FileInputStream(path);
+            } else {
+                String relativePath = System.getenv("OLDPWD") + "/" + path;
+                if (new File(relativePath).exists()) {
+                    inputStream = new FileInputStream(relativePath);
+                }
+            }
+        } catch (FileNotFoundException e) {
         }
-        final String absolutePath = file.getAbsolutePath();
+        if (inputStream == null) {
+            inputStream = DynamicConfigInitializer.class.getClassLoader().getResourceAsStream(path);
+            log.info("load route classpath: {}", path);
+        } else {
+            log.info("load route path: {}", path);
+        }
+        return loadFile(inputStream);
+    }
+
+    public boolean loadFile(InputStream inputStream) {
+        if (inputStream == null) {
+            throw new RuntimeException("rote file is not exist.");
+        }
+
         try {
             Yaml yaml = new Yaml();
-            RouteConfig config = yaml.loadAs(new FileInputStream(absolutePath), RouteConfig.class);
+            RouteConfig config = yaml.loadAs(inputStream, RouteConfig.class);
             for (Route route : config.getRoutes()) {
                 DefaultDynamicConfig.getInstance().addRoute(route);
                 CacheManager.removeForRoute(route.getId());
@@ -46,7 +68,7 @@ public class DynamicConfigInitializer {
             log.info(" reload route yaml success.");
             return true;
         } catch (Throwable t) {
-            log.error("reload route yaml failed. path:{}", absolutePath, t);
+            log.error("reload route yaml failed", t);
             return false;
         }
     }

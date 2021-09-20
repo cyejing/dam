@@ -2,8 +2,6 @@ package cn.cyejing.dam.core.context;
 
 public abstract class AttributeKey<T> {
 
-    public static final AttributeKey<String> SERVICE_NAME_KEY = create(String.class);
-
     public static <T> AttributeKey<T> create(final Class<? super T> valueClass) {
         return new SimpleAttributeKey(valueClass);
     }

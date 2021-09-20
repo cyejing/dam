@@ -28,7 +28,7 @@ public class RegistryServiceImpl extends AbstractService implements RegistryServ
     @Override
     public void initialize(RegistryConfig config, boolean watch) {
         if (initialized.compareAndSet(false, true)) {
-            log.info("initialize registry config:{}", JSONUtil.toJSONString(config));
+            log.info("initialize registry config:{}", JSONUtil.writeValueAsString(config));
             this.config = config;
             getRegistrySPI().init(config);
             if (watch) {

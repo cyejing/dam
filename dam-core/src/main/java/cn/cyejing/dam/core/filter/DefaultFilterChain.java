@@ -6,7 +6,6 @@ import cn.cyejing.dam.core.context.InternalExchange;
 import cn.cyejing.dam.core.support.cache.CacheManager;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 public class DefaultFilterChain implements FilterChain {
@@ -38,9 +37,9 @@ public class DefaultFilterChain implements FilterChain {
                 filter.filter(this, exchange, null);
             } else {
                 Object config = cache.get(filterConfig.getName(), s -> {
-                    if (filter.getConfigClass() != null && StringUtils.isNotEmpty(filterConfig.getParam())) {
+                    if (filter.getConfigClass() != null && filterConfig.getParam() != null) {
                         try {
-                            return JSONUtil.parse(filterConfig.getParam(), filter.getConfigClass());
+                            return JSONUtil.convertValue(filterConfig.getParam(), filter.getConfigClass());
                         } catch (Exception e) {
                             log.error("filter {} params parse error:{}", filter.getNameToLowerCase(), filterConfig.getParam(), e);
                         }

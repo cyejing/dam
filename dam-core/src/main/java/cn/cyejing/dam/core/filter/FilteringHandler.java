@@ -34,7 +34,7 @@ public class FilteringHandler {
                 globalFilters.add(filter);
             }
             filters.add(filter);
-            log.info("scan filter:{}", filter);
+            log.info("scan filter: {}", filter);
         }
         this.filterMap = filters.stream().collect(Collectors.toMap(Filter::getNameToLowerCase, Function.identity()));
     }

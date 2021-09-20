@@ -9,7 +9,7 @@ import java.util.Objects;
 public class FilterConfig {
 
     private String name;
-    private String param;
+    private Object param;
     private Boolean loggable = false;
     private Boolean opened = true;
 

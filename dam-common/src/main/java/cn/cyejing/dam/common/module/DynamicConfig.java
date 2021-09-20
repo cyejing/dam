@@ -6,6 +6,8 @@ import java.util.SortedSet;
 
 public interface DynamicConfig {
 
+    Route getRoute(String group, String id);
+
     SortedSet<Route> getRoutes(String group);
 
     void addRoute(Route route);

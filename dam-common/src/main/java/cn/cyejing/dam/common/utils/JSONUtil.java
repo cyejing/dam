@@ -1,7 +1,6 @@
 package cn.cyejing.dam.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import java.util.List;
 
 public class JSONUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final JsonFactory JASON_FACTORY = MAPPER.getFactory();
 
     static {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -27,7 +25,7 @@ public class JSONUtil {
         MAPPER.setFilterProvider(new SimpleFilterProvider().addFilter("excludeFilter", SimpleBeanPropertyFilter.serializeAllExcept("class")));
     }
 
-    public static String toJSONString(Object obj) {
+    public static String writeValueAsString(Object obj) {
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
@@ -35,7 +33,7 @@ public class JSONUtil {
         }
     }
 
-    public static <T> T parse(String str, Class<T> clz) {
+    public static <T> T readValue(String str, Class<T> clz) {
         try {
             return MAPPER.readValue(str == null ? "{}" : str, clz);
         } catch (Exception e) {
@@ -43,7 +41,7 @@ public class JSONUtil {
         }
     }
 
-    public static <T> T parse(String str, JavaType javaType) {
+    public static <T> T readValue(String str, JavaType javaType) {
         try {
             return MAPPER.readValue(str, javaType);
         } catch (Exception e) {
@@ -51,8 +49,12 @@ public class JSONUtil {
         }
     }
 
-    public static <T> List<T> parseList(String json, Class<T> clz) {
-        return parse(json, getCollectionType(List.class, clz));
+    public static <T> T convertValue(Object obj, Class<T> clz) {
+        return MAPPER.convertValue(obj, clz);
+    }
+
+    public static <T> List<T> readValueList(String json, Class<T> clz) {
+        return readValue(json, getCollectionType(List.class, clz));
     }
 
     public static JavaType getCollectionType(Class<?> collectionClass, Class<?>... elementClasses) {

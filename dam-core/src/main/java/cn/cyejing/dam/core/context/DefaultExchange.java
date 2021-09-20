@@ -189,7 +189,7 @@ public class DefaultExchange implements Exchange, InternalExchange {
             try {
                 if (route.getExpression().evaluateBoolean(SelectorFactory.buildContext(request))) {
                     if (route.isLoggable()) {
-                        log.info("Match to Route information. path:{} route:{}", request.getPath(), JSONUtil.toJSONString(route));
+                        log.info("Match to Route information. path:{} route:{}", request.getPath(), JSONUtil.writeValueAsString(route));
                     }
                     return route.toReadonly();
                 }

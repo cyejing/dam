@@ -17,7 +17,7 @@ public class MatchFactory {
         matchOperatorMap.put(EnumMatch.ANT, new AntMatch());
         matchOperatorMap.put(EnumMatch.LIKE, new LikeMatch());
         matchOperatorMap.put(EnumMatch.IP, new IPMatch());
-        matchOperatorMap.put(EnumMatch.REGEX, new RegularMatch());
+        matchOperatorMap.put(EnumMatch.REGEX, new RegexMatch());
     }
 
 

@@ -66,7 +66,7 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
                 log.info("Listening to node changes key: {}, value: {}", keyValue.getKey(), keyValue.getValue());
                 for (NotifyListener<Route> listener : routeListener) {
                     try {
-                        Route route = JSONUtil.parse(keyValue.getValue(), Route.class);
+                        Route route = JSONUtil.readValue(keyValue.getValue(), Route.class);
                         listener.put(route);
                     } catch (Exception e) {
                         log.error("Handling node changes with exceptions", e);
@@ -79,7 +79,7 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
                 log.info("Listening to node deletion key: {}", keyValue.getKey());
                 for (NotifyListener<Route> listener : routeListener) {
                     try {
-                        Route route = JSONUtil.parse(keyValue.getValue(), Route.class);
+                        Route route = JSONUtil.readValue(keyValue.getValue(), Route.class);
                         listener.delete(route);
                     } catch (Exception e) {
                         log.error("Handling node changes with exceptions", e);

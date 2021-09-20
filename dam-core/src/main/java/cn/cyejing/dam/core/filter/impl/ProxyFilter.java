@@ -23,8 +23,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class ProxyFilter implements Filter<ProxyFilter.Config> {
 
-    AsyncHttpClient client = NettyClient.getClient();
-
+    private static AsyncHttpClient client = NettyClient.getClient();
 
     @Override
     public String getName() {

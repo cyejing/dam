@@ -1,0 +1,18 @@
+routes:
+  - id: 196105db9a384d7a93f8102ae46684cb
+    group: test
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/replace/**')
+    filterConfigs:
+    - name: rewrite
+      param:
+        regex: "/replace/(.*)"
+        replacement: "/$\\1"
+    - name: proxy
+      param:
+        uri: "lb://test"
+instances:
+  - host: test
+    address: localhost:4843

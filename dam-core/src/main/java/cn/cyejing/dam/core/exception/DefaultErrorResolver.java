@@ -29,7 +29,7 @@ public class DefaultErrorResolver implements ErrorResolver {
 
     private DefaultResponse buildResponse(HttpResponseStatus status, ErrorCode code, String message) {
         ErrorBody errorBody = new ErrorBody(status, code, message);
-        return new DefaultResponse(status, JSONUtil.toJSONString(errorBody));
+        return new DefaultResponse(status, JSONUtil.writeValueAsString(errorBody));
     }
 
     @Data
