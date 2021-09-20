@@ -14,8 +14,8 @@ public class TokenParserTest {
 
     @Test
     public void testToken() {
-        List<Token> process = new TokenParser("PATH.anyMatch('/rivers/**') || Host.anyMatch('http://localhost') || Header['X-Tags'].equals('tag')").process();
-        assertEquals("/rivers/**", process.get(4).getData());
+        List<Token> process = new TokenParser("PATH.anyMatch('/dam/**') || Host.anyMatch('http://localhost') || Header['X-Tags'].equals('tag')").process();
+        assertEquals("/dam/**", process.get(4).getData());
         assertEquals(TokenType.SYMBOLIC_OR, process.get(6).getType());
     }
 

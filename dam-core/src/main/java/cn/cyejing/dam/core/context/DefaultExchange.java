@@ -166,7 +166,7 @@ public class DefaultExchange implements Exchange, InternalExchange {
         RouteReadonly defaultRoute = matchRoutes(request, DefaultDynamicConfig.getInstance().getDefaultRoutes());
         if (defaultRoute == null) {
             if (!request.getPath().equals("/") && !request.getPath().equals("/favicon.ico")) {
-                log.info("Searching for the default Route does not find the service name. Original request：{}", request.getUrl());
+                log.info("Searching for the default Route does not find the group. Original request：{}", request.getUrl());
             }
             throw new DamException(ErrorCode.NOT_FOUND);
         }
@@ -176,7 +176,7 @@ public class DefaultExchange implements Exchange, InternalExchange {
         if (route == null) {
             route = matchRoutes(request, routes.stream().filter(Route::isGlobal).collect(Collectors.toList()));
             if (route == null) {
-                log.info("Route information not found. Service name:{} Original request：{}", defaultRoute.getGroup(), request.getUrl());
+                log.info("Route information not found. group:{} Original request：{}", defaultRoute.getGroup(), request.getUrl());
                 throw new DamException(ErrorCode.NOT_FOUND);
             }
         }

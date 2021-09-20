@@ -2,7 +2,7 @@ package cn.cyejing.dam.core.filter;
 
 import cn.cyejing.dam.core.context.Exchange;
 
-public interface Filter<T>{
+public interface Filter<T> {
 
     String getName();
 

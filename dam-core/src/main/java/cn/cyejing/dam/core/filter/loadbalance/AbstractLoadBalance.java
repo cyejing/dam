@@ -1,7 +1,3 @@
-/*
- * frxs Inc.  湖南兴盛优选电子商务有限公司.
- * Copyright (c) 2017-2019. All Rights Reserved.
- */
 package cn.cyejing.dam.core.filter.loadbalance;
 
 
@@ -12,19 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * <B>主类名称：负载均衡基础类,提高权重计算方法</B><BR>
- * <B>概要说明：</B><BR>
- *
- * @author Born
- * @version : AbstractLoadBalance.java,v 0.1 2020年06月05日 2:17 下午
- */
 public abstract class AbstractLoadBalance implements LoadBalance {
     private static final int DEFAULT_WEIGHT = 100;
-    private static final int DEFAULT_WARMUP = 5 * 60 * 1000;;
+    private static final int DEFAULT_WARMUP = 5 * 60 * 1000;
 
     @Override
-    public Instance select(Exchange exchange, Set<Instance> sets){
+    public Instance select(Exchange exchange, Set<Instance> sets) {
         if (sets == null || sets.size() == 0) {
             return null;
         }
