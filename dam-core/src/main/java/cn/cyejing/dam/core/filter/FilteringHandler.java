@@ -60,29 +60,32 @@ public class FilteringHandler {
 
     public void complete(InternalExchange exchange) {
         ChannelHandlerContext ctx = exchange.getChannelHandlerContext();
-        boolean keepAlive = exchange.isKeepAlive();
         exchange.releaseRequest();
         if (exchange.isCompleted()) {
             if (exchange.isError()) {
                 Response response = ErrorResolverFactory.resolve(exchange.getError());
-                writeResponse(ctx, response, keepAlive);
+                writeResponse(ctx, response, exchange);
             } else {
-                writeResponse(ctx, exchange.getResponse(), keepAlive);
+                writeResponse(ctx, exchange.getResponse(), exchange);
             }
         } else {
             RuntimeException e = new RuntimeException();
             log.error("exchange not completed!", e);
             Response response = ErrorResolverFactory.resolve(e);
-            writeResponse(ctx, response, keepAlive);
+            writeResponse(ctx, response, exchange);
         }
     }
 
-    private void writeResponse(ChannelHandlerContext ctx, Response response, boolean isKeepAlive) {
-        if (isKeepAlive) {
-            ctx.writeAndFlush(response.build()).addListener(ChannelFutureListener.CLOSE);
+    private void writeResponse(ChannelHandlerContext ctx, Response response, InternalExchange exchange) {
+        if (exchange.getWritten().compareAndSet(false, true)) {
+            if (!exchange.isKeepAlive()) {
+                ctx.writeAndFlush(response.build()).addListener(ChannelFutureListener.CLOSE);
+            } else {
+                response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+                ctx.writeAndFlush(response.build());
+            }
         } else {
-            response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-            ctx.writeAndFlush(response.build());
+            log.error("Repeat write response");
         }
     }
 }

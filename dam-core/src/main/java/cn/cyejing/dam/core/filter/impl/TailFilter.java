@@ -30,6 +30,7 @@ public class TailFilter implements Filter {
     @Override
     public void filter(FilterChain chain, Exchange exchange, Object config) {
         exchange.occurError(new DamException(ErrorCode.FILTER_TAIL));
+        chain.doFilter();
     }
 
 }

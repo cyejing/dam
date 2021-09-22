@@ -61,6 +61,7 @@ public class ProxyFilter implements Filter<ProxyFilter.Config> {
 
         CompletableFuture<Response> future = client.executeRequest(requestMutable.build()).toCompletableFuture();
         future.whenComplete((response, throwable) -> {
+            exchange.releaseRequest();
             if (throwable != null) {
                 exchange.occurError(throwable);
             } else {

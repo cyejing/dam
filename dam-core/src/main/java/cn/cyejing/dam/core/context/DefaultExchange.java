@@ -32,6 +32,7 @@ public class DefaultExchange implements Exchange, InternalExchange {
     private FullHttpRequest fullHttpRequest;
     private boolean keepAlive;
     private boolean completed;
+    private final AtomicBoolean written = new AtomicBoolean(false);
     private boolean occurError;
     private Throwable error;
     private Request request;
@@ -113,6 +114,11 @@ public class DefaultExchange implements Exchange, InternalExchange {
     @Override
     public boolean isCompleted() {
         return this.completed || this.occurError;
+    }
+
+    @Override
+    public AtomicBoolean getWritten() {
+        return written;
     }
 
     @Override

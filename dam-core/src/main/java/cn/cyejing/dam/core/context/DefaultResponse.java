@@ -42,9 +42,10 @@ public class DefaultResponse implements Response {
     }
 
     public DefaultResponse(org.asynchttpclient.Response response) {
-        this(HttpResponseStatus.valueOf(response.getStatusCode()),
-                Unpooled.wrappedBuffer(response.getResponseBodyAsByteBuffer()),
-                response.getHeaders());
+        this.response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
+                HttpResponseStatus.valueOf(response.getStatusCode()),
+                Unpooled.wrappedBuffer(response.getResponseBodyAsByteBuffer()));
+        this.response.headers().add(response.getHeaders());
     }
 
     @Override

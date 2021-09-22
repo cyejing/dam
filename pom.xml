@@ -50,8 +50,8 @@
         <logback.version>1.2.5</logback.version>
         <lombok.version>1.18.0</lombok.version>
 
-        <netty.version>4.1.52.Final</netty.version>
-        <async-http-client.version>2.12.3</async-http-client.version>
+        <netty.version>4.1.48.Final</netty.version>
+        <async-http-client.version>2.12.1</async-http-client.version>
 
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
@@ -189,12 +189,6 @@
                 <artifactId>async-http-client</artifactId>
                 <version>${async-http-client.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.asynchttpclient</groupId>
-                <artifactId>async-http-client-netty-utils</artifactId>
-                <version>${async-http-client.version}</version>
-            </dependency>
-
 
             <!-- common -->
             <dependency>

@@ -31,10 +31,9 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
             handlerRequest(ctx, (FullHttpRequest) message);
         } else {
             // never go this way, If so, it must be a bug
-            log.error("#NettyHttpServerHandler.channelRead0# message type is not HttpRequest: {}", message);
-            boolean release = ReferenceCountUtil.release(message);
-            if (!release) {
-                log.error("#NettyHttpServerHandler.channelRead# release fail, release : {}", false);
+            log.error("message type is not HttpRequest: {}", message);
+            if (!ReferenceCountUtil.release(message)) {
+                log.error("release message fail.");
             }
         }
     }
@@ -49,10 +48,16 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
             Response response = ErrorResolverFactory.resolve(e);
             ctx.writeAndFlush(response.build()).addListener(ChannelFutureListener.CLOSE);
             if (!ReferenceCountUtil.release(request)) {
-                log.error("release request fail");
+                log.error("release request fail.");
             }
         }
     }
 
-
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        if (!cause.getMessage().contains("readAddress(..) failed")) {
+            log.error("channel exception", cause);
+        }
+        ctx.channel().close();
+    }
 }

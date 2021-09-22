@@ -51,9 +51,6 @@ public class DefaultFilterChain implements FilterChain {
             }
         } catch (Throwable t) {
             exchange.occurError(t);
-        }
-
-        if (exchange.isCompleted()) {
             handler.complete(exchange);
         }
     }

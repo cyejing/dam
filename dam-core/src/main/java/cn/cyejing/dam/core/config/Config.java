@@ -14,7 +14,7 @@ public class Config {
     private String registry;
 
     private int eventLoopGroupBossNum = 1;
-    private int eventLoopGroupWorkNum = Runtime.getRuntime().availableProcessors() + 1;
+    private int eventLoopGroupWorkNum = Runtime.getRuntime().availableProcessors();
     private boolean useEPoll = true;
     private boolean nettyAllocator = true;
     private int maxContentLength = 32 * 1024 * 1024;
