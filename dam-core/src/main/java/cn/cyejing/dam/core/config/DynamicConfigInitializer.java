@@ -43,16 +43,16 @@ public class DynamicConfigInitializer {
         }
         if (inputStream == null) {
             inputStream = DynamicConfigInitializer.class.getClassLoader().getResourceAsStream(path);
-            log.info("load route classpath: {}", path);
+            log.info("load route yaml classpath: {}", path);
         } else {
-            log.info("load route path: {}", path);
+            log.info("load route yaml path: {}", path);
         }
         return loadFile(inputStream);
     }
 
     public boolean loadFile(InputStream inputStream) {
         if (inputStream == null) {
-            throw new RuntimeException("rote file is not exist.");
+            throw new RuntimeException("rote yaml is not exist.");
         }
 
         try {

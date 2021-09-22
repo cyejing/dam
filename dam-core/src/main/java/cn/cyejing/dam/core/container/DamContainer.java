@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 @Slf4j
-public class NettyContainer {
+public class DamContainer {
 
     private final Config config;
     private NettyHttpServer nettyHttpServer;
@@ -24,7 +24,7 @@ public class NettyContainer {
     private EventLoopGroup eventLoopGroupBoss;
     private EventLoopGroup eventLoopGroupWork;
 
-    public NettyContainer(Config config) {
+    public DamContainer(Config config) {
         this.config = config;
         init();
     }
