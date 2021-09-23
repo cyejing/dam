@@ -55,9 +55,6 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        if (!cause.getMessage().contains("readAddress(..) failed")) {
-            log.error("channel exception", cause);
-        }
         ctx.channel().close();
     }
 }
