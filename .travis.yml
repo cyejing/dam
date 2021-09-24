@@ -42,8 +42,7 @@ before_script:
   - ulimit -c unlimited
 
 script:
-  - travis_retry mvn -B clean 
-  - travis_retry mvn -B package 
+  - travis_retry mvn -B clean package jacoco:report coveralls:report
 
 after_success:
   - mvn clean install -Pit-test
