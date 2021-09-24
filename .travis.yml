@@ -3,7 +3,7 @@ dist: bionic
 notifications:
   email:
     recipients:
-      - dev@rocketmq.apache.org
+      - jing23501@qq.com
   on_success: change
   on_failure: always
 
