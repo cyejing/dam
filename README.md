@@ -1,6 +1,7 @@
 ## Dam
+[![Build Status](https://app.travis-ci.com/cyejing/dam.svg?branch=master)](https://app.travis-ci.com/cyejing/dam)
 
-high performance gateway
+**Dam is high performance gateway**
 
 ## Features
 * Netty
