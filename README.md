@@ -1,7 +1,6 @@
 ## Dam
-[![Build Status](https://app.travis-ci.com/cyejing/dam.svg?branch=master)](https://app.travis-ci.com/cyejing/dam)
+[![Build](https://github.com/cyejing/dam/actions/workflows/ci.yml/badge.svg)](https://github.com/cyejing/dam/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/cyejing/dam/branch/master/graph/badge.svg?token=MLU4076I9A)](https://codecov.io/gh/cyejing/dam)
-[![Coverage Status](https://coveralls.io/repos/github/cyejing/dam/badge.svg?branch=master)](https://coveralls.io/github/cyejing/dam?branch=master)
 
 **Dam is high performance gateway**
 
