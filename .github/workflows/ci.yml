@@ -31,7 +31,7 @@ jobs:
       run: java -version && mvn -version && ulimit -c unlimited
     - name: Build with Maven
       run: mvn -B clean package jacoco:report
-    - name: Code Check
-      run: mvn clean install -Pit-test && mvn sonar:sonar -Psonar-apache
+    - name: Integration test
+      run: mvn clean install -Pit-test 
     - name: Codecov Report
       run: bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
