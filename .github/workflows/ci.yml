@@ -30,7 +30,7 @@ jobs:
     - name: Log Version
       run: java -version && mvn -version && ulimit -c unlimited
     - name: Build with Maven
-      run: mvn -B clean package jacoco:report coveralls:report
+      run: mvn -B clean package jacoco:report
     - name: Code Check
       run: mvn clean install -Pit-test && mvn sonar:sonar -Psonar-apache
     - name: Codecov Report
