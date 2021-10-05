@@ -23,6 +23,8 @@ jobs:
             os: ubuntu-latest
           - java: 16
             os: ubuntu-latest
+          - java: 17
+            os: ubuntu-latest 
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
