@@ -36,6 +36,5 @@ public class HealthIT {
 
         assertEquals(200, response.getStatusCode());
         assertEquals("up", response.getResponseBody());
-        System.out.println(response);
     }
 }
