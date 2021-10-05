@@ -9,7 +9,7 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
   
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux]
     
     steps:
     - uses: actions/checkout@v2
