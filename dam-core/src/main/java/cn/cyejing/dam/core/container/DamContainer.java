@@ -29,7 +29,7 @@ public class DamContainer {
         init();
     }
 
-    public void init() {
+    private void init() {
         initEventLoopGroup();
 
         initAsyncHttpClient();
@@ -68,7 +68,7 @@ public class DamContainer {
     }
 
 
-    public boolean useEPoll() {
+    private boolean useEPoll() {
         return config.isUseEPoll() && Epoll.isAvailable() && System.getProperty("os.name") != null && System.getProperty("os.name").toLowerCase().contains("linux");
     }
 

@@ -11,4 +11,11 @@
 
     <artifactId>dam-integration-test</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>cn.cyejing</groupId>
+            <artifactId>dam-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>

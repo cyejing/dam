@@ -1,5 +1,6 @@
 package cn.cyejing.dam.core.support;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class DataCarrierTest {
 
     @Test
+    @Ignore
     public void test() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 100, 100, data -> {
@@ -40,6 +42,7 @@ public class DataCarrierTest {
 
 
     @Test
+    @Ignore
     public void testMax() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 100, 100, data -> {
@@ -66,6 +69,7 @@ public class DataCarrierTest {
     }
 
     @Test
+    @Ignore
     public void testBigBuff() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 1024 * 10, 1024, data -> {

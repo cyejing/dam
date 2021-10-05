@@ -3,11 +3,11 @@ package cn.cyejing.dam.common.constants;
 
 public abstract class Protocol {
 
-    private static final String HTTP = "http";
+    public static final String HTTP = "http";
 
-    private static final String DUBBO = "dubbo";
+    public static final String DUBBO = "dubbo";
 
-    private static final String TCP = "tcp";
+    public static final String TCP = "tcp";
 
     public static boolean isHttp(String protocol) {
         return HTTP.equals(protocol);
