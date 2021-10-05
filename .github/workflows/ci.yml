@@ -44,4 +44,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B clean verify jacoco:report
     - name: Codecov Report
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v1
