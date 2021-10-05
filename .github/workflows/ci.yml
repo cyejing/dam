@@ -26,10 +26,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 8
+    - name: Set up JDK Version
       uses: actions/setup-java@v2
       with:
-        java-version: '8'
+        java-version: ${{ matrix.java }}
         distribution: 'adopt'
         cache: maven
     - uses: actions/cache@v2  
@@ -37,9 +37,6 @@ jobs:
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-    - uses: actions/setup-java@v1
-      with:
-        java-version: ${{ matrix.java }}
     - name: Log Version
       run: java -version && mvn -version && ulimit -c unlimited
     - name: Build with Maven
