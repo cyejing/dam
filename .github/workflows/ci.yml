@@ -8,9 +8,22 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-  
-    runs-on: [self-hosted, linux]
-    
+    strategy:
+      matrix:
+        java: [ 8, 11 ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        include:
+          - java: 12
+            os: ubuntu-latest
+          - java: 13
+            os: ubuntu-latest
+          - java: 14
+            os: ubuntu-latest
+          - java: 15
+            os: ubuntu-latest
+          - java: 16
+            os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
@@ -24,6 +37,9 @@ jobs:
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
     - name: Log Version
       run: java -version && mvn -version && ulimit -c unlimited
     - name: Build with Maven
