@@ -267,7 +267,7 @@
                             <goal>prepare-agent-integration</goal>
                         </goals>
                         <configuration>
-                            <destFile>${project.build.directory}/jacoco-it.exec</destFile>
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
                             <propertyName>failsafeArgLine</propertyName>
                         </configuration>
                     </execution>
