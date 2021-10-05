@@ -39,7 +39,7 @@ routes:
         uri: "lb://test"
 instances:
   - host: test
-    address: localhost:4843
+    address: localhost:4843 
 ```
 
 ## Benchmark
