@@ -16,6 +16,7 @@ public class HealthFilter implements Filter {
         route.setExpressionStr("Path.Equals('/health')");
         route.setGlobal(true);
         route.setProtocol(Protocol.HTTP);
+        route.setOrder(0);
         route.setGroup("health");
         DefaultDynamicConfig.getInstance().addRoute(route);
     }
