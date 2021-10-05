@@ -38,7 +38,7 @@ jobs:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
     - name: Log Version
-      run: java -version && mvn -version && ulimit -c unlimited
+      run: java -version && mvn -version && uname -a
     - name: Build with Maven
       run: mvn -B clean package jacoco:report
     - name: Codecov Report
