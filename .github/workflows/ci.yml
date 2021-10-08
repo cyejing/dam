@@ -31,6 +31,6 @@ jobs:
     - name: Log Version
       run: java -version && mvn -version
     - name: Build with Maven
-      run: mvn -B clean verify jacoco:report-aggregate -Pit-test
+      run: mvn -B clean verify jacoco:report-aggregate -Pit
     - name: Codecov Report
       uses: codecov/codecov-action@v2
