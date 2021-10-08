@@ -1,6 +1,6 @@
 package cn.cyejing.dam.registry.service;
 
-import cn.cyejing.dam.common.module.Instance;
+import cn.cyejing.dam.common.config.Instance;
 import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.registry.api.InstanceAPI;
 import cn.cyejing.dam.registry.api.NotifyListener;

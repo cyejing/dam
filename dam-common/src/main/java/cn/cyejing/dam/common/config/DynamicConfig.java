@@ -1,4 +1,4 @@
-package cn.cyejing.dam.common.module;
+package cn.cyejing.dam.common.config;
 
 import java.util.Set;
 import java.util.SortedSet;

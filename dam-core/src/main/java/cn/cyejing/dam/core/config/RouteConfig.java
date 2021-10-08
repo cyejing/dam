@@ -1,7 +1,7 @@
 package cn.cyejing.dam.core.config;
 
-import cn.cyejing.dam.common.module.Instance;
-import cn.cyejing.dam.common.module.Route;
+import cn.cyejing.dam.common.config.Instance;
+import cn.cyejing.dam.common.config.Route;
 import lombok.Data;
 
 import java.util.List;

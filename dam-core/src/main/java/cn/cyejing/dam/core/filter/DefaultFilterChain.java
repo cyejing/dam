@@ -1,6 +1,6 @@
 package cn.cyejing.dam.core.filter;
 
-import cn.cyejing.dam.common.module.FilterConfig;
+import cn.cyejing.dam.common.config.FilterConfig;
 import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.context.InternalExchange;
 import cn.cyejing.dam.core.support.cache.CacheManager;

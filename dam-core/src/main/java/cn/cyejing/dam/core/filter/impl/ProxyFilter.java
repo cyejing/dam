@@ -1,8 +1,8 @@
 package cn.cyejing.dam.core.filter.impl;
 
 import cn.cyejing.dam.common.enums.EnumLoadBalance;
-import cn.cyejing.dam.common.module.DefaultDynamicConfig;
-import cn.cyejing.dam.common.module.Instance;
+import cn.cyejing.dam.common.config.DefaultDynamicConfig;
+import cn.cyejing.dam.common.config.Instance;
 import cn.cyejing.dam.core.container.NettyClient;
 import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Exchange;

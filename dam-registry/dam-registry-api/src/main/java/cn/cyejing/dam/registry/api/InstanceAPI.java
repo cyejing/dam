@@ -1,6 +1,6 @@
 package cn.cyejing.dam.registry.api;
 
-import cn.cyejing.dam.common.module.Instance;
+import cn.cyejing.dam.common.config.Instance;
 
 import java.util.List;
 

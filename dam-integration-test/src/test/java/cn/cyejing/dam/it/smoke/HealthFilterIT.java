@@ -12,17 +12,18 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class HealthIT {
+public class HealthFilterIT {
 
-    DamContainer container;
+    private DamContainer damContainer;
+
     @Before
     public void setUp() {
-        container = BaseIT.startCore();
-        container.start();
+        damContainer = BaseIT.startCore();
+        damContainer.start();
     }
     @After
     public void tearDown() {
-        container.shutdown();
+        damContainer.shutdown();
     }
 
     @Test
@@ -31,8 +32,7 @@ public class HealthIT {
         RequestBuilder requestBuilder = new RequestBuilder("GET")
                 .setUrl("http://localhost:8048/health");
 
-        ListenableFuture<Response> future = asyncHttpClient.executeRequest(requestBuilder.build());
-        Response response = future.get();
+        Response response = asyncHttpClient.executeRequest(requestBuilder).get();
 
         assertEquals(200, response.getStatusCode());
         assertEquals("up", response.getResponseBody());

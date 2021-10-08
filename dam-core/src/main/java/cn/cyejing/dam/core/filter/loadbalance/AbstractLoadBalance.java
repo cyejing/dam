@@ -1,7 +1,7 @@
 package cn.cyejing.dam.core.filter.loadbalance;
 
 
-import cn.cyejing.dam.common.module.Instance;
+import cn.cyejing.dam.common.config.Instance;
 import cn.cyejing.dam.core.context.Exchange;
 
 import java.util.ArrayList;

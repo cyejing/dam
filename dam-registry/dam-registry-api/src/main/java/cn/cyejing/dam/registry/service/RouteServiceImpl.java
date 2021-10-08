@@ -1,6 +1,6 @@
 package cn.cyejing.dam.registry.service;
 
-import cn.cyejing.dam.common.module.Route;
+import cn.cyejing.dam.common.config.Route;
 import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.registry.api.NotifyListener;
 import cn.cyejing.dam.registry.api.RouteAPI;

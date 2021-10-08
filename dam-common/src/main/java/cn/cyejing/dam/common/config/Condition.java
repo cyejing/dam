@@ -1,4 +1,4 @@
-package cn.cyejing.dam.common.module;
+package cn.cyejing.dam.common.config;
 
 import cn.cyejing.dam.common.enums.EnumMatch;
 import cn.cyejing.dam.common.enums.EnumOperator;

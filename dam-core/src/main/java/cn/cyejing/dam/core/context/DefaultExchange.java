@@ -1,10 +1,10 @@
 package cn.cyejing.dam.core.context;
 
 import cn.cyejing.dam.common.constants.Protocol;
-import cn.cyejing.dam.common.module.DefaultDynamicConfig;
-import cn.cyejing.dam.common.module.FilterConfig;
-import cn.cyejing.dam.common.module.Route;
-import cn.cyejing.dam.common.module.RouteReadonly;
+import cn.cyejing.dam.common.config.DefaultDynamicConfig;
+import cn.cyejing.dam.common.config.FilterConfig;
+import cn.cyejing.dam.common.config.Route;
+import cn.cyejing.dam.common.config.RouteReadonly;
 import cn.cyejing.dam.common.utils.Assert;
 import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.exception.DamException;

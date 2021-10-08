@@ -1,8 +1,8 @@
 package cn.cyejing.dam.core.filter.impl;
 
 import cn.cyejing.dam.common.constants.Protocol;
-import cn.cyejing.dam.common.module.DefaultDynamicConfig;
-import cn.cyejing.dam.common.module.Route;
+import cn.cyejing.dam.common.config.DefaultDynamicConfig;
+import cn.cyejing.dam.common.config.Route;
 import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Exchange;
 import cn.cyejing.dam.core.filter.Filter;
@@ -43,7 +43,9 @@ public class HealthFilter implements Filter {
 
     @Override
     public void filter(FilterChain chain, Exchange exchange, Object config) throws Exception {
-        exchange.completedAndResponse(new DefaultResponse("up"));
+        if (exchange.getRequest().getPath().equals("/health")) {
+            exchange.completedAndResponse(new DefaultResponse("up"));
+        }
         chain.doFilter();
     }
 }

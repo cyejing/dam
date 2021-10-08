@@ -2,7 +2,7 @@
 [![Build](https://github.com/cyejing/dam/actions/workflows/ci.yml/badge.svg)](https://github.com/cyejing/dam/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/cyejing/dam/branch/master/graph/badge.svg?token=MLU4076I9A)](https://codecov.io/gh/cyejing/dam)
 
-**Dam is high performance gateway**
+**Dam is High-Performance API Gateway**
 
 ## Features
 * Netty

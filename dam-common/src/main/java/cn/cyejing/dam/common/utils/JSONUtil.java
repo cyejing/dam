@@ -1,10 +1,7 @@
 package cn.cyejing.dam.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -33,6 +30,13 @@ public class JSONUtil {
         }
     }
 
+    public static JsonNode readValue(String str) {
+        try {
+            return MAPPER.readTree(str);
+        } catch (Exception e) {
+            throw new RuntimeException("json parse to object error", e);
+        }
+    }
     public static <T> T readValue(String str, Class<T> clz) {
         try {
             return MAPPER.readValue(str == null ? "{}" : str, clz);

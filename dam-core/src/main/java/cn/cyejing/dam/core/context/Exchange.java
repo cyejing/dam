@@ -1,7 +1,7 @@
 package cn.cyejing.dam.core.context;
 
-import cn.cyejing.dam.common.module.FilterConfig;
-import cn.cyejing.dam.common.module.RouteReadonly;
+import cn.cyejing.dam.common.config.FilterConfig;
+import cn.cyejing.dam.common.config.RouteReadonly;
 
 
 public interface Exchange {

@@ -1,6 +1,6 @@
 package cn.cyejing.dam.core.filter;
 
-import cn.cyejing.dam.common.module.FilterConfig;
+import cn.cyejing.dam.common.config.FilterConfig;
 import cn.cyejing.dam.core.context.InternalExchange;
 import cn.cyejing.dam.core.context.Response;
 import cn.cyejing.dam.core.exception.ErrorResolverFactory;

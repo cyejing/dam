@@ -1,4 +1,4 @@
-package cn.cyejing.dam.common.module;
+package cn.cyejing.dam.common.config;
 
 import cn.cyejing.dam.common.expression.ExpressionParser;
 import cn.cyejing.dam.common.utils.JSONUtil;

@@ -1,6 +1,6 @@
 package cn.cyejing.dam.common.expression;
 
-import cn.cyejing.dam.common.module.Condition;
+import cn.cyejing.dam.common.config.Condition;
 
 import java.util.function.Predicate;
 

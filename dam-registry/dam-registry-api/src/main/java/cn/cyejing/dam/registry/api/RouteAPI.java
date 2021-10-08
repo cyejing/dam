@@ -1,6 +1,6 @@
 package cn.cyejing.dam.registry.api;
 
-import cn.cyejing.dam.common.module.Route;
+import cn.cyejing.dam.common.config.Route;
 
 import java.util.List;
 
