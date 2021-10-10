@@ -6,6 +6,7 @@ import cn.cyejing.dam.core.filter.FilterChain;
 import lombok.Data;
 
 public class RewriteFilter implements Filter<RewriteFilter.Config> {
+
     @Override
     public String getName() {
         return "rewrite";

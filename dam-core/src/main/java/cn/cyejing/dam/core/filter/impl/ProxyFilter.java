@@ -12,7 +12,6 @@ import cn.cyejing.dam.core.filter.FilterChain;
 import cn.cyejing.dam.core.filter.loadbalance.LoadBalanceFactory;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;
 
 import java.net.URI;
@@ -22,8 +21,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 public class ProxyFilter implements Filter<ProxyFilter.Config> {
-
-    private static AsyncHttpClient client = NettyClient.getClient();
 
     @Override
     public String getName() {
@@ -59,7 +56,7 @@ public class ProxyFilter implements Filter<ProxyFilter.Config> {
             requestMutable.setAddress(uri.getHost() + ":" + uri.getPort());
         }
 
-        CompletableFuture<Response> future = client.executeRequest(requestMutable.build()).toCompletableFuture();
+        CompletableFuture<Response> future = NettyClient.getClient().executeRequest(requestMutable.build()).toCompletableFuture();
         future.whenComplete((response, throwable) -> {
             exchange.releaseRequest();
             if (throwable != null) {
