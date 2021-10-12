@@ -43,4 +43,15 @@ instances:
 ```
 
 ## Benchmark
+
 fork from [spring-cloud-gateway-bench](https://github.com/cyejing/spring-cloud-gateway-bench) [gitee](https://gitee.com/cyejing/spring-cloud-gateway-bench)
+
+TL;DR
+
+Proxy | Avg Latency | Avg Req/Sec/Thread
+-- | -- | --
+dam | 2.04ms | 107.869k
+gateway | 4.68ms | 43.827k
+linkered | 5.23ms | 41.988k
+zuul | 11.08ms | 22.757k
+none | 3.25ms | 161.243k
