@@ -1,8 +1,11 @@
 package cn.cyejing.dam.it.smoke;
 
+import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.container.DamContainer;
 import cn.cyejing.dam.it.base.BaseIT;
 import cn.cyejing.dam.it.server.WebServer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.RequestBuilder;
@@ -11,12 +14,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.concurrent.ExecutionException;
-
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class RewriteFilterIT {
+public class ProxyFilterIT {
 
     private DamContainer damContainer;
     private WebServer webServer;
@@ -40,16 +41,19 @@ public class RewriteFilterIT {
     }
 
     @Test
-    public void testPathRewrite() throws Exception {
+    public void testProxyHttp() throws Exception {
         AsyncHttpClient asyncHttpClient = BaseIT.startClient();
         RequestBuilder requestBuilder = new RequestBuilder("GET")
-                .setHeader("X-Hello","rewrite")
-                .setUrl("http://localhost:8048/replace/hello?hello=rewrite");
+                .setHeader("X-Hello", "hello")
+                .setHeader(HttpHeaderNames.HOST,"www.dam.com")
+                .setUrl("http://localhost:8048/hello");
 
         Response response = asyncHttpClient.executeRequest(requestBuilder).get();
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("rewrite", response.getHeader("X-Hello"));
-        assertEquals("rewrite", response.getResponseBody());
+        assertEquals("hello", response.getHeader("X-Hello"));
+        assertEquals("hello", response.getResponseBody());
     }
+
+
 }

@@ -4,7 +4,6 @@ import cn.cyejing.dam.core.container.DamContainer;
 import cn.cyejing.dam.it.base.BaseIT;
 import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.ListenableFuture;
 import org.asynchttpclient.RequestBuilder;
 import org.asynchttpclient.Response;
 import org.junit.After;

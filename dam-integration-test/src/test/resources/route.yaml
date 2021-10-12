@@ -1,6 +1,6 @@
 routes:
   - id: 196105db9a384d7a93f8102ae46684cb
-    group: test
+    group: replacePath
     order: 100
     global: true
     protocol: http
@@ -13,6 +13,16 @@ routes:
     - name: proxy
       param:
         uri: "lb://test"
+  - id: 1122334400
+    group: damHost
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Host.Equals('www.dam.com')
+    filterConfigs:
+      - name: proxy
+        param:
+          uri: "http://localhost:4843/hello"
 instances:
   - host: test
     address: localhost:4843

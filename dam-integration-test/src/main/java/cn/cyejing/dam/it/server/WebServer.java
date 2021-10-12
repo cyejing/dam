@@ -24,9 +24,13 @@ public class WebServer {
                             String header = exchange.getRequestHeaders().get("X-Hello").getFirst();
                             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                             exchange.getResponseHeaders().put(HttpString.tryFromString("X-Hello"), header);
-                            exchange.getResponseSender().send(exchange.getQueryParameters().get("hello").getFirst());
+                            if (exchange.getQueryParameters().get("hello") != null) {
+                                exchange.getResponseSender().send(exchange.getQueryParameters().get("hello").getFirst());
+                            } else {
+                                exchange.getResponseSender().send("hello");
+                            }
                         })
-                        .post("/hello",exchange -> {
+                        .post("/hello", exchange -> {
                             String header = exchange.getRequestHeaders().get("X-Hello").getFirst();
                             FormDataParser parser = FormParserFactory.builder().build().createParser(exchange);
                             parser.parse(e -> {
@@ -36,7 +40,7 @@ public class WebServer {
                                 e.getResponseSender().send(formData.get("hello").getFirst().getValue());
                             });
                         })
-                        .post("/hello/json",exchange -> {
+                        .post("/hello/json", exchange -> {
                             String header = exchange.getRequestHeaders().get("X-Hello").getFirst();
                             exchange.getRequestReceiver().receiveFullString((e, message) -> {
                                 JsonNode jsonNode = JSONUtil.readValue(message);
