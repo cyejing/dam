@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 @ChannelHandler.Sharable
 public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
 
+    private static FilteringHandler filteringHandler = FilteringHandler.getInstance();
+
     public NettyHttpServerHandler() {
     }
 
@@ -53,7 +55,7 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
             DefaultRequest request = new DefaultRequest(fullHttpRequest, (InetSocketAddress) ctx.channel().remoteAddress());
             RouteReadonly route = matchRoute(request);
             InternalExchange exchange = new DefaultExchange(ctx, fullHttpRequest, request, route);
-            FilteringHandler.getInstance().handler(exchange);
+            filteringHandler.handler(exchange);
         } catch (Throwable e) {
             log.error("build exchange or init filterChain fail", e);
             Response response = ErrorResolverFactory.resolve(e);
