@@ -23,7 +23,10 @@ public class WebServer {
                 .addHttpListener(port, "localhost")
                 .setHandler(Handlers.routing()
                         .get("/hello", exchange -> {
-                            String header = exchange.getRequestHeaders().get("X-Hello").getFirst();
+                            String header = null;
+                            if (exchange.getRequestHeaders().get("X-Hello") != null) {
+                                header = exchange.getRequestHeaders().get("X-Hello").getFirst();
+                            }
                             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                             exchange.getResponseHeaders().put(HttpString.tryFromString("X-Hello"), header);
                             if (exchange.getQueryParameters().get("hello") != null) {

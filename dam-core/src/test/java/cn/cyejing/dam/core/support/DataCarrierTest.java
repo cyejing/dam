@@ -1,6 +1,5 @@
 package cn.cyejing.dam.core.support;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
