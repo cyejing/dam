@@ -14,9 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebServer {
 
-    private Undertow undertow;
+    private final int port;
+    private final Undertow undertow;
 
-    public WebServer start(int port) {
+    public WebServer(int port) {
+        this.port = port;
         this.undertow = Undertow.builder()
                 .addHttpListener(port, "localhost")
                 .setHandler(Handlers.routing()
@@ -50,6 +52,9 @@ public class WebServer {
                             });
                         })
                 ).build();
+    }
+
+    public WebServer start() {
         this.undertow.start();
         log.info("Start Web Server Port:" + port);
         return this;

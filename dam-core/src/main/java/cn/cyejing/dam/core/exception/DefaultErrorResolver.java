@@ -15,18 +15,7 @@ public class DefaultErrorResolver implements ErrorResolver {
         if (t instanceof DamException) {
             ErrorCode errorCode = ((DamException) t).getErrorCode();
             log.warn("dam error :{}", errorCode);
-            switch (errorCode) {
-                case NOT_FOUND:
-                    return buildResponse(HttpResponseStatus.NOT_FOUND, errorCode, "not found route");
-                case NOT_FOUND_RESOURCE:
-                    return buildResponse(HttpResponseStatus.NOT_FOUND, errorCode, "not found resource");
-                case URI_ILLEGALITY:
-                    return buildResponse(HttpResponseStatus.BAD_REQUEST, errorCode, "uri illegality");
-                case FILTER_TAIL:
-                    return buildResponse(HttpResponseStatus.NOT_EXTENDED, errorCode, "No more filters");
-                case INTERNAL_SERVER_ERROR:
-                    return buildResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, errorCode, "internal server error");
-            }
+            return buildResponse(errorCode);
         } else {
             log.error("unknown error", t);
         }
@@ -36,6 +25,12 @@ public class DefaultErrorResolver implements ErrorResolver {
     private DefaultResponse buildResponse(HttpResponseStatus status, ErrorCode code, String message) {
         ErrorBody errorBody = new ErrorBody(status, code, message);
         return new DefaultResponse(status, JSONUtil.writeValueAsString(errorBody));
+    }
+
+    private DefaultResponse buildResponse(ErrorCode errorCode) {
+        ErrorResponse errorResponse = ErrorResponse.valueOf(errorCode);
+        ErrorBody errorBody = new ErrorBody(errorResponse.getStatus(), errorResponse.getErrorCode(), errorResponse.getMessage());
+        return new DefaultResponse(errorResponse.getStatus(), JSONUtil.writeValueAsString(errorBody));
     }
 
     @Data

@@ -14,7 +14,6 @@ import static org.junit.Assert.assertEquals;
 public class DataCarrierTest {
 
     @Test
-    @Ignore
     public void test() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 100, 100, data -> {
@@ -42,7 +41,6 @@ public class DataCarrierTest {
 
 
     @Test
-    @Ignore
     public void testMax() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 100, 100, data -> {
@@ -69,7 +67,6 @@ public class DataCarrierTest {
     }
 
     @Test
-    @Ignore
     public void testBigBuff() throws InterruptedException {
         AtomicInteger consumerCount = new AtomicInteger(0);
         DataCarrier<Data> dataCarrier = new DataCarrier<>(10, 1024 * 10, 1024, data -> {
@@ -78,7 +75,7 @@ public class DataCarrierTest {
 
         ExecutorService executorService = Executors.newFixedThreadPool(4);
         AtomicInteger adder = new AtomicInteger(0);
-        for (int i = 0; i < 128; i++) {
+        for (int i = 0; i < 24; i++) {
             for (int j = 0; j < 1024 * 8; j++) {
                 executorService.submit(() -> {
                     if (dataCarrier.add(new Data(ThreadLocalRandom.current().nextInt(99999), "fun"))) {

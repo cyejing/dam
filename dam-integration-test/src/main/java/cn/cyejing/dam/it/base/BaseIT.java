@@ -15,4 +15,5 @@ public class BaseIT {
     public static AsyncHttpClient startClient() {
         return NettyClient.getClient();
     }
+
 }

@@ -13,7 +13,14 @@ routes:
     - name: proxy
       param:
         uri: "lb://test"
-  - id: 1122334400
+  - id: wj921n09gzfnqpsrubjxo9aq2u0pfj3a
+    group: emptyFilter
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/emptyFilter/**')
+    filterConfigs: []
+  - id: swzxgze3nzfbly61gcnkc1hz823fv5r7
     group: damHost
     order: 100
     global: true
@@ -23,6 +30,24 @@ routes:
       - name: proxy
         param:
           uri: "http://localhost:4843/hello"
+  - id: 3hwc9bkos0dm76xofquqbvxi7m0i2s65
+    group: files
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/files/**')
+    filterConfigs:
+      - name: rewrite
+        param:
+          regex: "/files/(.*)"
+          replacement: "/$1"
+      - name: resource
+        param:
+          root: "./src/test/resources"
 instances:
   - host: test
     address: localhost:4843
+  - host: test
+    address: localhost:4844
+  - host: test
+    address: localhost:4845

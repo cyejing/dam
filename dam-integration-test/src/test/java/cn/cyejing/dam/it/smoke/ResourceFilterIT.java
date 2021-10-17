@@ -1,5 +1,6 @@
 package cn.cyejing.dam.it.smoke;
 
+import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.container.DamContainer;
 import cn.cyejing.dam.it.base.BaseIT;
 import cn.cyejing.dam.it.server.WebServer;
@@ -12,10 +13,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class ProxyFilterIT {
+public class ResourceFilterIT {
 
     private DamContainer damContainer;
     private WebServer webServer;
@@ -39,19 +42,14 @@ public class ProxyFilterIT {
     }
 
     @Test
-    public void testProxyHttp() throws Exception {
+    public void testFile() throws Exception {
         AsyncHttpClient asyncHttpClient = BaseIT.startClient();
         RequestBuilder requestBuilder = new RequestBuilder("GET")
-                .setHeader("X-Hello", "hello")
-                .setHeader(HttpHeaderNames.HOST,"www.dam.com")
-                .setUrl("http://localhost:8048/hello");
+                .setUrl("http://localhost:8048/files/a.json");
 
         Response response = asyncHttpClient.executeRequest(requestBuilder).get();
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("hello", response.getHeader("X-Hello"));
-        assertEquals("hello", response.getResponseBody());
+        assertEquals("file", JSONUtil.readValue(response.getResponseBody()).get("hello").asText());
     }
-
-
 }
