@@ -5,7 +5,6 @@ import cn.cyejing.dam.common.config.Route;
 import cn.cyejing.dam.common.constants.Protocol;
 import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Exchange;
-import cn.cyejing.dam.core.filter.Filter;
 import cn.cyejing.dam.core.filter.FilterChain;
 import cn.cyejing.dam.core.filter.GlobalFilter;
 

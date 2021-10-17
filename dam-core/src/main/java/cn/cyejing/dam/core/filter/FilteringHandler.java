@@ -4,7 +4,9 @@ import cn.cyejing.dam.common.config.FilterConfig;
 import cn.cyejing.dam.core.context.InternalExchange;
 import cn.cyejing.dam.core.context.Response;
 import cn.cyejing.dam.core.exception.ErrorResolverFactory;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.LastHttpContent;
@@ -34,7 +36,7 @@ public class FilteringHandler {
             if (filter instanceof GlobalFilter) {
                 if (((GlobalFilter<?>) filter).getOrder() < 0) {
                     beforeFilters.add(filter);
-                }else{
+                } else {
                     afterFilters.add(filter);
                 }
             }
@@ -83,7 +85,7 @@ public class FilteringHandler {
         if (exchange.getWritten().compareAndSet(false, true)) {
             if (exchange.isKeepAlive()) {
                 response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-            }else{
+            } else {
                 response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
             }
 
@@ -92,7 +94,7 @@ public class FilteringHandler {
                 ctx.write(response.build());
                 ctx.write(response.getFileRegion(), ctx.newProgressivePromise());
                 lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
-            }else{
+            } else {
                 lastContentFuture = ctx.writeAndFlush(response.build());
             }
 

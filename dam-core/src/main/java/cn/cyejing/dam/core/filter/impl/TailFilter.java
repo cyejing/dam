@@ -3,7 +3,6 @@ package cn.cyejing.dam.core.filter.impl;
 import cn.cyejing.dam.core.context.Exchange;
 import cn.cyejing.dam.core.exception.DamException;
 import cn.cyejing.dam.core.exception.ErrorCode;
-import cn.cyejing.dam.core.filter.Filter;
 import cn.cyejing.dam.core.filter.FilterChain;
 import cn.cyejing.dam.core.filter.GlobalFilter;
 
