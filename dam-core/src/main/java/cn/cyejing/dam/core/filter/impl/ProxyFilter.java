@@ -28,16 +28,6 @@ public class ProxyFilter implements Filter<ProxyFilter.Config> {
     }
 
     @Override
-    public int getOrder() {
-        return Integer.MIN_VALUE + 1000;
-    }
-
-    @Override
-    public boolean isGlobal() {
-        return false;
-    }
-
-    @Override
     public Class<Config> getConfigClass() {
         return Config.class;
     }

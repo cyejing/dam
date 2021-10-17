@@ -13,16 +13,6 @@ public class RewriteFilter implements Filter<RewriteFilter.Config> {
     }
 
     @Override
-    public int getOrder() {
-        return 0;
-    }
-
-    @Override
-    public boolean isGlobal() {
-        return false;
-    }
-
-    @Override
     public Class<Config> getConfigClass() {
         return Config.class;
     }

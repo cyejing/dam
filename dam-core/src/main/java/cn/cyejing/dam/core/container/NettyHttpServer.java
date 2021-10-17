@@ -12,6 +12,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.HttpServerExpectContinueHandler;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
@@ -43,8 +46,7 @@ public class NettyHttpServer {
 
     public void start(int port) {
         NettyHttpServerHandler nettyHttpServerHandler = new NettyHttpServerHandler();
-        ServerBootstrap childHandler =
-                this.serverBootstrap.group(eventLoopGroupBoss, eventLoopGroupWork)
+        ServerBootstrap serverBootstrap = this.serverBootstrap.group(eventLoopGroupBoss, eventLoopGroupWork)
                         .channel(useEPool ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                         .option(ChannelOption.SO_BACKLOG, 1024)
                         .option(ChannelOption.SO_REUSEADDR, true)
@@ -52,7 +54,6 @@ public class NettyHttpServer {
                         .childOption(ChannelOption.SO_SNDBUF, 65535)
                         .childOption(ChannelOption.SO_RCVBUF, 65535)
                         .childOption(ChannelOption.SO_KEEPALIVE, false)
-                        .localAddress(new InetSocketAddress(port))
                         .childHandler(new ChannelInitializer<SocketChannel>() {
                             @Override
                             public void initChannel(SocketChannel ch) throws Exception {
@@ -67,11 +68,11 @@ public class NettyHttpServer {
                         });
 
         if (config.isNettyAllocator()) {
-            childHandler.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+            serverBootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
         }
 
         try {
-            this.serverBootstrap.bind().sync();
+            this.serverBootstrap.bind(port).sync();
             log.info(" <----------- Dam Server StartUp On Port :" + port + " ---------------> ");
         } catch (InterruptedException e1) {
             throw new RuntimeException("this.serverBootstrap.bind().sync() InterruptedException", e1);

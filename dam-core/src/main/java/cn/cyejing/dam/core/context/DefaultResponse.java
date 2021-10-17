@@ -2,15 +2,28 @@ package cn.cyejing.dam.core.context;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.DefaultFileRegion;
+import io.netty.channel.FileRegion;
 import io.netty.handler.codec.http.*;
+
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
 
 
 public class DefaultResponse implements Response {
 
-    private final FullHttpResponse response;
+    private final HttpResponse response;
+    public FileRegion fileRegion;
 
     public DefaultResponse(String body) {
         this(HttpResponseStatus.OK, body, null);
+    }
+
+    public DefaultResponse(File file) {
+        this.response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
+        this.fileRegion = new DefaultFileRegion(file, 0, file.length());
+        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, file.length());
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, new MimetypesFileTypeMap().getContentType(file.getPath()));
     }
 
     public DefaultResponse(ByteBuf body) {
@@ -34,11 +47,12 @@ public class DefaultResponse implements Response {
     }
 
     public DefaultResponse(HttpResponseStatus status, ByteBuf body, HttpHeaders headers) {
-        this.response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, body);
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, body);
         if (headers != null) {
             response.headers().add(headers);
         }
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
+        this.response = response;
     }
 
     public DefaultResponse(org.asynchttpclient.Response response) {
@@ -78,14 +92,12 @@ public class DefaultResponse implements Response {
         response.headers().set(httpHeaders);
     }
 
-
-    @Override
-    public ByteBuf getBody() {
-        return response.content();
+    public HttpResponse build() {
+        return response;
     }
 
-    public FullHttpResponse build() {
-        return response;
+    public FileRegion getFileRegion() {
+        return fileRegion;
     }
 
 }

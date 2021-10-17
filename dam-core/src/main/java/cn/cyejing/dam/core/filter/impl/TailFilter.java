@@ -5,8 +5,9 @@ import cn.cyejing.dam.core.exception.DamException;
 import cn.cyejing.dam.core.exception.ErrorCode;
 import cn.cyejing.dam.core.filter.Filter;
 import cn.cyejing.dam.core.filter.FilterChain;
+import cn.cyejing.dam.core.filter.GlobalFilter;
 
-public class TailFilter implements Filter {
+public class TailFilter implements GlobalFilter {
     @Override
     public String getName() {
         return "tail";
@@ -14,12 +15,7 @@ public class TailFilter implements Filter {
 
     @Override
     public int getOrder() {
-        return Integer.MIN_VALUE;
-    }
-
-    @Override
-    public boolean isGlobal() {
-        return true;
+        return Integer.MAX_VALUE;
     }
 
     @Override

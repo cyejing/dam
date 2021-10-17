@@ -7,8 +7,9 @@ import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Exchange;
 import cn.cyejing.dam.core.filter.Filter;
 import cn.cyejing.dam.core.filter.FilterChain;
+import cn.cyejing.dam.core.filter.GlobalFilter;
 
-public class HealthFilter implements Filter {
+public class HealthFilter implements GlobalFilter {
 
     public HealthFilter() {
         Route route = new Route();
@@ -28,12 +29,7 @@ public class HealthFilter implements Filter {
 
     @Override
     public int getOrder() {
-        return 0;
-    }
-
-    @Override
-    public boolean isGlobal() {
-        return true;
+        return Integer.MIN_VALUE;
     }
 
     @Override

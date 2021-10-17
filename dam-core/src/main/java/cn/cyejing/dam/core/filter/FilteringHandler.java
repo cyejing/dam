@@ -4,10 +4,10 @@ import cn.cyejing.dam.common.config.FilterConfig;
 import cn.cyejing.dam.core.context.InternalExchange;
 import cn.cyejing.dam.core.context.Response;
 import cn.cyejing.dam.core.exception.ErrorResolverFactory;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.LastHttpContent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -19,7 +19,8 @@ public class FilteringHandler {
 
     private static final FilteringHandler INSTANCE = new FilteringHandler();
 
-    private final List<Filter<?>> globalFilters = new ArrayList<>();
+    private final List<Filter<?>> beforeFilters = new ArrayList<>();
+    private final List<Filter<?>> afterFilters = new ArrayList<>();
     private final List<Filter<?>> filters = new ArrayList<>();
     private final Map<String, Filter<?>> filterMap;
 
@@ -30,8 +31,12 @@ public class FilteringHandler {
     private FilteringHandler() {
         ServiceLoader<Filter> serviceloader = ServiceLoader.load(Filter.class);
         for (Filter<?> filter : serviceloader) {
-            if (filter.isGlobal()) {
-                globalFilters.add(filter);
+            if (filter instanceof GlobalFilter) {
+                if (((GlobalFilter<?>) filter).getOrder() < 0) {
+                    beforeFilters.add(filter);
+                }else{
+                    afterFilters.add(filter);
+                }
             }
             filters.add(filter);
             log.info("scan filter: {}", filter);
@@ -41,7 +46,7 @@ public class FilteringHandler {
 
     public void handler(InternalExchange exchange) {
         Set<FilterConfig> filterConfigs = exchange.getRoute().getFilterConfigs();
-        List<Filter> runFilters = new ArrayList<>(globalFilters);
+        List<Filter> runFilters = new ArrayList<>(beforeFilters);
 
         for (FilterConfig filterConfig : filterConfigs) {
             Filter<?> filter = filterMap.get(filterConfig.getName());
@@ -50,9 +55,7 @@ public class FilteringHandler {
             }
         }
 
-        if (runFilters.size() > 1) {
-            runFilters.sort((o1, o2) -> Integer.compare(o2.getOrder(), o1.getOrder()));
-        }
+        runFilters.addAll(afterFilters);
 
         DefaultFilterChain chain = new DefaultFilterChain(this, exchange, runFilters.toArray(new Filter[0]));
         chain.doFilter();
@@ -78,11 +81,24 @@ public class FilteringHandler {
 
     private void writeResponse(ChannelHandlerContext ctx, Response response, InternalExchange exchange) {
         if (exchange.getWritten().compareAndSet(false, true)) {
-            if (!exchange.isKeepAlive()) {
-                ctx.writeAndFlush(response.build()).addListener(ChannelFutureListener.CLOSE);
-            } else {
+            if (exchange.isKeepAlive()) {
                 response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-                ctx.writeAndFlush(response.build());
+            }else{
+                response.setHeader(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+            }
+
+            ChannelFuture lastContentFuture;
+            if (response.getFileRegion() != null) {
+                ctx.write(response.build());
+                ctx.write(response.getFileRegion(), ctx.newProgressivePromise());
+                lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
+            }else{
+                lastContentFuture = ctx.writeAndFlush(response.build());
+            }
+
+
+            if (!exchange.isKeepAlive()) {
+                lastContentFuture.addListener(ChannelFutureListener.CLOSE);
             }
         } else {
             log.error("Repeat write response");

@@ -10,10 +10,6 @@ public interface Filter<T> {
         return getName().toLowerCase();
     }
 
-    int getOrder();
-
-    boolean isGlobal();
-
     Class<T> getConfigClass();
 
     void filter(FilterChain chain, Exchange exchange, T config) throws Exception;

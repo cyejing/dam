@@ -1,6 +1,6 @@
 routes:
   - id: 196105db9a384d7a93f8102ae46684cb
-    group: test
+    group: replace
     order: 100
     global: true
     protocol: http
@@ -13,6 +13,20 @@ routes:
     - name: proxy
       param:
         uri: "lb://test"
+  - id: f1xb758a1hsrkguxtryjjt4swakayrf8
+    group: resources
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/file/**')
+    filterConfigs:
+      - name: rewrite
+        param:
+          regex: "/file/(.*)"
+          replacement: "/$1"
+      - name: resource
+        param:
+          root: "./"
 instances:
   - host: test
     address: localhost:4843

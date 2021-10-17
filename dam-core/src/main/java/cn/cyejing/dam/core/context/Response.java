@@ -1,8 +1,8 @@
 package cn.cyejing.dam.core.context;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.channel.FileRegion;
 import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 public interface Response {
@@ -19,8 +19,8 @@ public interface Response {
 
     void setHeader(HttpHeaders httpHeaders);
 
-    ByteBuf getBody();
+    HttpResponse build();
 
-    FullHttpResponse build();
+    FileRegion getFileRegion();
 
 }
