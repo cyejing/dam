@@ -18,7 +18,7 @@ EG: dam-example
 ### 网关处理逻辑
 1. 将请求与路由进行匹配
 2. 优先匹配``global``路由,确定``group``分组
-3. 按顺序遍历``group``分组下的所有路由,知道``expressionStr``匹配正确
+3. 按顺序遍历``group``分组下的所有路由,直到``expressionStr``匹配正确
 4. 执行该路由过滤器配置
 ### 路由配置说明
 ```yaml
