@@ -22,6 +22,7 @@ public class SelectorFactory {
         httpSelectorMap.put(EnumType.IP, new IpSelector());
         httpSelectorMap.put(EnumType.QUERY, new QuerySelector());
         httpSelectorMap.put(EnumType.BODY, new BodySelector());
+        httpSelectorMap.put(EnumType.CONTEXT, new ContextSelector());
     }
 
 

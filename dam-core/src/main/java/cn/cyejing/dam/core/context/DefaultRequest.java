@@ -1,5 +1,6 @@
 package cn.cyejing.dam.core.context;
 
+import cn.cyejing.dam.core.support.RemoteUtil;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.handler.codec.http.cookie.ServerCookieDecoder;
@@ -55,15 +56,27 @@ public class DefaultRequest implements Request {
     private Map<String, List<String>> postParameters;
 
     public DefaultRequest(FullHttpRequest request, InetSocketAddress remoteAddress) {
+        this(HttpUtil.getCharset(request, StandardCharsets.UTF_8),
+                RemoteUtil.getClientIp(remoteAddress, request),
+                request.headers().get(HttpHeaderNames.HOST),
+                request.uri(),
+                request.method(),
+                HttpUtil.getMimeType(request) == null ? null : HttpUtil.getMimeType(request).toString(),
+                request.headers(),
+                request);
+    }
+
+    public DefaultRequest(Charset charset, String clientIp, String host, String uri,
+                          HttpMethod method, String contentType, HttpHeaders headers, FullHttpRequest request) {
         this.fullHttpRequest = request;
         this.beginTime = System.currentTimeMillis();
-        this.method = request.method();
-        this.headers = request.headers();
-        this.uri = request.uri();
-        this.host = headers.get(HttpHeaderNames.HOST);
-        this.clientIp = getClientIp(remoteAddress, request);
-        this.contentType = HttpUtil.getMimeType(request) == null ? null : HttpUtil.getMimeType(request).toString();
-        this.charset = HttpUtil.getCharset(request, StandardCharsets.UTF_8);
+        this.method = method;
+        this.headers = headers;
+        this.uri = uri;
+        this.host = host;
+        this.clientIp = clientIp;
+        this.contentType = contentType;
+        this.charset = charset;
 
         this.queryDecoder = new QueryStringDecoder(uri, charset);
         this.path = queryDecoder.path();
@@ -150,19 +163,5 @@ public class DefaultRequest implements Request {
     }
 
 
-    private String getClientIp(InetSocketAddress remoteAddress, FullHttpRequest request) {
-        String xForwardedValue = request.headers().get("X-Forwarded-For");
-        String clientIp = null;
-        if (StringUtils.isNotEmpty(xForwardedValue)) {
-            List<String> values = Arrays.asList(xForwardedValue.split(", "));
-            if (values.size() >= 1 && StringUtils.isNotBlank(values.get(0))) {
-                clientIp = values.get(0);
-            }
-        }
-        if (clientIp == null) {
-            clientIp = remoteAddress.getAddress().getHostAddress();
-        }
-        return clientIp;
-    }
 }
 

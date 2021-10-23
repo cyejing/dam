@@ -44,8 +44,16 @@ public class DefaultExchange implements Exchange, InternalExchange {
                            FullHttpRequest fullHttpRequest,
                            Request request,
                            RouteReadonly route) {
+        this(ctx, fullHttpRequest, HttpUtil.isKeepAlive(fullHttpRequest), request, route);
+
+    }
+    public DefaultExchange(ChannelHandlerContext ctx,
+                           FullHttpRequest fullHttpRequest,
+                           boolean keepAlive,
+                           Request request,
+                           RouteReadonly route) {
         this.ctx = ctx;
-        this.keepAlive = HttpUtil.isKeepAlive(fullHttpRequest);
+        this.keepAlive = keepAlive;
         this.fullHttpRequest = fullHttpRequest;
         this.request = request;
         this.route = route;
