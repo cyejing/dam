@@ -21,7 +21,7 @@ public class HeaderSelectorCYJTest {
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
         headers.set("X-Test","hello");
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
                 "localhost", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
         Condition condition = new Condition();
@@ -30,8 +30,8 @@ public class HeaderSelectorCYJTest {
         condition.setName("X-Test");
         condition.setValue("hello");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("hello", httpSelector.select(Utils.buildExchange(riversRequest), "X-Test"));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("hello", httpSelector.select(Utils.buildExchange(request), "X-Test"));
     }
 
 }

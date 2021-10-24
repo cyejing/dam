@@ -20,8 +20,8 @@ public class MethodSelectorCYJTest {
     @Test
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
-                "www.xsyx.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+                "www.dam.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
 
         Condition condition = new Condition();
@@ -29,8 +29,8 @@ public class MethodSelectorCYJTest {
         condition.setMatch(EnumMatch.EQUALS);
         condition.setValue("GET");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("GET", httpSelector.select(Utils.buildExchange(riversRequest), ""));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("GET", httpSelector.select(Utils.buildExchange(request), ""));
     }
 
 }

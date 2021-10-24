@@ -24,18 +24,18 @@ public class BodySelectorCYJTest {
     public void testFromData() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
         FullHttpRequest fullHttpRequest = Mockito.mock(FullHttpRequest.class);
-        Mockito.when(fullHttpRequest.content()).thenReturn(Unpooled.copiedBuffer("foo=123&hello=xsyx", StandardCharsets.UTF_8));
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
-                "www.xsyx.com", "/webtest/hello", HttpMethod.POST, HttpHeaderValues.FORM_DATA.toString(),
+        Mockito.when(fullHttpRequest.content()).thenReturn(Unpooled.copiedBuffer("foo=123&hello=dam", StandardCharsets.UTF_8));
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+                "www.dam.com", "/webtest/hello", HttpMethod.POST, HttpHeaderValues.FORM_DATA.toString(),
                 headers, fullHttpRequest);
         Condition condition = new Condition();
         condition.setType(EnumType.BODY);
         condition.setMatch(EnumMatch.EQUALS);
         condition.setName("hello");
-        condition.setValue("xsyx");
+        condition.setValue("dam");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("xsyx", httpSelector.select(Utils.buildExchange(riversRequest), "hello"));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("dam", httpSelector.select(Utils.buildExchange(request), "hello"));
 
     }
 

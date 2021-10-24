@@ -20,17 +20,17 @@ public class HostSelectorCYJTest {
     @Test
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
-                "www.xsyx.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+                "www.dam.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
 
         Condition condition = new Condition();
         condition.setType(EnumType.HOST);
         condition.setMatch(EnumMatch.EQUALS);
-        condition.setValue("www.xsyx.com");
+        condition.setValue("www.dam.com");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("www.xsyx.com", httpSelector.select(Utils.buildExchange(riversRequest), ""));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("www.dam.com", httpSelector.select(Utils.buildExchange(request), ""));
     }
 
 

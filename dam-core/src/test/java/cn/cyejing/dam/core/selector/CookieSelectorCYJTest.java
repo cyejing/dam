@@ -18,7 +18,7 @@ public class CookieSelectorCYJTest {
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
         headers.set(HttpHeaderNames.COOKIE, "foo=foo1;hello=cookie;");
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
                 "localhost", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
         Condition condition = new Condition();
@@ -27,7 +27,7 @@ public class CookieSelectorCYJTest {
         condition.setName("hello");
         condition.setValue("cookie");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("cookie", httpSelector.select(Utils.buildExchange(riversRequest), "hello"));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("cookie", httpSelector.select(Utils.buildExchange(request), "hello"));
     }
 }

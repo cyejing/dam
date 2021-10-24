@@ -21,18 +21,18 @@ public class QuerySelectorCYJTest {
     @Test
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
-                "www.xsyx.com", "/webtest/hello?foo=123&hello=xsyx", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+                "www.dam.com", "/webtest/hello?foo=123&hello=dam", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
 
         Condition condition = new Condition();
         condition.setType(EnumType.QUERY);
         condition.setMatch(EnumMatch.EQUALS);
         condition.setName("hello");
-        condition.setValue("xsyx");
+        condition.setValue("dam");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("xsyx", httpSelector.select(Utils.buildExchange(riversRequest), "hello"));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("dam", httpSelector.select(Utils.buildExchange(request), "hello"));
     }
 
 }

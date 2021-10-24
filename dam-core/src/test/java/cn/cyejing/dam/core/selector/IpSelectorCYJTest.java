@@ -20,8 +20,8 @@ public class IpSelectorCYJTest {
     @Test
     public void test() {
         DefaultHttpHeaders headers = new DefaultHttpHeaders();
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
-                "www.xsyx.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+                "www.dam.com", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 headers, Mockito.mock(FullHttpRequest.class));
 
         Condition condition = new Condition();
@@ -29,8 +29,8 @@ public class IpSelectorCYJTest {
         condition.setMatch(EnumMatch.IP);
         condition.setValue("127.0.0.1");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
-        Assert.assertEquals("127.0.0.1", httpSelector.select(Utils.buildExchange(riversRequest), ""));
+        Assert.assertTrue(httpSelector.test(request, condition));
+        Assert.assertEquals("127.0.0.1", httpSelector.select(Utils.buildExchange(request), ""));
     }
 
 }

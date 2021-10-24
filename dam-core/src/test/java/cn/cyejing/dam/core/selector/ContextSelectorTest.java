@@ -19,7 +19,7 @@ public class ContextSelectorTest {
     @Test(expected = UnsupportedOperationException.class)
     @Ignore
     public void test() {
-        DefaultRequest riversRequest = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
+        DefaultRequest request = new DefaultRequest(Charset.defaultCharset(), "127.0.0.1",
                 "localhost", "/webtest/hello", HttpMethod.GET, HttpHeaderValues.APPLICATION_JSON.toString(),
                 null, Mockito.mock(FullHttpRequest.class));
         Condition condition = new Condition();
@@ -28,6 +28,6 @@ public class ContextSelectorTest {
         condition.setName("authId");
         condition.setValue("123");
         HttpSelector httpSelector = SelectorFactory.getHttpSelector(condition.getType());
-        Assert.assertTrue(httpSelector.test(riversRequest, condition));
+        Assert.assertTrue(httpSelector.test(request, condition));
     }
 }
