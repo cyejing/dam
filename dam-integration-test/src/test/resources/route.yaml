@@ -29,7 +29,7 @@ routes:
     filterConfigs:
       - name: proxy
         param:
-          uri: "http://localhost:4843/hello"
+          uri: "http://localhost:4843"
   - id: 3hwc9bkos0dm76xofquqbvxi7m0i2s65
     group: files
     order: 100
@@ -45,9 +45,9 @@ routes:
         param:
           root: "./src/test/resources"
 instances:
-  - host: test
-    address: localhost:4843
-  - host: test
-    address: localhost:4844
-  - host: test
-    address: localhost:4845
+  - group: test
+    uri: http://localhost:4843
+  - group: test
+    uri: http://localhost:4844
+  - group: test
+    uri: http://localhost:4845

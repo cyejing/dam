@@ -65,7 +65,7 @@ public class DynamicConfigInitializer {
             for (Instance instance : config.getInstances()) {
                 DefaultDynamicConfig.getInstance().addInstance(instance);
             }
-            log.info(" reload route yaml success.");
+            log.info("reload route yaml success.");
             return true;
         } catch (Throwable t) {
             log.error("reload route yaml failed", t);
@@ -99,7 +99,7 @@ public class DynamicConfigInitializer {
 
                 @Override
                 public void delete(Instance instance) {
-                    DefaultDynamicConfig.getInstance().deleteInstance(instance.getHost(), instance.getAddress());
+                    DefaultDynamicConfig.getInstance().deleteInstance(instance.getGroup(), instance.getUri());
                 }
             });
         }

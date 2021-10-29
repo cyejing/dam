@@ -1,6 +1,7 @@
 package cn.cyejing.dam.core.context;
 
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.cookie.Cookie;
 import org.asynchttpclient.RequestBuilder;
 
@@ -9,13 +10,10 @@ import java.util.Objects;
 public class DefaultRequestMutable implements RequestMutable {
 
     private RequestBuilder requestBuilder;
-    private String scheme;
-    private String host;
+    private String uri;
     private String path;
 
     public DefaultRequestMutable(Request request, FullHttpRequest fullHttpRequest) {
-        this.scheme = "http://";
-        this.host = request.getHost();
         this.path = request.getPath();
 
         this.requestBuilder = new RequestBuilder();
@@ -25,26 +23,6 @@ public class DefaultRequestMutable implements RequestMutable {
         if (Objects.nonNull(fullHttpRequest.content())) {
             this.requestBuilder.setBody(fullHttpRequest.content().nioBuffer());
         }
-    }
-
-    @Override
-    public String getScheme() {
-        return this.scheme;
-    }
-
-    @Override
-    public void setScheme(String scheme) {
-        this.scheme = scheme;
-    }
-
-    @Override
-    public String getAddress() {
-        return this.host = host;
-    }
-
-    @Override
-    public void setAddress(String host) {
-        this.host = host;
     }
 
     @Override
@@ -58,8 +36,13 @@ public class DefaultRequestMutable implements RequestMutable {
     }
 
     @Override
-    public String getRouteUrl() {
-        return scheme + host + path;
+    public String getUri() {
+        return this.uri + path;
+    }
+
+    @Override
+    public void  setUri(String uri) {
+        this.uri = uri;
     }
 
     @Override
@@ -70,6 +53,16 @@ public class DefaultRequestMutable implements RequestMutable {
     @Override
     public void setHeader(CharSequence name, String value) {
         requestBuilder.setHeader(name, value);
+    }
+
+    @Override
+    public void setHeaders(HttpHeaders headers) {
+        requestBuilder.setHeaders(headers);
+    }
+
+    @Override
+    public void clearHeaders() {
+        requestBuilder.clearHeaders();
     }
 
     @Override
@@ -95,7 +88,7 @@ public class DefaultRequestMutable implements RequestMutable {
 
     @Override
     public org.asynchttpclient.Request build() {
-        requestBuilder.setUrl(getRouteUrl());
+        requestBuilder.setUrl(getUri());
         return requestBuilder.build();
     }
 

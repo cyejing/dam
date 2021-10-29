@@ -20,14 +20,12 @@ public class Config {
     private int maxContentLength = 32 * 1024 * 1024;
     private int bufferSize = 1024 * 16;
 
-    private int httpConnectTimeout = 30000;
+    private int httpConnectTimeout = 5000;
     private int httpReadTimeout = -1;
-    private int httpRequestTimeout = 30000;
+    private int httpRequestTimeout = 20000;
     private int httpMaxRequestRetry = 2;
     private int httpMaxConnections = 10000;
     private int httpMaxConnectionsPerHost = 8000;
     private int httpPooledConnectionIdleTimeout = 60 * 1000;
 
-    private int dubboConnections = Runtime.getRuntime().availableProcessors() + 1;
-    private boolean dubboInit = false;
 }

@@ -51,14 +51,20 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
 
 
     public void handlerRequest(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws Exception {
+        Throwable err = null;
         try {
             DefaultRequest request = new DefaultRequest(fullHttpRequest, (InetSocketAddress) ctx.channel().remoteAddress());
             RouteReadonly route = matchRoute(request);
             InternalExchange exchange = new DefaultExchange(ctx, fullHttpRequest, request, route);
             filteringHandler.handler(exchange);
+        } catch (DamException e) {
+            err = e;
         } catch (Throwable e) {
+            err = e;
             log.error("build exchange or init filterChain fail", e);
-            Response response = ErrorResolverFactory.resolve(e);
+        }
+        if (err != null) {
+            Response response = ErrorResolverFactory.resolve(err);
             ctx.writeAndFlush(response.build()).addListener(ChannelFutureListener.CLOSE);
             if (!ReferenceCountUtil.release(fullHttpRequest)) {
                 log.error("release request fail.");

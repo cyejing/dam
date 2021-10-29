@@ -29,5 +29,5 @@ routes:
           uri: "http://localhost"
           loadBalance: ROUND_ROBIN
 instances:
-  - host: test
-    address: localhost:4843
+  - group: test
+    uri: localhost:4843

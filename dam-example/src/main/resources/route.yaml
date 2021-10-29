@@ -4,18 +4,14 @@ routes:
     order: 100
     global: true
     protocol: http
-    expressionStr: Path.AntMatch('/replace/**')
+    expressionStr: Path.AntMatch('/**')
     filterConfigs:
-    - name: rewrite
-      param:
-        regex: "/replace/(.*)"
-        replacement: "/$1"
     - name: proxy
       param:
-        uri: "lb://test"
+        uri: "https://example.com"
   - id: f1xb758a1hsrkguxtryjjt4swakayrf8
     group: resources
-    order: 100
+    order: 20
     global: true
     protocol: http
     expressionStr: Path.AntMatch('/file/**')
@@ -28,5 +24,5 @@ routes:
         param:
           root: "./"
 instances:
-  - host: test
-    address: localhost:4843
+  - group: test
+    uri: https://example.com

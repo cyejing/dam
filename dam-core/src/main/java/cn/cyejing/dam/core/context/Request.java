@@ -19,8 +19,6 @@ public interface Request {
 
     String getHost();
 
-    String getUri();
-
     String getPath();
 
     HttpMethod getMethod();

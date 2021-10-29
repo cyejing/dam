@@ -9,9 +9,9 @@ import java.util.Objects;
 @Data
 public class Instance {
 
-    private String host;
+    private String group;
 
-    private String address;
+    private String uri;
 
     private Integer weight;
 
@@ -25,13 +25,13 @@ public class Instance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Instance instance = (Instance) o;
-        return Objects.equals(host, instance.host) &&
-                Objects.equals(address, instance.address);
+        return Objects.equals(group, instance.group) &&
+                Objects.equals(uri, instance.uri);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(host, address);
+        return Objects.hash(group, uri);
     }
 
 

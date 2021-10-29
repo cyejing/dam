@@ -96,7 +96,7 @@ public class DefaultDynamicConfig implements DynamicConfig {
 
     @Override
     public void addInstance(Instance instance) {
-        String host = instance.getHost();
+        String host = instance.getGroup();
         if (StringUtils.isEmpty(host)) {
             throw new IllegalArgumentException("host can not be empty");
         }
@@ -105,19 +105,19 @@ public class DefaultDynamicConfig implements DynamicConfig {
             instanceMap.putIfAbsent(host, ConcurrentHashMap.newKeySet());
             instances = instanceMap.get(host);
         }
-        if (instances.removeIf(ins -> ins.getAddress().equals(instance.getAddress()))) {
-            log.info("modify Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.writeValueAsString(instance));
+        if (instances.removeIf(ins -> ins.getUri().equals(instance.getUri()))) {
+            log.info("modify Instance instance:{}", JSONUtil.writeValueAsString(instance));
         } else {
-            log.info("add Instance host:{}, address:{}, instance:{}", instance.getHost(), instance.getAddress(), JSONUtil.writeValueAsString(instance));
+            log.info("add Instance instance:{}", JSONUtil.writeValueAsString(instance));
         }
         instances.add(instance);
     }
 
     @Override
-    public void deleteInstance(String host, String address) {
-        log.info("delete Instance host:{}, address:{}", host, address);
-        Set<Instance> instances = instanceMap.get(host);
-        instances.removeIf(instance -> instance.getAddress().equals(address));
+    public void deleteInstance(String group, String uri) {
+        log.info("delete Instance group:{}, uri:{}", group, uri);
+        Set<Instance> instances = instanceMap.get(group);
+        instances.removeIf(instance -> instance.getUri().equals(uri));
     }
 
 
@@ -131,7 +131,7 @@ public class DefaultDynamicConfig implements DynamicConfig {
 
 
     @Override
-    public Set<Instance> getInstances(String host,String tag) {
+    public Set<Instance> getInstances(String host, String tag) {
         if (instanceMap.get(host) == null) {
             return Collections.emptySet();
         }

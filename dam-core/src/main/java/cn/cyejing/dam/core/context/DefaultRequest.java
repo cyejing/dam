@@ -34,9 +34,6 @@ public class DefaultRequest implements Request {
     private final String path;
 
     @Getter
-    private final String uri;
-
-    @Getter
     private final HttpMethod method;
 
     @Getter
@@ -72,14 +69,13 @@ public class DefaultRequest implements Request {
         this.beginTime = System.currentTimeMillis();
         this.method = method;
         this.headers = headers;
-        this.uri = uri;
+        this.path = uri;
         this.host = host;
         this.clientIp = clientIp;
         this.contentType = contentType;
         this.charset = charset;
 
         this.queryDecoder = new QueryStringDecoder(uri, charset);
-        this.path = queryDecoder.path();
     }
 
     @Override

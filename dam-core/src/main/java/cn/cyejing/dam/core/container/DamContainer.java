@@ -7,36 +7,56 @@ import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-
+/**
+ * @author chenyejing
+ */
 @Slf4j
 public class DamContainer {
-
     private final Config config;
-    private NettyHttpServer nettyHttpServer;
-    private AsyncHttpClient asyncHttpClient;
+
+    @Getter
     private EventLoopGroup eventLoopGroupBoss;
+    @Getter
     private EventLoopGroup eventLoopGroupWork;
+
+    private List<DamServer> damServers = new ArrayList<>();
+    private AsyncHttpClient asyncHttpClient;
+
+
 
     public DamContainer(Config config) {
         this.config = config;
-        init();
-    }
 
-    private void init() {
         initEventLoopGroup();
 
         initAsyncHttpClient();
 
-        nettyHttpServer = new NettyHttpServer(config, eventLoopGroupBoss, eventLoopGroupWork, useEPoll());
-
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "Shutdown-Container"));
+    }
+
+
+    private void initEventLoopGroup() {
+        if (useEPoll()) {
+            this.eventLoopGroupBoss = new EpollEventLoopGroup(config.getEventLoopGroupBossNum(), new DefaultThreadFactory("NettyBossEPOLL"));
+            this.eventLoopGroupWork = new EpollEventLoopGroup(config.getEventLoopGroupWorkNum(), new DefaultThreadFactory("NettyWorkEPOLL"));
+        } else {
+            this.eventLoopGroupBoss = new NioEventLoopGroup(config.getEventLoopGroupBossNum(), new DefaultThreadFactory("NettyBoss"));
+            this.eventLoopGroupWork = new NioEventLoopGroup(config.getEventLoopGroupWorkNum(), new DefaultThreadFactory("NettyWork"));
+        }
+    }
+
+    public boolean useEPoll() {
+        return config.isUseEPoll() && Epoll.isAvailable() && System.getProperty("os.name") != null && System.getProperty("os.name").toLowerCase().contains("linux");
     }
 
     private void initAsyncHttpClient() {
@@ -57,24 +77,12 @@ public class DamContainer {
         NettyClient.setClient(asyncHttpClient);
     }
 
-    private void initEventLoopGroup() {
-        if (useEPoll()) {
-            this.eventLoopGroupBoss = new EpollEventLoopGroup(config.getEventLoopGroupBossNum(), new DefaultThreadFactory("NettyBossEPOLL"));
-            this.eventLoopGroupWork = new EpollEventLoopGroup(config.getEventLoopGroupWorkNum(), new DefaultThreadFactory("NettyWorkEPOLL"));
-        } else {
-            this.eventLoopGroupBoss = new NioEventLoopGroup(config.getEventLoopGroupBossNum(), new DefaultThreadFactory("NettyBoss"));
-            this.eventLoopGroupWork = new NioEventLoopGroup(config.getEventLoopGroupWorkNum(), new DefaultThreadFactory("NettyWork"));
-        }
-    }
-
-
-    private boolean useEPoll() {
-        return config.isUseEPoll() && Epoll.isAvailable() && System.getProperty("os.name") != null && System.getProperty("os.name").toLowerCase().contains("linux");
-    }
-
-
     public void start() {
-        nettyHttpServer.start(config.getPort());
+        this.damServers.add(new DamServer(config, this).start(config.getPort()));
+    }
+
+    public void start(int port) {
+        this.damServers.add(new DamServer(config, this).start(port));
     }
 
     public void shutdown() {
@@ -86,5 +94,4 @@ public class DamContainer {
             log.error("Shutdown Container error", e);
         }
     }
-
 }

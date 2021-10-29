@@ -37,13 +37,13 @@ public class ProxyFilter implements Filter<ProxyFilter.Config> {
         URI uri = new URI(config.getUri());
         RequestMutable requestMutable = exchange.getRequestMutable();
         if ("lb".equals(uri.getScheme())) {
-            String host = uri.getHost();
-            Set<Instance> instances = DefaultDynamicConfig.getInstance().getInstances(host);
+            String group = uri.getHost();
+            Set<Instance> instances = DefaultDynamicConfig.getInstance().getInstances(group);
             Instance instance = LoadBalanceFactory.getLoadBalance(config.getLoadBalance()).select(exchange, instances);
 
-            requestMutable.setAddress(instance.getAddress());
+            requestMutable.setUri(instance.getUri());
         } else {
-            requestMutable.setAddress(uri.getHost() + ":" + uri.getPort());
+            requestMutable.setUri(uri.toString());
         }
 
         CompletableFuture<Response> future = NettyClient.getClient().executeRequest(requestMutable.build()).toCompletableFuture();

@@ -4,7 +4,6 @@ import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.container.DamContainer;
 import cn.cyejing.dam.it.base.BaseIT;
 import cn.cyejing.dam.it.server.WebServer;
-import io.netty.handler.codec.http.HttpHeaderNames;
 import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.RequestBuilder;
@@ -12,8 +11,6 @@ import org.asynchttpclient.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 

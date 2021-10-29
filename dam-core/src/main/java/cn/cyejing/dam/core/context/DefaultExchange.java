@@ -32,8 +32,6 @@ public class DefaultExchange implements Exchange, InternalExchange {
 
     private RequestMutable requestMutable;
 
-    private RequestDubbo requestDubbo;
-
     private HttpHeaders responseHeaders = new DefaultHttpHeaders();
 
     private Response response;
@@ -59,8 +57,6 @@ public class DefaultExchange implements Exchange, InternalExchange {
         this.route = route;
         if (Protocol.isHttp(getProtocol())) {
             this.requestMutable = new DefaultRequestMutable(request, fullHttpRequest);
-        } else if (Protocol.isDubbo(getProtocol())) {
-            this.requestDubbo = new RequestDubbo(request);
         } else {
             log.error("unknown protocol");
         }

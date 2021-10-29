@@ -74,36 +74,36 @@ public class DefaultDynamicConfigTest {
         {
             DefaultDynamicConfig.getInstance().clear();
             Instance instance = new Instance();
-            instance.setHost("123");
-            instance.setAddress("123");
+            instance.setGroup("123");
+            instance.setUri("123");
             instance.setRegisterTime(122L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
             Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
-            assertEquals("123", ins[0].getAddress());
+            assertEquals("123", ins[0].getUri());
         }
 
         {
             Instance instance = new Instance();
-            instance.setHost("123");
-            instance.setAddress("123");
+            instance.setGroup("123");
+            instance.setUri("123");
             instance.setRegisterTime(123L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
             Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
-            assertEquals("123", ins[0].getAddress());
+            assertEquals("123", ins[0].getUri());
             assertEquals(123L, ins[0].getRegisterTime());
         }
 
         {
             Instance instance = new Instance();
-            instance.setHost("123");
-            instance.setAddress("124");
+            instance.setGroup("123");
+            instance.setUri("124");
             instance.setRegisterTime(124L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
             Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(2, ins.length);
-            assertEquals("124", ins[0].getAddress());
+            assertEquals("124", ins[0].getUri());
             assertEquals(124L, ins[0].getRegisterTime());
         }
 
@@ -111,7 +111,7 @@ public class DefaultDynamicConfigTest {
             DefaultDynamicConfig.getInstance().deleteInstance("123", "124");
             Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
-            assertEquals("123", ins[0].getAddress());
+            assertEquals("123", ins[0].getUri());
             assertEquals(123L, ins[0].getRegisterTime());
             DefaultDynamicConfig.getInstance().deleteInstance("123", "123");
 
@@ -122,13 +122,13 @@ public class DefaultDynamicConfigTest {
         {
             DefaultDynamicConfig.getInstance().clear();
             Instance instance = new Instance();
-            instance.setHost("123");
-            instance.setAddress("123");
+            instance.setGroup("123");
+            instance.setUri("123");
             instance.setRegisterTime(122L);
             DefaultDynamicConfig.getInstance().addInstance(instance);
             Instance[] ins = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins.length);
-            assertEquals("123", ins[0].getAddress());
+            assertEquals("123", ins[0].getUri());
 
             Instance[] ins1 = DefaultDynamicConfig.getInstance().getInstances("123").toArray(new Instance[1]);
             assertEquals(1, ins1.length);
