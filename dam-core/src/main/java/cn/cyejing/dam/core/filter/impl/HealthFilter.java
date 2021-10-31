@@ -11,15 +11,10 @@ import cn.cyejing.dam.core.filter.GlobalFilter;
 public class HealthFilter implements GlobalFilter {
 
     public HealthFilter() {
-        Route route = new Route();
-        route.setId("health");
-        route.setExpressionStr("Path.Equals('/health')");
-        route.setGlobal(true);
-        route.setProtocol(Protocol.HTTP);
-        route.setOrder(0);
-        route.setGroup("health");
-        DefaultDynamicConfig.getInstance().addRoute(route);
+        initRoute();
     }
+
+
 
     @Override
     public String getName() {
@@ -42,5 +37,16 @@ public class HealthFilter implements GlobalFilter {
             exchange.completedAndResponse(new DefaultResponse("up"));
         }
         chain.doFilter();
+    }
+
+    void initRoute() {
+        Route route = new Route();
+        route.setId("health");
+        route.setExpressionStr("Path.Equals('/health')");
+        route.setGlobal(true);
+        route.setProtocol(Protocol.HTTP);
+        route.setOrder(0);
+        route.setGroup("health");
+        DefaultDynamicConfig.getInstance().addRoute(route);
     }
 }

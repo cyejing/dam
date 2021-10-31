@@ -3,7 +3,7 @@ package cn.cyejing.dam.core.filter.impl;
 import cn.cyejing.dam.common.config.DefaultDynamicConfig;
 import cn.cyejing.dam.common.config.Instance;
 import cn.cyejing.dam.common.enums.EnumLoadBalance;
-import cn.cyejing.dam.core.container.NettyClient;
+import cn.cyejing.dam.core.container.DamContainer;
 import cn.cyejing.dam.core.context.DefaultResponse;
 import cn.cyejing.dam.core.context.Exchange;
 import cn.cyejing.dam.core.context.RequestMutable;
@@ -46,7 +46,7 @@ public class ProxyFilter implements Filter<ProxyFilter.Config> {
             requestMutable.setUri(uri.toString());
         }
 
-        CompletableFuture<Response> future = NettyClient.getClient().executeRequest(requestMutable.build()).toCompletableFuture();
+        CompletableFuture<Response> future = DamContainer.getClient().executeRequest(requestMutable.build()).toCompletableFuture();
         future.whenComplete((response, throwable) -> {
             exchange.releaseRequest();
             if (throwable != null) {

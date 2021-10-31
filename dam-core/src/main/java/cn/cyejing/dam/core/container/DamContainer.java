@@ -30,7 +30,8 @@ public class DamContainer {
     private EventLoopGroup eventLoopGroupWork;
 
     private List<DamServer> damServers = new ArrayList<>();
-    private AsyncHttpClient asyncHttpClient;
+
+    private static AsyncHttpClient asyncHttpClient;
 
 
 
@@ -74,7 +75,6 @@ public class DamContainer {
                 .setPooledConnectionIdleTimeout(config.getHttpPooledConnectionIdleTimeout());
 
         asyncHttpClient = new DefaultAsyncHttpClient(clientBuilder.build());
-        NettyClient.setClient(asyncHttpClient);
     }
 
     public void start() {
@@ -93,5 +93,12 @@ public class DamContainer {
         } catch (IOException e) {
             log.error("Shutdown Container error", e);
         }
+    }
+
+    public static AsyncHttpClient getClient() {
+        if (asyncHttpClient == null) {
+            throw new RuntimeException("AsyncHttpClient not initialized yet");
+        }
+        return asyncHttpClient;
     }
 }

@@ -8,7 +8,7 @@ routes:
     filterConfigs:
     - name: proxy
       param:
-        uri: "https://example.com"
+        uri: "lb://example"
   - id: f1xb758a1hsrkguxtryjjt4swakayrf8
     group: resources
     order: 20
@@ -24,5 +24,5 @@ routes:
         param:
           root: "./"
 instances:
-  - group: test
+  - group: example
     uri: https://example.com
