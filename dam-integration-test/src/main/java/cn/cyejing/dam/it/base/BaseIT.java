@@ -8,7 +8,7 @@ public class BaseIT {
 
 
     public static DamContainer startCore() {
-        return new DamContainer(ConfigLoader.getInstance().load(null));
+        return new DamContainer(ConfigLoader.load(null));
     }
 
     public static AsyncHttpClient startClient() {

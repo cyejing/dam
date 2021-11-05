@@ -25,15 +25,15 @@ public class ConfigLoader {
     private ConfigLoader() {
     }
 
-    public static ConfigLoader getInstance() {
-        return INSTANCE;
+    public static Config load(String[] args) {
+        return INSTANCE.loadImpl(args);
     }
 
     public static Config getConfig() {
         return INSTANCE.config;
     }
 
-    public Config load(String[] args) {
+    private Config loadImpl(String[] args) {
         if (this.config != null) {
             return this.config;
         }
