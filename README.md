@@ -37,7 +37,7 @@ routes:
     order: 100  # 路由匹配顺序
     global: true # 是否全局路由
     protocol: http # 路由协议
-    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') # 路由匹配表达式
+    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') 或者 Host.等于('www.dam.cn') # 路由匹配表达式
     filterConfigs: # 路由过滤器配置
     - name: rewrite
       param:
