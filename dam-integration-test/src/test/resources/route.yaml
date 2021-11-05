@@ -25,7 +25,7 @@ routes:
     order: 100
     global: true
     protocol: http
-    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com')
+    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') 或者 Host.等于('www.dam.cn')
     filterConfigs:
       - name: rewrite
         param:
