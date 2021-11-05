@@ -14,7 +14,7 @@ routes:
         param:
           uri: "rlb://example"
   - id: f1xb758a1hsrkguxtryjjt4swakayrf8
-    group: resources
+    group: resource
     order: 20
     global: true
     protocol: http
