@@ -10,12 +10,12 @@ public class OrOpTokenReader implements TokenReader {
     @Override
     public boolean check(TokenStream tokenStream) {
 
-        return tokenStream.peekString("||", "或者", "or", "OR") != null;
+        return tokenStream.peekString("||", "或者", "or", "OR", "Or") != null;
     }
 
     @Override
     public void process(TokenStream tokenStream) {
-        String str = tokenStream.peekString("||", "或者", "or", "OR");
+        String str = tokenStream.peekString("||", "或者", "or", "OR", "Or");
         tokenStream.addToken(TokenType.SYMBOLIC_OR, str);
     }
 }

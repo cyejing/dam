@@ -8,3 +8,4 @@
 #### 文件服务
 - 配置``route.yaml``resource服务的``filter``配置,指定``root``到本地文件的具体目录
 - 浏览器打开localhost:8048/file/xxx.txt .即可打开具体文件
+

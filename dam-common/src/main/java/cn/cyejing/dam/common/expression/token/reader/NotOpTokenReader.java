@@ -9,12 +9,12 @@ public class NotOpTokenReader implements TokenReader {
 
     @Override
     public boolean check(TokenStream tokenStream) {
-        return tokenStream.peekString("!", "非") != null;
+        return tokenStream.peekString("!", "非", "not", "Not", "NOT") != null;
     }
 
     @Override
     public void process(TokenStream tokenStream) {
-        String str = tokenStream.peekString("!", "非");
+        String str = tokenStream.peekString("!", "非", "not", "Not", "NOT");
         tokenStream.addToken(TokenType.NOT, str);
     }
 }
