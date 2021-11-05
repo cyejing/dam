@@ -61,6 +61,11 @@ public class DefaultRequestMutable implements RequestMutable {
     }
 
     @Override
+    public void unsetHeader(CharSequence name) {
+        requestBuilder.setHeader(name, "");
+    }
+
+    @Override
     public void clearHeaders() {
         requestBuilder.clearHeaders();
     }

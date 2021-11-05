@@ -53,5 +53,19 @@ public class ProxyFilterIT {
         assertEquals("hello", response.getResponseBody());
     }
 
+    @Test
+    public void testProxyHttp2() throws Exception {
+        AsyncHttpClient asyncHttpClient = BaseIT.startClient();
+        RequestBuilder requestBuilder = new RequestBuilder("GET")
+                .setHeader("X-Hello", "hello")
+                .setUrl("http://localhost:8048/dam/hello");
+
+        Response response = asyncHttpClient.executeRequest(requestBuilder).get();
+
+        assertEquals(200, response.getStatusCode());
+        assertEquals("hello", response.getHeader("X-Hello"));
+        assertEquals("hello", response.getResponseBody());
+    }
+
 
 }

@@ -12,7 +12,7 @@ routes:
         replacement: "/$1"
     - name: proxy
       param:
-        uri: "lb://test"
+        uri: "rlb://test"
   - id: wj921n09gzfnqpsrubjxo9aq2u0pfj3a
     group: emptyFilter
     order: 100
@@ -25,8 +25,12 @@ routes:
     order: 100
     global: true
     protocol: http
-    expressionStr: Host.Equals('www.dam.com')
+    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com')
     filterConfigs:
+      - name: rewrite
+        param:
+          regex: "/dam/(.*)"
+          replacement: "/$1"
       - name: proxy
         param:
           uri: "http://localhost:4843"

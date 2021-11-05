@@ -37,18 +37,22 @@ routes:
     order: 100  # 路由匹配顺序
     global: true # 是否全局路由
     protocol: http # 路由协议
-    expressionStr: Path.AntMatch('/replace/**') # 路由匹配表达式
+    expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') # 路由匹配表达式
     filterConfigs: # 路由过滤器配置
     - name: rewrite
       param:
-        regex: "/replace/(.*)"
-        replacement: "/$\\1"
+        regex: "/dam/(.*)"
+        replacement: "/$1"
     - name: proxy
       param:
-        uri: "lb://test"
+        uri: "rlb://test"
 instances:
   - group: test
-    uri: localhost:4843 
+    uri: 192.168.1.1:4843 
+  - group: test
+    uri: 192.168.1.2:4843
+  - group: test
+    uri: 192.168.1.3:4843 
 ```
 
 ### 网关处理逻辑

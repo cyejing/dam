@@ -21,6 +21,8 @@ public interface RequestMutable {
 
     void setHeaders(HttpHeaders headers);
 
+    void unsetHeader(CharSequence name);
+
     void clearHeaders();
 
     void addQueryParam(String name, String value);

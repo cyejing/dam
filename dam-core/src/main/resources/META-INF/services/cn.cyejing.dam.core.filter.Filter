@@ -3,3 +3,4 @@ cn.cyejing.dam.core.filter.impl.TailFilter
 cn.cyejing.dam.core.filter.impl.ProxyFilter
 cn.cyejing.dam.core.filter.impl.RewriteFilter
 cn.cyejing.dam.core.filter.impl.ResourceFilter
+cn.cyejing.dam.core.filter.impl.HeadersFilter

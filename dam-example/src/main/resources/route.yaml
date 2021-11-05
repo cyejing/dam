@@ -6,9 +6,13 @@ routes:
     protocol: http
     expressionStr: Path.AntMatch('/**')
     filterConfigs:
-    - name: proxy
-      param:
-        uri: "lb://example"
+      - name: headers
+        param:
+          setHeaders:
+            - host,www.baidu.com
+      - name: proxy
+        param:
+          uri: "rlb://example"
   - id: f1xb758a1hsrkguxtryjjt4swakayrf8
     group: resources
     order: 20
@@ -25,4 +29,4 @@ routes:
           root: "./"
 instances:
   - group: example
-    uri: https://example.com
+    uri: https://www.baidu.com

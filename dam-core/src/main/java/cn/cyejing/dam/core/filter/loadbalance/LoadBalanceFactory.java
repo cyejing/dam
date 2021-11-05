@@ -1,19 +1,18 @@
 package cn.cyejing.dam.core.filter.loadbalance;
-import cn.cyejing.dam.common.enums.EnumLoadBalance;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoadBalanceFactory {
 
-    private final Map<EnumLoadBalance, LoadBalance> loadBalanceMap = new HashMap<>();
+    private final Map<String, LoadBalance> loadBalanceMap = new HashMap<>();
     private static final LoadBalanceFactory INSTANCE = new LoadBalanceFactory();
 
     private LoadBalanceFactory() {
-        loadBalanceMap.put(EnumLoadBalance.RANDOM, new RandomLoadBalance());
+        loadBalanceMap.put("rlb", new RandomLoadBalance());
     }
 
-    public static LoadBalance getLoadBalance(EnumLoadBalance loadBalance) {
+    public static LoadBalance getLoadBalance(String loadBalance) {
         return INSTANCE.loadBalanceMap.get(loadBalance);
     }
 

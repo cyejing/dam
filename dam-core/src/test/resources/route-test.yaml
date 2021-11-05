@@ -12,7 +12,7 @@ routes:
           replacement: "/$1"
       - name: proxy
         param:
-          uri: "lb://test"
+          uri: "rlb://test"
   - id: 126105db9a384d7a93f8102ae4668412
     group: test2
     order: 100
@@ -27,7 +27,6 @@ routes:
       - name: proxy
         param:
           uri: "http://localhost"
-          loadBalance: ROUND_ROBIN
 instances:
   - group: test
     uri: localhost:4843

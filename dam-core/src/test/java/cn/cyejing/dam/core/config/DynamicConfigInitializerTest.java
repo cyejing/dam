@@ -3,7 +3,6 @@ package cn.cyejing.dam.core.config;
 import cn.cyejing.dam.common.config.DefaultDynamicConfig;
 import cn.cyejing.dam.common.config.FilterConfig;
 import cn.cyejing.dam.common.config.Route;
-import cn.cyejing.dam.common.enums.EnumLoadBalance;
 import cn.cyejing.dam.common.utils.JSONUtil;
 import cn.cyejing.dam.core.filter.impl.ProxyFilter;
 import cn.cyejing.dam.core.filter.impl.RewriteFilter;
@@ -24,6 +23,10 @@ public class DynamicConfigInitializerTest {
         RewriteFilter.Config config = JSONUtil.convertValue(param, RewriteFilter.Config.class);
         assertEquals("/replace/(.*)", config.getRegex());
         assertEquals("/$1", config.getReplacement());
+
+        FilterConfig filterConfig2 = route.getFilterConfig("proxy");
+        ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig2.getParam(), ProxyFilter.Config.class);
+        assertEquals("rlb://test", config1.getUri());
     }
 
     @Test
@@ -39,7 +42,6 @@ public class DynamicConfigInitializerTest {
         FilterConfig filterConfig1 = route.getFilterConfig("proxy");
         ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig1.getParam(), ProxyFilter.Config.class);
         assertEquals("http://localhost", config1.getUri());
-        assertEquals(EnumLoadBalance.ROUND_ROBIN, config1.getLoadBalance());
 
     }
 
