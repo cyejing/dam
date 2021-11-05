@@ -6,21 +6,29 @@
 
 ## Features
 * Netty
-* 响应式网络处理
+* 高性能响应式网络处理
 * 路由表达式灵活匹配Http请求协议体
-* 灵活路由配置,功能可插拔配置  
-* 基于SPI过滤器扩展,灵活扩展网关功能
+* 网关功能可插拔配置  
+* 可基于SPI扩展网关功能
 
 ## Quick Start
 EG: dam-example
-
-## Docs
-### 网关处理逻辑
-1. 将请求与路由进行匹配
-2. 优先匹配``global``路由,确定``group``分组
-3. 按顺序遍历``group``分组下的所有路由,直到``expressionStr``匹配正确
-4. 执行该路由过滤器配置
-### 路由配置说明
+### 网关快速启动
+添加依赖
+```xml
+<dependency>
+    <groupId>cn.cyejing</groupId>
+    <artifactId>dam-core</artifactId>
+    <version>${new.version}</version>
+</dependency>
+```
+启动方法
+```java
+public static void main(String[] args) {
+    new DamContainer(ConfigLoader.getInstance().load(args)).start();
+}
+```
+配置route.yaml
 ```yaml
 #route.yaml
 routes:
@@ -39,9 +47,19 @@ routes:
       param:
         uri: "lb://test"
 instances:
-  - host: test
-    address: localhost:4843 
+  - group: test
+    uri: localhost:4843 
 ```
+
+### 网关处理逻辑
+1. 将请求与路由进行匹配
+2. 优先匹配``global``路由,确定``group``分组
+3. 按顺序遍历``group``分组下的所有路由,直到``expressionStr``匹配正确
+4. 执行该路由过滤器配置
+
+## Docs
+
+[中文文档](docs/cn/README.md)
 
 ## Benchmark
 
@@ -52,7 +70,7 @@ TL;DR
 Proxy | Avg Latency | Avg Req/Sec/Thread
 -- | -- | --
 dam | 2.04ms | 107.869k
-gateway | 4.68ms | 43.827k
+spring cloud gateway | 4.68ms | 43.827k
 linkered | 5.23ms | 41.988k
 zuul | 11.08ms | 22.757k
 none | 3.25ms | 161.243k

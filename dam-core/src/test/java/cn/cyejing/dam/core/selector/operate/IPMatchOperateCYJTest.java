@@ -33,6 +33,6 @@ public class IPMatchOperateCYJTest {
     @Test(expected = RuntimeException.class)
     public void matchError2() {
         Match ipMatchOperate = MatchFactory.getMatch(EnumMatch.IP);
-        assertFalse(ipMatchOperate.match("wefw", "192wefw"));
+        assertFalse(ipMatchOperate.match("192.wefw", "192wefw"));
     }
 }
