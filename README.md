@@ -63,7 +63,7 @@ instances:
 
 ## Docs
 
-[中文文档](docs/cn/README.md)
+[中文文档](docs/cn/README.md?type=blob)
 
 ## Benchmark
 
