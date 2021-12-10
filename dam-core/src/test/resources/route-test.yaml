@@ -7,11 +7,11 @@ routes:
     expressionStr: Path.AntMatch('/test1/**')
     filterConfigs:
       - name: rewrite
-        param:
+        params:
           regex: "/replace/(.*)"
           replacement: "/$1"
       - name: proxy
-        param:
+        params:
           uri: "rlb://test"
   - id: 126105db9a384d7a93f8102ae4668412
     group: test2
@@ -21,11 +21,11 @@ routes:
     expressionStr: Path.AntMatch('/test2/**')
     filterConfigs:
       - name: rewrite
-        param:
+        params:
           regex: "/a/b/(?<segment>.*)"
           replacement: "/f/${segment}"
       - name: proxy
-        param:
+        params:
           uri: "http://localhost"
 instances:
   - group: test

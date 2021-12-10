@@ -7,11 +7,11 @@ routes:
     expressionStr: Path.AntMatch('/replace/**')
     filterConfigs:
     - name: rewrite
-      param:
+      params:
         regex: "/replace/(.*)"
         replacement: "/$1"
     - name: proxy
-      param:
+      params:
         uri: "rlb://test"
   - id: wj921n09gzfnqpsrubjxo9aq2u0pfj3a
     group: emptyFilter
@@ -28,11 +28,11 @@ routes:
     expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') 或者 Host.等于('www.dam.cn')
     filterConfigs:
       - name: rewrite
-        param:
+        params:
           regex: "/dam/(.*)"
           replacement: "/$1"
       - name: proxy
-        param:
+        params:
           uri: "http://localhost:4843"
   - id: 3hwc9bkos0dm76xofquqbvxi7m0i2s65
     group: files
@@ -42,11 +42,11 @@ routes:
     expressionStr: Path.AntMatch('/files/**')
     filterConfigs:
       - name: rewrite
-        param:
+        params:
           regex: "/files/(.*)"
           replacement: "/$1"
       - name: resource
-        param:
+        params:
           root: "./src/test/resources"
 instances:
   - group: test

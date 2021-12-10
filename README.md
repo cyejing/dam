@@ -40,11 +40,11 @@ routes:
     expressionStr: Path.AntMatch('/dam/**') OR Host.Equals('www.dam.com') 或者 Host.等于('www.dam.cn') # 路由匹配表达式
     filterConfigs: # 路由过滤器配置
     - name: rewrite
-      param:
+      params:
         regex: "/dam/(.*)"
         replacement: "/$1"
     - name: proxy
-      param:
+      params:
         uri: "rlb://test"
 instances:
   - group: test

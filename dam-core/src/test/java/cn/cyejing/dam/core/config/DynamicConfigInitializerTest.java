@@ -19,13 +19,13 @@ public class DynamicConfigInitializerTest {
         Route route = DefaultDynamicConfig.getInstance().getRoute("test1", "196105db9a384d7a93f8102ae46684cb");
         assertNotNull(route);
         FilterConfig filterConfig = route.getFilterConfig("rewrite");
-        Object param = filterConfig.getParam();
+        Object param = filterConfig.getParams();
         RewriteFilter.Config config = JSONUtil.convertValue(param, RewriteFilter.Config.class);
         assertEquals("/replace/(.*)", config.getRegex());
         assertEquals("/$1", config.getReplacement());
 
         FilterConfig filterConfig2 = route.getFilterConfig("proxy");
-        ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig2.getParam(), ProxyFilter.Config.class);
+        ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig2.getParams(), ProxyFilter.Config.class);
         assertEquals("rlb://test", config1.getUri());
     }
 
@@ -35,12 +35,12 @@ public class DynamicConfigInitializerTest {
         Route route = DefaultDynamicConfig.getInstance().getRoute("test2", "126105db9a384d7a93f8102ae4668412");
         assertNotNull(route);
         FilterConfig filterConfig = route.getFilterConfig("rewrite");
-        RewriteFilter.Config config = JSONUtil.convertValue(filterConfig.getParam(), RewriteFilter.Config.class);
+        RewriteFilter.Config config = JSONUtil.convertValue(filterConfig.getParams(), RewriteFilter.Config.class);
         assertEquals("/a/b/(?<segment>.*)", config.getRegex());
         assertEquals("/f/${segment}", config.getReplacement());
 
         FilterConfig filterConfig1 = route.getFilterConfig("proxy");
-        ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig1.getParam(), ProxyFilter.Config.class);
+        ProxyFilter.Config config1 = JSONUtil.convertValue(filterConfig1.getParams(), ProxyFilter.Config.class);
         assertEquals("http://localhost", config1.getUri());
 
     }

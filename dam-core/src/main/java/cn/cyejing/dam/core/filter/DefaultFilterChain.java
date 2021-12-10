@@ -37,11 +37,11 @@ public class DefaultFilterChain implements FilterChain {
                 filter.filter(this, exchange, null);
             } else {
                 Object config = cache.get(filterConfig.getName(), s -> {
-                    if (filter.getConfigClass() != null && filterConfig.getParam() != null) {
+                    if (filter.getConfigClass() != null && filterConfig.getParams() != null) {
                         try {
-                            return JSONUtil.convertValue(filterConfig.getParam(), filter.getConfigClass());
+                            return JSONUtil.convertValue(filterConfig.getParams(), filter.getConfigClass());
                         } catch (Exception e) {
-                            log.error("filter {} params parse error:{}", filter.getNameToLowerCase(), filterConfig.getParam(), e);
+                            log.error("filter {} params parse error:{}", filter.getNameToLowerCase(), filterConfig.getParams(), e);
                         }
                     }
                     return null;

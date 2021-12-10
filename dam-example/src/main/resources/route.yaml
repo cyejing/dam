@@ -7,11 +7,11 @@ routes:
     expressionStr: Path.AntMatch('/**')
     filterConfigs:
       - name: headers
-        param:
+        params:
           setHeaders:
             - host,www.baidu.com
       - name: proxy
-        param:
+        params:
           uri: "rlb://example"
   - id: f1xb758a1hsrkguxtryjjt4swakayrf8
     group: resource
@@ -21,11 +21,11 @@ routes:
     expressionStr: Path.AntMatch('/file/**')
     filterConfigs:
       - name: rewrite
-        param:
+        params:
           regex: "/file/(.*)"
           replacement: "/$1"
       - name: resource
-        param:
+        params:
           root: "./"
 instances:
   - group: example
