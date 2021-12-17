@@ -12,6 +12,7 @@
     <modules>
         <module>dam-registry-api</module>
         <module>dam-registry-etcd</module>
+        <module>dam-registry-memory</module>
     </modules>
 
 </project>
