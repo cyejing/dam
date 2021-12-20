@@ -47,8 +47,8 @@ public class FilteringHandler {
     }
 
     public void handler(InternalExchange exchange) {
-        Set<FilterConfig> filterConfigs = exchange.getRoute().getFilterConfigs();
-        List<Filter> runFilters = new ArrayList<>(beforeFilters);
+        List<FilterConfig> filterConfigs = exchange.getRoute().getFilterConfigs();
+        List<Filter<?>> runFilters = new ArrayList<>(beforeFilters);
 
         for (FilterConfig filterConfig : filterConfigs) {
             Filter<?> filter = filterMap.get(filterConfig.getName());

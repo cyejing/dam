@@ -80,6 +80,7 @@ public class ProxyFilterIT {
         assertEquals(200, response.getStatusCode());
         assertEquals("hello", response.getHeader("X-Hello"));
         assertEquals("hello", response.getResponseBody());
+
     }
 
 

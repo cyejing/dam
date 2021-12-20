@@ -10,6 +10,8 @@ public interface RegistrySPI {
 
     void init(RegistryConfig config);
 
+    String getNamespace();
+
     void put(String key, String value);
 
     void putWithHeartbeat(String key, String value);

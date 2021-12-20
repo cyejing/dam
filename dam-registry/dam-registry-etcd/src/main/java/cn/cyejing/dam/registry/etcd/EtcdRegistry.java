@@ -34,7 +34,12 @@ public class EtcdRegistry implements RegistrySPI {
     @Override
     public void init(RegistryConfig config) {
         this.config = config;
-        this.client = Client.builder().endpoints(config.getAddresses()).build();
+        this.client = Client.builder().endpoints(config.getUrls()).build();
+    }
+
+    @Override
+    public String getNamespace() {
+        return config.getNamespace();
     }
 
     @Override

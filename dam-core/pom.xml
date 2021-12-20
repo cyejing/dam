@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>cn.cyejing</groupId>
-            <artifactId>dam-registry-etcd</artifactId>
+            <artifactId>dam-registry-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

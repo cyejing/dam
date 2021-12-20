@@ -16,6 +16,7 @@ public class JSONUtil {
                 .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false)
                 .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+                .configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true)
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         MAPPER.addMixIn(Object.class, ExcludeFilter.class);

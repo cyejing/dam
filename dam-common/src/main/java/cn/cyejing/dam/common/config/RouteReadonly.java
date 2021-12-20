@@ -2,11 +2,13 @@ package cn.cyejing.dam.common.config;
 
 import cn.cyejing.dam.common.expression.Expression;
 
-import java.util.Set;
+import java.util.List;
 
 
 public interface RouteReadonly {
+
     String getId();
+
     String getGroup();
 
     boolean isGlobal();
@@ -17,7 +19,7 @@ public interface RouteReadonly {
 
     Expression getExpression();
 
-    Set<FilterConfig> getFilterConfigs();
+    List<FilterConfig> getFilterConfigs();
 
     boolean isLoggable();
 

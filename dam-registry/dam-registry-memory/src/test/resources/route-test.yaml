@@ -1,0 +1,32 @@
+routes:
+  - id: 196105db9a384d7a93f8102ae46684cb
+    group: test1
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/test1/**')
+    filterConfigs:
+      - name: rewrite
+        params:
+          regex: "/replace/(.*)"
+          replacement: "/$1"
+      - name: proxy
+        params:
+          uri: "rlb://test"
+  - id: 126105db9a384d7a93f8102ae4668412
+    group: test2
+    order: 100
+    global: true
+    protocol: http
+    expressionStr: Path.AntMatch('/test2/**')
+    filterConfigs:
+      - name: rewrite
+        params:
+          regex: "/a/b/(?<segment>.*)"
+          replacement: "/f/${segment}"
+      - name: proxy
+        params:
+          uri: "http://localhost"
+instances:
+  - group: test
+    uri: localhost:4843

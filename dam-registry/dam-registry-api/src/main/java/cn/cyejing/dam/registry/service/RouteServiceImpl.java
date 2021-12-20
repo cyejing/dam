@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -25,42 +26,52 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
 
     @Override
     public void registerRoute(Route route) {
-
+        getRegistrySPI().put(getNodePath().genRouteKey(route), JSONUtil.writeValueAsString(route));
     }
 
     @Override
     public void subscribeRoute(NotifyListener<Route> listener) {
-
+        routeListener.add(listener);
+        watchRoute();
+        queryRoutes().forEach(listener::put);
     }
 
     @Override
     public void deleteRoute(String group, String routeId) {
-
+        getRegistrySPI().delete(getNodePath().genRouteKey(group, routeId), false);
     }
 
     @Override
     public void deleteRoute(String group) {
-
+        getRegistrySPI().delete(getNodePath().genRouteKey(group), true);
     }
 
     @Override
     public Route queryRoute(String group, String routeId) {
-        return null;
+        return getRegistrySPI().get(getNodePath().genRouteKey(group, routeId), false)
+                .stream()
+                .findFirst()
+                .map(kv -> JSONUtil.readValue(kv.getValue(), Route.class))
+                .orElse(null);
     }
 
     @Override
     public List<Route> queryRoutes() {
-        return null;
+        return getRegistrySPI().get(getNodePath().genRouteKey(), true).stream()
+                .map(kv -> JSONUtil.readValue(kv.getValue(), Route.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Route> queryRoute(String group) {
-        return null;
+        return getRegistrySPI().get(getNodePath().genRouteKey(group), true).stream()
+                .map(kv -> JSONUtil.readValue(kv.getValue(), Route.class))
+                .collect(Collectors.toList());
     }
 
 
     public void watchRoute() {
-        getRegistrySPI().addWatch(getKey(), new Watch() {
+        getRegistrySPI().addWatch(getNodePath().genRouteKey(), new Watch() {
             @Override
             public void put(KeyValue keyValue) {
                 log.info("Listening to node changes key: {}, value: {}", keyValue.getKey(), keyValue.getValue());
@@ -90,15 +101,4 @@ public class RouteServiceImpl extends AbstractService implements RouteAPI {
     }
 
 
-    private String getKey() {
-        return "/routes";
-    }
-
-    private String getKey(String group, String id) {
-        return getKey(group) + "/" + id;
-    }
-
-    private String getKey(String group) {
-        return getKey() + "/" + group;
-    }
 }

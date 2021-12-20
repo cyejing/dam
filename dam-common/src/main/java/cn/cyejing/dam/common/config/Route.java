@@ -4,9 +4,9 @@ import cn.cyejing.dam.common.expression.Expression;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Slf4j
@@ -19,7 +19,7 @@ public class Route implements Comparable<Route>, RouteReadonly {
     protected String protocol;
     protected String expressionStr;
     protected Expression expression;
-    protected Set<FilterConfig> filterConfigs = new HashSet<>();
+    protected List<FilterConfig> filterConfigs = new ArrayList<>();
 
     protected boolean global;
 

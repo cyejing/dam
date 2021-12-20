@@ -9,12 +9,14 @@ public interface InstanceAPI {
 
     void registerInstance(Instance instance);
 
-    void unregisterInstance(String host, String address);
+    void unregisterInstance(String group, String uri);
 
     void subscribeInstance(NotifyListener<Instance> listener);
 
     Instance queryInstance(String host, String address);
 
     List<Instance> queryInstanceList(String host);
+
+    List<Instance> queryInstanceList();
 
 }

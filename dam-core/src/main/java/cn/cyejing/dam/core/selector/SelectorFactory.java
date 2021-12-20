@@ -3,15 +3,15 @@ package cn.cyejing.dam.core.selector;
 import cn.cyejing.dam.common.enums.EnumType;
 import cn.cyejing.dam.common.expression.EvaluationContext;
 import cn.cyejing.dam.core.context.Request;
-import com.google.common.collect.Maps;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class SelectorFactory {
 
     private static final SelectorFactory INSTANCE = new SelectorFactory();
-    private final Map<EnumType, HttpSelector> httpSelectorMap = Maps.newHashMap();
+    private final Map<EnumType, HttpSelector> httpSelectorMap = new HashMap<>();
 
     private SelectorFactory() {
         httpSelectorMap.put(EnumType.HEADER, new HeaderSelector());

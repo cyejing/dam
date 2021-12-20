@@ -1,7 +1,6 @@
 package cn.cyejing.dam.core.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -100,16 +99,14 @@ public class ConfigLoader {
 
         this.config = config;
 
-        if (StringUtils.isNotEmpty(config.getRegistry())) {
-            DynamicConfigInitializer.getInstance().watchRegistry(config.getNamespace(), config.getRegistry());
-        } else {
-            DynamicConfigInitializer.getInstance().loadFile(config.getRoutePath());
-        }
+        DynamicConfigInitializer.getInstance().watchRegistry(config.getNamespace(), config.getRegistry());
         return this.config;
     }
 
     private void properties2Object(Properties properties, Config config) {
-
+        config.setPort(Integer.parseInt(properties.getProperty("port")));
+        config.setNamespace(properties.getProperty("namespace"));
+        config.setRegistry(properties.getProperty("registry"));
     }
 
     private void properties2Object(Properties properties, Config config, String prefix) {

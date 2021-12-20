@@ -10,8 +10,7 @@ public class Config {
 
     private int port = 8048;
     private String namespace = "dam";
-    private String routePath = "route.yaml";
-    private String registry;
+    private String registry = "route.yaml";
 
     private int eventLoopGroupBossNum = 1;
     private int eventLoopGroupWorkNum = Runtime.getRuntime().availableProcessors();

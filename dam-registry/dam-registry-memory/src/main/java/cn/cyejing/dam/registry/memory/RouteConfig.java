@@ -1,4 +1,4 @@
-package cn.cyejing.dam.core.config;
+package cn.cyejing.dam.registry.memory;
 
 import cn.cyejing.dam.common.config.Instance;
 import cn.cyejing.dam.common.config.Route;

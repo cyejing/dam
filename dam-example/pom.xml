@@ -20,6 +20,11 @@
             <artifactId>dam-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.cyejing</groupId>
+            <artifactId>dam-registry-memory</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

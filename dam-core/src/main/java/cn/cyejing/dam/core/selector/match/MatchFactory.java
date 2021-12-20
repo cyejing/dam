@@ -2,15 +2,15 @@ package cn.cyejing.dam.core.selector.match;
 
 
 import cn.cyejing.dam.common.enums.EnumMatch;
-import com.google.common.collect.Maps;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class MatchFactory {
 
     private static final cn.cyejing.dam.core.selector.match.MatchFactory INSTANCE = new cn.cyejing.dam.core.selector.match.MatchFactory();
-    private final Map<EnumMatch, Match> matchOperatorMap = Maps.newHashMap();
+    private final Map<EnumMatch, Match> matchOperatorMap = new HashMap<>();
 
     private MatchFactory() {
         matchOperatorMap.put(EnumMatch.EQUALS, new AnyMatch());

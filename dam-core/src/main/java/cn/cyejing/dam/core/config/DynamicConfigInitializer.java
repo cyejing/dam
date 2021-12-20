@@ -9,12 +9,7 @@ import cn.cyejing.dam.registry.RegistryService;
 import cn.cyejing.dam.registry.RegistryServiceFactory;
 import cn.cyejing.dam.registry.api.NotifyListener;
 import lombok.extern.slf4j.Slf4j;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -28,55 +23,10 @@ public class DynamicConfigInitializer {
         return INSTANCE;
     }
 
-    public boolean loadFile(String path) {
-        InputStream inputStream = null;
-        try {
-            if (new File(path).exists()) {
-                inputStream = new FileInputStream(path);
-            } else {
-                String relativePath = System.getenv("OLDPWD") + "/" + path;
-                if (new File(relativePath).exists()) {
-                    inputStream = new FileInputStream(relativePath);
-                }
-            }
-        } catch (FileNotFoundException e) {
-        }
-        if (inputStream == null) {
-            inputStream = DynamicConfigInitializer.class.getClassLoader().getResourceAsStream(path);
-            log.info("load route yaml classpath: {}", path);
-        } else {
-            log.info("load route yaml path: {}", path);
-        }
-        return loadFile(inputStream);
-    }
-
-    public boolean loadFile(InputStream inputStream) {
-        if (inputStream == null) {
-            throw new RuntimeException("rote yaml is not exist.");
-        }
-
-        try {
-            Yaml yaml = new Yaml();
-            RouteConfig config = yaml.loadAs(inputStream, RouteConfig.class);
-            for (Route route : config.getRoutes()) {
-                DefaultDynamicConfig.getInstance().addRoute(route);
-                CacheManager.removeForRoute(route.getId());
-            }
-            for (Instance instance : config.getInstances()) {
-                DefaultDynamicConfig.getInstance().addInstance(instance);
-            }
-            log.info("reload route yaml success.");
-            return true;
-        } catch (Throwable t) {
-            log.error("reload route yaml failed", t);
-            return false;
-        }
-    }
-
-    public void watchRegistry(String namespace, String addresses) {
+    public void watchRegistry(String namespace, String urls) {
         if (initialized.compareAndSet(false, true)) {
             RegistryService registryService = RegistryServiceFactory.getRegistryService();
-            registryService.initialize(new RegistryConfig(namespace, addresses), true);
+            registryService.initialize(new RegistryConfig(namespace, urls));
 
             registryService.getRouteAPI().subscribeRoute(new NotifyListener<Route>() {
                 @Override
