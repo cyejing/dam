@@ -71,7 +71,7 @@ fork from [spring-cloud-gateway-bench](https://github.com/cyejing/spring-cloud-g
 
 TL;DR
 
-Proxy | Avg Latency | Avg Req/Sec/Thread
+Proxy | Avg Latency | Avg Req/Sec
 -- | -- | --
 dam | 2.04ms | 107.869k
 spring cloud gateway | 4.68ms | 43.827k
