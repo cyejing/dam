@@ -13,9 +13,9 @@ public interface InstanceAPI {
 
     void subscribeInstance(NotifyListener<Instance> listener);
 
-    Instance queryInstance(String host, String address);
+    Instance queryInstance(String group, String uri);
 
-    List<Instance> queryInstanceList(String host);
+    List<Instance> queryInstanceList(String group);
 
     List<Instance> queryInstanceList();
 

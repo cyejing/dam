@@ -26,7 +26,7 @@ public class NodePath {
     }
 
     public String genInstanceKey(Instance instance) {
-        return this.root + INSTANCE + "/" + instance.getGroup() + "/" + instance.getGroup();
+        return this.root + INSTANCE + "/" + instance.getGroup() + "/" + instance.getUri();
     }
 
     public String genInstanceKey(String group, String uri) {
